@@ -1,0 +1,34 @@
+/* =========================================================================
+   kahoot.css — Página de enlaces a los 2 Kahoots.
+   ========================================================================= */
+.kahoots { display: grid; gap: var(--sp-5); grid-template-columns: 1fr; margin-top: var(--sp-5); }
+@media (min-width: 760px) { .kahoots { grid-template-columns: 1fr 1fr; } }
+
+.kcard {
+  display: flex; flex-direction: column; gap: var(--sp-3);
+  border: 1px solid var(--c-line); border-radius: var(--radius); padding: var(--sp-6);
+  background: var(--c-bg); border-top: 6px solid var(--c-accent-blue);
+}
+.kcard:nth-child(2) { border-top-color: #6a2cf5; }
+.kcard__when { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em; color: var(--c-accent-blue); font-size: .85rem; }
+.kcard:nth-child(2) .kcard__when { color: #6a2cf5; }
+.kcard__title { font-family: var(--font-display); font-size: 2.2rem; color: var(--c-ink); margin: 0; }
+.kcard__valida { color: var(--c-ink-soft); font-size: .92rem; margin: 0; }
+
+.kfield { display: flex; flex-direction: column; gap: 4px; }
+.kfield label { font-size: .82rem; font-weight: 600; color: var(--c-ink); }
+.kfield input { padding: .6em .7em; border: 1px solid var(--c-line); border-radius: var(--radius-sm); font: inherit; }
+.kfield input:focus-visible { outline: 3px solid var(--c-accent-blue); outline-offset: 2px; }
+
+.kpin { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: .08em; color: var(--c-ink); margin: var(--sp-2) 0; min-height: 1em; }
+.kpin[hidden] { display: none; }
+
+.kcard__open {
+  margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+  padding: .9em 1.4em; border-radius: var(--radius-pill); border: none; cursor: pointer;
+  font: 600 1.1rem/1 var(--font-body); background: var(--c-accent-blue); color: #fff; text-decoration: none;
+}
+.kcard__open:hover { background: #0036b3; }
+.kcard:nth-child(2) .kcard__open { background: #6a2cf5; }
+.kcard:nth-child(2) .kcard__open:hover { background: #561fd0; }
+.kcard__open[aria-disabled="true"] { opacity: .45; pointer-events: none; }

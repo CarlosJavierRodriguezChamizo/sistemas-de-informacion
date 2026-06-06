@@ -1,0 +1,62 @@
+/* =========================================================================
+   migrar-integrar.css — Scorer del trade-off Migrar vs Integrar (AS/400).
+   ========================================================================= */
+
+.mi-board { display: grid; gap: var(--sp-5); margin-top: var(--sp-4); }
+@media (min-width: 1040px) { .mi-board { grid-template-columns: 1fr 360px; align-items: start; } }
+
+/* --------------------------------------------------------- Ficha contexto */
+.ctx { border: 1px solid var(--c-line); border-radius: var(--radius); padding: var(--sp-4); background: #fff5f5; }
+.ctx h3 { margin: 0 0 var(--sp-2); }
+.ctx__grid { display: grid; grid-template-columns: auto 1fr; gap: .25em var(--sp-4); font-size: .9rem; }
+.ctx__grid dt { color: var(--c-ink-soft); }
+.ctx__grid dd { margin: 0; font-weight: 600; color: var(--c-ink); }
+.ctx__nota { margin: var(--sp-3) 0 0; font-size: .86rem; color: var(--c-body); }
+
+/* --------------------------------------------------------------- Criterios */
+.crit { display: flex; flex-direction: column; gap: var(--sp-3); margin-top: var(--sp-3); }
+.crit-row {
+  display: grid; gap: var(--sp-2) var(--sp-4); align-items: center;
+  grid-template-columns: 1fr; padding: var(--sp-3) 0; border-bottom: 1px solid var(--c-line);
+}
+@media (min-width: 700px) { .crit-row { grid-template-columns: 1.6fr 1.4fr auto; } }
+
+.crit-name { font-weight: 600; color: var(--c-ink); }
+.crit-name small { display: block; font-weight: 400; color: var(--c-ink-soft); font-size: .8rem; }
+.side { display: inline-block; margin-top: 4px; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: .15em .5em; border-radius: 999px; }
+.side--integrar { background: var(--c-accent-soft); color: #06477a; }
+.side--migrar { background: #fbe4cf; color: #9a5400; }
+
+/* Slider de valor */
+.val { display: flex; align-items: center; gap: var(--sp-3); }
+.val input[type="range"] { flex: 1; accent-color: var(--c-accent-blue); }
+.val output { font-family: var(--font-display); font-size: 1.2rem; color: var(--c-ink); min-width: 1.2em; text-align: center; }
+
+/* Peso */
+.weight { display: flex; align-items: center; gap: var(--sp-2); font-size: .82rem; color: var(--c-ink-soft); }
+.weight input { width: 56px; padding: .3em .4em; border: 1px solid var(--c-line); border-radius: 6px; font: inherit; text-align: center; }
+
+/* --------------------------------------------------------- Panel resultado */
+.result { position: sticky; top: 84px; display: flex; flex-direction: column; gap: var(--sp-4); }
+.gauge { border: 1px solid var(--c-line); border-radius: var(--radius); padding: var(--sp-4); background: var(--c-bg); transition: box-shadow .15s, border-color .15s; }
+.gauge.is-rec { border-color: var(--c-accent-blue); box-shadow: 0 0 0 3px var(--c-accent-soft); }
+.gauge--migrar.is-rec { border-color: #b26a00; box-shadow: 0 0 0 3px #fbe4cf; }
+.gauge__label { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-2); }
+.gauge__label b { font-size: .98rem; color: var(--c-ink); }
+.gauge__pct { font-family: var(--font-display); font-size: 1.8rem; color: var(--c-ink); }
+.gauge__track { height: 12px; border-radius: 999px; background: #eef1f8; margin-top: var(--sp-2); overflow: hidden; }
+.gauge__fill { height: 100%; border-radius: 999px; transition: width .25s ease; }
+.gauge--integrar .gauge__fill { background: var(--c-accent-blue); }
+.gauge--migrar .gauge__fill { background: #b26a00; }
+.gauge__plazo { font-size: .78rem; color: var(--c-ink-soft); }
+
+/* Recomendación */
+.reco { border-radius: var(--radius); padding: var(--sp-4); background: var(--c-bg-blue); color: #fff; }
+.reco--migrar { background: #8a5200; }
+.reco--equilibrio { background: var(--c-ink); }
+.reco__tag { font-family: var(--font-display); font-size: 1.25rem; margin: 0 0 var(--sp-2); }
+.reco p { margin: 0; color: rgba(255,255,255,.88); font-size: .92rem; }
+
+/* Nota didáctica */
+.didactic { margin-top: var(--sp-5); padding: var(--sp-4); border-left: 4px solid var(--c-accent); background: var(--c-accent-soft); border-radius: var(--radius-sm); font-size: .92rem; }
+.didactic strong { color: var(--c-ink); }

@@ -1,0 +1,104 @@
+/* =========================================================================
+   clasificador.css — Drag & drop de clasificación de sistemas (práctica M1).
+   ========================================================================= */
+
+/* ------------------------------------------------------------- Tablero */
+.cls-board { display: grid; gap: var(--sp-5); margin-top: var(--sp-5); }
+@media (min-width: 980px) { .cls-board { grid-template-columns: 320px 1fr; align-items: start; } }
+
+/* ----------------------------------------------------- Pool sin clasificar */
+.pool { position: sticky; top: 84px; }
+.pool__head, .zone__head { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.pool__title { font-family: var(--font-display); font-size: 1.15rem; color: var(--c-ink); margin: 0; }
+.count { font-size: .8rem; color: var(--c-ink-soft); font-weight: 600; }
+
+.dropbody {
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  min-height: 64px; padding: var(--sp-3);
+  border: 2px dashed var(--c-line); border-radius: var(--radius);
+  background: #fafbff; transition: border-color .15s, background .15s;
+}
+.dropbody:empty::after {
+  content: "Suelta aquí o usa “Mover aquí”."; color: var(--c-ink-soft);
+  font-size: .82rem; font-style: italic;
+}
+.dropbody.is-dragover { border-color: var(--c-accent-blue); background: var(--c-accent-soft); }
+
+/* --------------------------------------------------------------- Zonas */
+.zones { display: grid; gap: var(--sp-4); grid-template-columns: 1fr; }
+@media (min-width: 620px)  { .zones { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1400px) { .zones { grid-template-columns: repeat(3, 1fr); } }
+
+.zone { border: 1px solid var(--c-line); border-radius: var(--radius); padding: var(--sp-4); background: var(--c-bg); }
+.zone__title { font-family: var(--font-display); font-size: 1.15rem; color: var(--c-ink); margin: 0; }
+.zone__desc { font-size: .82rem; color: var(--c-ink-soft); margin: var(--sp-1) 0 var(--sp-3); }
+.zone__place {
+  font-size: .78rem; font-weight: 600; cursor: pointer;
+  background: transparent; border: 1.5px solid var(--c-accent-blue); color: var(--c-accent-blue);
+  border-radius: var(--radius-pill); padding: .25em .8em; margin-left: auto;
+}
+.zone__place:disabled { opacity: .4; cursor: not-allowed; }
+.zone__place:hover:not(:disabled) { background: var(--c-accent-soft); }
+
+/* --------------------------------------------------------- Tarjeta sistema */
+.csys-card {
+  position: relative; text-align: left; cursor: grab;
+  display: grid; gap: 2px; width: 100%;
+  padding: var(--sp-3) var(--sp-4); padding-right: 2.2em;
+  border: 1px solid var(--c-line); border-left: 4px solid var(--c-ink-soft);
+  border-radius: var(--radius-sm); background: var(--c-bg);
+  font: inherit; color: var(--c-ink);
+  transition: box-shadow .12s, border-color .12s, transform .12s;
+}
+.csys-card:hover { box-shadow: var(--shadow-sm); }
+.csys-card:active { cursor: grabbing; }
+.csys-card.is-dragging { opacity: .5; }
+.csys-card[aria-pressed="true"] {
+  border-color: var(--c-accent-blue); box-shadow: 0 0 0 3px var(--c-accent-soft);
+}
+.csys-card__name { font-weight: 700; font-size: .98rem; }
+.csys-card__meta { font-size: .8rem; color: var(--c-ink-soft); }
+
+/* Indicador de estado (icono a la derecha) */
+.csys-card__status {
+  position: absolute; right: .6em; top: 50%; transform: translateY(-50%);
+  width: 1.3em; height: 1.3em; border-radius: 50%;
+  display: grid; place-content: center; font-size: .8em; font-weight: 700; color: #fff;
+}
+.csys-card.is-correct   { border-left-color: var(--c-m3-ok, #0a826e); }
+.csys-card.is-correct   .csys-card__status { background: #0a826e; }
+.csys-card.is-correct   .csys-card__status::before { content: "✓"; }
+.csys-card.is-incorrect { border-left-color: #d33; }
+.csys-card.is-incorrect .csys-card__status { background: #d33; }
+.csys-card.is-incorrect .csys-card__status::before { content: "✕"; }
+.csys-card.is-unclassified { border-left-color: #e0a100; }
+.csys-card.is-unclassified .csys-card__status { background: #e0a100; }
+.csys-card.is-unclassified .csys-card__status::before { content: "!"; }
+
+/* ----------------------------------------------------------- Tooltip */
+.csys-card__tip {
+  position: absolute; left: 0; bottom: calc(100% + 6px); z-index: 30;
+  width: max(220px, 100%); padding: .5em .7em;
+  background: var(--c-ink); color: #fff; border-radius: 8px;
+  font-size: .78rem; line-height: 1.35;
+  opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .12s, transform .12s;
+  pointer-events: none; box-shadow: var(--shadow);
+}
+.csys-card__tip::after {
+  content: ""; position: absolute; top: 100%; left: 1.5em;
+  border: 6px solid transparent; border-top-color: var(--c-ink);
+}
+.csys-card.has-tip:hover .csys-card__tip,
+.csys-card.has-tip:focus-visible .csys-card__tip { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* ------------------------------------------------------- Panel de insight */
+.insight {
+  margin-top: var(--sp-6); padding: var(--sp-6);
+  border-radius: var(--radius); background: var(--c-bg-blue); color: #fff;
+  box-shadow: var(--shadow);
+}
+.insight[hidden] { display: none; }
+.insight__big { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); color: var(--c-accent); margin: 0 0 .2em; }
+.insight p { color: var(--c-white-soft); margin: .2em 0 0; max-width: 60ch; }
+.insight strong { color: #fff; }
+.insight :focus-visible { outline-color: var(--c-accent); }

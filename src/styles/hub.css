@@ -1,0 +1,129 @@
+/* =========================================================================
+   hub.css — Estilos específicos del Hub / Escaleta viva (index.html).
+   ========================================================================= */
+
+/* ------------------------------------------------------------- Hero */
+.hero__title { font-size: clamp(2.8rem, 7vw, 5.5rem); text-transform: uppercase; margin-bottom: .1em; }
+.hero__subtitle { font-size: clamp(1.1rem, 2.2vw, 1.6rem); color: var(--c-ink-soft); margin: 0; }
+
+/* Banda azul con el gancho del caso */
+.gancho { display: grid; gap: var(--sp-6); }
+.gancho__q { font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 600; font-family: var(--font-display); margin: 0; }
+.gancho__kpis { display: grid; gap: var(--sp-5); grid-template-columns: 1fr; }
+@media (min-width: 700px) { .gancho__kpis { grid-template-columns: repeat(2, max-content); gap: var(--sp-8); } }
+
+/* ----------------------------------------------------- Leyenda de tipos */
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-4); }
+
+/* --------------------------------------------------------- Días (2 col) */
+.days { display: grid; gap: var(--sp-6); grid-template-columns: 1fr; }
+@media (min-width: 920px) { .days { grid-template-columns: 1fr 1fr; gap: var(--sp-7); } }
+
+.day__head { padding-bottom: var(--sp-3); border-bottom: 2px solid var(--c-line); margin-bottom: var(--sp-5); }
+.day__name { display: flex; align-items: baseline; gap: var(--sp-3); flex-wrap: wrap; margin: 0; }
+.day__franja { font-family: var(--font-body); font-weight: 600; color: var(--c-accent-blue); font-size: 1.1rem; }
+.day__lema { color: var(--c-ink-soft); margin: var(--sp-2) 0 0; }
+
+.day__list { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+/* --------------------------------------------------------- Item agenda */
+.agenda-item {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  border: 1px solid var(--c-line);
+  border-left: 4px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  background: var(--c-bg);
+  transition: box-shadow .15s, border-color .15s, opacity .15s;
+}
+.agenda-item:hover { box-shadow: var(--shadow-sm); }
+
+/* Columna de hora */
+.agenda-item__time { display: flex; flex-direction: column; gap: var(--sp-2); }
+.agenda-item__hour { font-family: var(--font-display); font-size: 1.5rem; color: var(--c-ink); line-height: 1; }
+.agenda-item__dur { font-size: .75rem; color: var(--c-ink-soft); }
+
+/* Columna principal */
+.agenda-item__main { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+.agenda-item__head { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.agenda-item__title { font-family: var(--font-body); font-weight: 600; color: var(--c-ink); font-size: 1.05rem; margin: 0; }
+.agenda-item__note { color: var(--c-ink-soft); font-size: .9rem; margin: 0; }
+
+/* Enlaces de acción (deck/tool/kahoot/pitch) — pills compactas */
+.agenda-links { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-1); }
+.agenda-link {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: .35em .8em; border-radius: var(--radius-pill);
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  border: 1.5px solid var(--c-line); color: var(--c-ink); background: var(--c-bg);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.agenda-link::before { content: "→"; opacity: .55; }
+.agenda-link:hover { transform: translateY(-1px); }
+.agenda-link--deck   { border-color: var(--c-m1); color: var(--c-m1); }
+.agenda-link--deck:hover   { background: var(--c-m1); color: #fff; }
+.agenda-link--tool   { border-color: #08a98f; color: #08746a; }
+.agenda-link--tool:hover   { background: #08a98f; color: #fff; }
+.agenda-link--story  { border-color: #c01d6a; color: #c01d6a; }
+.agenda-link--story:hover  { background: #c01d6a; color: #fff; }
+.agenda-link--kahoot { border-color: #b26a00; color: #b26a00; }
+.agenda-link--kahoot:hover { background: #b26a00; color: #fff; }
+.agenda-link--pitch  { border-color: var(--c-ink); color: var(--c-ink); }
+.agenda-link--pitch:hover  { background: var(--c-ink); color: #fff; }
+
+/* ----------------------------------------------- Chip de categoría (tipo) */
+.cat {
+  display: inline-flex; align-items: center; gap: .4em;
+  padding: .26em .7em; border-radius: var(--radius-pill);
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+  color: #fff; background: var(--c-ink);
+}
+/* Scoped a `.cat` para que NO afecte al <article class="agenda-item cat--*">,
+   que reutiliza estas clases solo para el color del borde izquierdo. */
+.cat.cat--deck    { background: var(--c-m1); }
+.cat.cat--tool    { background: #08746a; }   /* teal AA con texto blanco */
+.cat.cat--ia      { background: #6a2cf5; }   /* violeta = identidad IA */
+.cat.cat--kahoot  { background: #b26a00; }   /* ámbar (distinto de IA) */
+.cat.cat--pitch   { background: var(--c-ink); }
+.cat.cat--rest    { background: #6b7280; }   /* gris descanso */
+.cat.cat--demo    { background: #0a6fb0; }   /* azul demo */
+.cat.cat--plenary { background: var(--c-ink-soft); }
+
+/* Cinta de color del borde izquierdo por categoría (estado pendiente).
+   Se declara ANTES que las reglas de [data-status] para que el estado
+   (en curso / hecho) tenga prioridad sobre el color de categoría. */
+.agenda-item.cat--deck    { border-left-color: var(--c-m1); }
+.agenda-item.cat--tool    { border-left-color: #08a98f; }
+.agenda-item.cat--ia      { border-left-color: #6a2cf5; }
+.agenda-item.cat--kahoot  { border-left-color: #b26a00; }
+.agenda-item.cat--pitch   { border-left-color: var(--c-ink); }
+.agenda-item.cat--rest    { border-left-color: #6b7280; }
+.agenda-item.cat--demo    { border-left-color: #0a6fb0; }
+.agenda-item.cat--plenary { border-left-color: var(--c-ink-soft); }
+
+/* ------------------------------------------------- Indicador de estado */
+.status {
+  display: inline-flex; align-items: center; gap: .4em;
+  padding: .3em .6em; border-radius: var(--radius-pill);
+  font-size: .72rem; font-weight: 700; letter-spacing: .02em;
+  border: 1.5px solid var(--c-line); background: var(--c-bg); color: var(--c-ink-soft);
+  cursor: pointer; line-height: 1;
+}
+.status__dot { width: .7em; height: .7em; border-radius: 50%; background: currentColor; flex: none; }
+.status:hover { border-color: var(--c-accent-blue); }
+
+/* Estado: pendiente (defecto) ya cubierto arriba */
+.status[data-status="encurso"] {
+  color: #08746a; border-color: #08a98f; background: var(--c-accent-soft);
+}
+.status[data-status="hecho"] { color: #fff; background: var(--c-m1); border-color: var(--c-m1); }
+
+/* Bordes/estados de la tarjeta según estado */
+.agenda-item[data-status="encurso"] { border-left-color: var(--c-accent); box-shadow: 0 0 0 2px var(--c-accent-soft); }
+.agenda-item[data-status="hecho"]   { border-left-color: var(--c-m1); opacity: .62; }
+.agenda-item[data-status="hecho"] .agenda-item__title { text-decoration: line-through; }
+
+/* ------------------------------------------------------------- Footer */
+.hub-footer { padding: var(--sp-6) 0; color: var(--c-ink-soft); font-size: .9rem; text-align: center; }

@@ -1,0 +1,38 @@
+/* =========================================================================
+   tool.css — Andamiaje común de las herramientas interactivas (prácticas).
+   Cabecera, intro, barra de acciones (toolbar) y región de estado.
+   ========================================================================= */
+
+.tool-intro { max-width: 70ch; }
+.tool-intro h1 { margin-bottom: var(--sp-2); }
+.tool-intro .lead { margin-top: 0; }
+
+/* Barra de acciones pegajosa (Comprobar / Reiniciar / estado) */
+.toolbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3) 0; margin-top: var(--sp-4);
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-line);
+}
+.toolbar__spacer { flex: 1 1 auto; }
+
+/* Marcador de resultado (X/12) */
+.score {
+  font-family: var(--font-display); font-size: 1.4rem; color: var(--c-ink);
+  display: inline-flex; align-items: baseline; gap: .3em;
+}
+.score small { font-family: var(--font-body); font-size: .8rem; color: var(--c-ink-soft); }
+
+/* Región viva de estado (anuncios para lector de pantalla + texto visible) */
+.status-live {
+  font-size: .9rem; color: var(--c-ink-soft); min-height: 1.4em;
+}
+
+/* Pista de uso de teclado */
+.kbd-hint { font-size: .82rem; color: var(--c-ink-soft); margin-top: var(--sp-3); }
+.kbd-hint kbd {
+  font-family: var(--font-body); font-size: .8em; background: #eef1f8;
+  border: 1px solid var(--c-line); border-bottom-width: 2px; border-radius: 5px;
+  padding: .1em .45em; color: var(--c-ink);
+}

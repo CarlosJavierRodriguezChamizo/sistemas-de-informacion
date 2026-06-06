@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Styleguide (interno) · Grupo Báltica — ESIC</title>
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <!--
+    Página interna de documentación visual de componentes.
+    NO está enlazada desde ninguna parte ni declarada en rollupOptions.input,
+    por lo que NO se incluye en /dist. Solo visible en `npm run dev`.
+  -->
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <main id="contenido" data-styleguide></main>
+  <script type="module" src="/src/js/styleguide.js"></script>
+</body>
+</html>

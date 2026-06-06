@@ -1,0 +1,38 @@
+/* =========================================================================
+   arquitectura.css — Capa visual del scrollytelling "Arquitectura objetivo".
+   La maquetación la aporta scrolly.css; aquí solo el diagrama por capas.
+   Las capas se revelan de forma acumulada (clase .on añadida por JS).
+   ========================================================================= */
+.arch-el { opacity: 0; transition: opacity .45s ease, transform .45s ease; }
+.arch-el.on { opacity: 1; }
+
+.arch-box rect { rx: 10; fill: #e9eeff; stroke: #0047e9; stroke-width: 2; }
+.arch-box text { font-family: var(--font-body); font-weight: 600; font-size: 13px; fill: var(--c-ink); text-anchor: middle; dominant-baseline: middle; }
+
+/* AS/400 (siempre visible como fuente, en rojo) */
+.arch-as400 rect { fill: #fdeaea; stroke: #d33; }
+.arch-as400 text { fill: #b01e1e; }
+.arch-as400.pulse rect { stroke-width: 4; }
+.arch-as400-tag { opacity: 0; transition: opacity .4s; }
+.arch-as400-tag rect { rx: 8; fill: #b26a00; }
+.arch-as400-tag text { fill: #fff; font-weight: 700; font-size: 12px; text-anchor: middle; dominant-baseline: middle; }
+.arch-as400-tag.on { opacity: 1; }
+
+/* Capa de integración */
+.arch-integration rect { rx: 12; fill: var(--c-accent-blue); }
+.arch-integration text { fill: #fff; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
+
+/* Data warehouse / SSOT */
+.arch-dwh rect { rx: 12; fill: #0a826e; }
+.arch-dwh text { fill: #fff; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
+
+/* Consumo (360, BI, IA) */
+.arch-top .arch-box rect { fill: #fff; stroke: var(--c-accent-blue); }
+.arch-top .arch-box.ia rect { stroke: #6a2cf5; }
+.arch-top .arch-box.ia text { fill: #4b2bb0; }
+
+/* Flechas */
+.arch-arrow { stroke: var(--c-ink-soft); stroke-width: 2; fill: none; }
+
+/* Etiqueta de capa (lateral) */
+.arch-layer-label { font-family: var(--font-display); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; fill: var(--c-ink-soft); }

@@ -1,0 +1,85 @@
+/* =========================================================================
+   mapa-silos.css — Grafo SVG de sistemas (práctica M2: gaps de integración).
+   ========================================================================= */
+
+.silos-board { display: grid; gap: var(--sp-5); margin-top: var(--sp-4); }
+@media (min-width: 1040px) { .silos-board { grid-template-columns: 1fr 340px; align-items: start; } }
+
+/* --------------------------------------------------------------- Grafo */
+.graph-wrap { border: 1px solid var(--c-line); border-radius: var(--radius); background: #fbfcff; padding: var(--sp-3); }
+.graph { width: 100%; height: auto; display: block; touch-action: manipulation; }
+
+/* Aristas */
+.edge { fill: none; }
+.edge--solid { stroke: var(--c-accent-blue); stroke-width: 2.5; }
+.edge--parcial { stroke: #b26a00; stroke-width: 2; stroke-dasharray: 7 6; }
+
+/* Nodo */
+.node { cursor: pointer; }
+.node__circle { stroke: var(--c-accent-blue); }
+.node--silo .node__circle { stroke: #d33; }
+.node__halo { fill: none; stroke: var(--c-accent); stroke-width: 3; opacity: 0; transition: opacity .12s; }
+.node.is-active .node__halo,
+.node:focus-visible .node__halo { opacity: 1; }
+.node:focus { outline: none; }
+.node__label { font-family: var(--font-body); font-weight: 600; font-size: 15px; fill: var(--c-ink); text-anchor: middle; }
+.node--silo .node__label { fill: #b01e1e; }
+
+/* Pastilla de integración (raw/norm) */
+.pill__bg { rx: 8; }
+.pill__txt { font-family: var(--font-body); font-weight: 700; font-size: 12px; fill: #fff; text-anchor: middle; dominant-baseline: middle; }
+.pill--si  .pill__bg { fill: #0a826e; }
+.pill--no  .pill__bg { fill: #d33; }
+.pill--parcial .pill__bg { fill: #b26a00; }
+
+/* Badge de incidencias (silos) */
+.inc-badge__bg { fill: #d33; rx: 9; }
+.inc-badge__txt { font-family: var(--font-body); font-weight: 700; font-size: 11px; fill: #fff; text-anchor: middle; dominant-baseline: middle; }
+
+/* Marca de gap crítico del alumno */
+.node__flag { font-size: 20px; text-anchor: middle; opacity: 0; }
+.node.is-gap .node__flag { opacity: 1; }
+.node.is-gap .node__circle { stroke-dasharray: 4 3; }
+
+/* ----------------------------------------------------------- Leyenda */
+.legend-row { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-3); font-size: .82rem; color: var(--c-ink-soft); }
+.legend-row span { display: inline-flex; align-items: center; gap: .4em; }
+.swatch { width: 26px; height: 0; border-top: 3px solid var(--c-accent-blue); }
+.swatch--parcial { border-top: 3px dashed #b26a00; }
+.swatch--dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--c-accent-blue); background: #e9eeff; }
+.swatch--silo { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #d33; background: #fdeaea; }
+
+/* --------------------------------------------------------- Panel lateral */
+.side { display: flex; flex-direction: column; gap: var(--sp-4); }
+.panel { border: 1px solid var(--c-line); border-radius: var(--radius); padding: var(--sp-4); background: var(--c-bg); }
+.panel h3 { margin: 0 0 var(--sp-3); font-size: 1.1rem; }
+
+/* Ficha del nodo */
+.ficha__title { font-family: var(--font-display); font-size: 1.3rem; color: var(--c-ink); margin: 0; }
+.ficha__sub { color: var(--c-ink-soft); font-size: .85rem; margin: 2px 0 var(--sp-3); }
+.ficha__grid { display: grid; grid-template-columns: auto 1fr; gap: .3em var(--sp-4); font-size: .9rem; }
+.ficha__grid dt { color: var(--c-ink-soft); }
+.ficha__grid dd { margin: 0; color: var(--c-ink); font-weight: 600; }
+.ficha__nota { margin: var(--sp-3) 0 0; font-size: .88rem; color: var(--c-body); background: #f4f6fb; padding: var(--sp-3); border-radius: var(--radius-sm); }
+.ficha__empty { color: var(--c-ink-soft); font-size: .9rem; }
+.tag-int { display: inline-block; padding: .1em .55em; border-radius: 999px; color: #fff; font-size: .8rem; }
+.tag-int--si { background: #0a826e; } .tag-int--no { background: #d33; } .tag-int--parcial { background: #b26a00; }
+
+/* Diagnóstico de gaps */
+.gap-list { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin: var(--sp-2) 0; min-height: 1.6em; }
+.gap-chip { display: inline-flex; align-items: center; gap: .4em; padding: .25em .6em; border-radius: 999px; background: var(--c-accent-soft); color: var(--c-ink); font-size: .8rem; font-weight: 600; }
+.gap-chip button { border: none; background: none; cursor: pointer; color: var(--c-ink-soft); font-size: 1em; line-height: 1; padding: 0; }
+.gap-empty { color: var(--c-ink-soft); font-size: .85rem; font-style: italic; }
+.gap-notes { width: 100%; min-height: 84px; resize: vertical; border: 1px solid var(--c-line); border-radius: var(--radius-sm); padding: var(--sp-3); font: inherit; font-size: .9rem; }
+.hint-box { margin-top: var(--sp-3); padding: var(--sp-3); border-left: 4px solid var(--c-accent); background: var(--c-accent-soft); border-radius: var(--radius-sm); font-size: .88rem; color: var(--c-body); }
+.hint-box[hidden] { display: none; }
+
+/* Toggle crudo / normalizado */
+.switch { display: inline-flex; align-items: center; gap: var(--sp-3); font-weight: 600; font-size: .9rem; color: var(--c-ink); cursor: pointer; }
+.switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.switch__track { width: 46px; height: 26px; border-radius: 999px; background: var(--c-line); position: relative; transition: background .15s; flex: none; }
+.switch__track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .15s; box-shadow: var(--shadow-sm); }
+.switch input:checked + .switch__track { background: var(--c-accent-blue); }
+.switch input:checked + .switch__track::after { transform: translateX(20px); }
+.switch input:focus-visible + .switch__track { outline: 3px solid var(--c-accent-blue); outline-offset: 2px; }
+.switch__state { color: var(--c-accent-blue); }

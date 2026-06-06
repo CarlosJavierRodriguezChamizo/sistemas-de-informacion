@@ -1,0 +1,131 @@
+/* =========================================================================
+   deck.css — Tema RevealJS con la identidad ESIC / Báltica.
+   Base azul corporativo + texto blanco; slides en claro con .slide--light.
+   El CSS core de Reveal se importa desde deck.js (offline, vía npm).
+   ========================================================================= */
+@import "./tokens.css";
+
+/* ----------------------------------------------------- Lienzo del deck */
+.reveal-viewport { background-color: var(--c-bg-blue); }
+
+.reveal {
+  font-family: var(--font-body);
+  color: #fff;
+  font-size: 30px;            /* base; Reveal escala al proyectar */
+}
+
+/* Titulares en display condensada */
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: var(--font-display);
+  color: #fff;
+  letter-spacing: .01em;
+  line-height: 1.02;
+  margin: 0 0 .4em;
+  text-transform: none;
+}
+.reveal h1 { font-size: 2.4em; }
+.reveal h2 { font-size: 1.7em; }
+.reveal h3 { font-size: 1.2em; }
+.reveal p { line-height: 1.4; }
+.reveal strong { color: var(--c-accent); }
+.reveal em { color: var(--c-accent); font-style: normal; }
+.reveal a { color: var(--c-accent); }
+
+.reveal ul, .reveal ol { display: block; margin-left: 1em; }
+.reveal li { margin: .35em 0; }
+.reveal .muted { color: var(--c-white-soft); }
+.reveal .eyebrow {
+  font-family: var(--font-display); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--c-accent); font-size: .8em; margin-bottom: .4em; display: block;
+}
+
+/* ------------------------------------------------- Slides en claro */
+.reveal .slide--light h1,
+.reveal .slide--light h2,
+.reveal .slide--light h3 { color: var(--c-ink); }
+.reveal .slide--light,
+.reveal .slide--light p,
+.reveal .slide--light li { color: var(--c-body); }
+.reveal .slide--light strong,
+.reveal .slide--light em { color: var(--c-accent-blue); }
+.reveal .slide--light .eyebrow { color: var(--c-accent-blue); }
+.reveal .slide--light .muted { color: var(--c-ink-soft); }
+
+/* ------------------------------------------------- Logo persistente */
+.deck-logo {
+  position: fixed; top: 28px; left: 36px; height: 34px; width: auto; z-index: 40;
+  pointer-events: none;
+}
+.deck-logo--blue { display: none; }
+body.light-slide .deck-logo--white { display: none; }
+body.light-slide .deck-logo--blue { display: block; }
+
+/* ------------------------------------------------- Controles / progreso */
+.reveal .progress { color: var(--c-accent); height: 6px; }
+.reveal .controls { color: #fff; }
+.reveal .slide-number { background: transparent; color: rgba(255, 255, 255, .55); font-family: var(--font-body); }
+body.light-slide .reveal .controls { color: var(--c-ink); }
+body.light-slide .reveal .slide-number { color: var(--c-ink-soft); }
+
+/* ------------------------------------------------- Utilidades de slide */
+.reveal .badge {
+  display: inline-block; padding: .22em .7em; border-radius: 8px;
+  font: 600 .6em/1 var(--font-display); letter-spacing: .05em; text-transform: uppercase;
+  color: #fff; background: var(--c-accent);
+}
+.reveal .badge--m1 { background: var(--c-accent); color: var(--c-ink); }
+.reveal .badge--m2 { background: #b79bff; color: var(--c-ink); }
+.reveal .badge--m3 { background: var(--c-accent); color: var(--c-ink); }
+
+/* Rejilla de tarjetas dentro de una slide */
+.reveal .cards { display: grid; gap: .8em; grid-template-columns: repeat(3, 1fr); margin-top: .5em; }
+.reveal .cards--2 { grid-template-columns: repeat(2, 1fr); }
+.reveal .ccard {
+  background: rgba(255, 255, 255, .10); border: 1px solid var(--c-line-blue);
+  border-radius: 14px; padding: .7em .8em; text-align: left;
+}
+.reveal .ccard h3 { font-size: 1em; margin-bottom: .2em; color: #fff; }
+.reveal .ccard p { font-size: .72em; margin: 0; color: var(--c-white-soft); }
+.reveal .slide--light .ccard { background: #f4f6fb; border-color: var(--c-line); }
+.reveal .slide--light .ccard h3 { color: var(--c-ink); }
+.reveal .slide--light .ccard p { color: var(--c-ink-soft); }
+
+/* Cifra grande estilo KPI dentro de slide */
+.reveal .big {
+  font-family: var(--font-display); font-size: 3.2em; line-height: .9; color: var(--c-accent);
+}
+.reveal .slide--light .big { color: var(--c-accent-blue); }
+
+/* ------------------------------------------------- Pirámide TPS–EIS */
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: .4em; }
+.pyramid__row {
+  display: flex; align-items: center; justify-content: center; gap: 1em;
+  color: #fff; border-radius: 8px; padding: .35em 1em; text-align: center;
+  background: rgba(255, 255, 255, .12); border: 1px solid var(--c-line-blue);
+}
+.pyramid__row b { font-family: var(--font-display); letter-spacing: .04em; }
+.pyramid__row small { color: var(--c-white-soft); font-size: .62em; }
+.pyramid__row--eis { width: 34%; background: var(--c-accent); color: var(--c-ink); border: none; }
+.pyramid__row--eis small { color: rgba(0,19,63,.7); }
+.pyramid__row--dss { width: 52%; }
+.pyramid__row--mis { width: 72%; }
+.pyramid__row--tps { width: 92%; }
+
+/* ------------------------------------------------- Timeline evolución */
+.timeline { display: flex; gap: 1em; margin-top: .6em; }
+.timeline > div { flex: 1; background: rgba(255,255,255,.10); border: 1px solid var(--c-line-blue); border-radius: 12px; padding: .6em .7em; }
+.timeline h3 { font-size: .95em; color: var(--c-accent); }
+.timeline p { font-size: .7em; color: var(--c-white-soft); margin: 0; }
+
+/* ------------------------------------------------- CTA de cierre */
+.deck-cta {
+  display: inline-flex; align-items: center; gap: .5em;
+  padding: .55em 1.3em; border-radius: 999px; margin-top: .4em;
+  background: var(--c-accent); color: var(--c-ink);
+  font: 600 .9em/1 var(--font-body); text-decoration: none;
+}
+.deck-cta:hover { background: #08c7aa; color: var(--c-ink); }
+.reveal .deck-cta::after { content: "→"; }
+
+/* Foco visible accesible sobre el deck */
+.reveal a:focus-visible, .deck-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }

@@ -1,0 +1,131 @@
+/* =========================================================================
+   base.css — Reset ligero, tipografía base y utilidades de layout.
+   Importa los tokens; una página solo necesita enlazar base.css
+   (y components.css si usa componentes).
+   ========================================================================= */
+@import "./tokens.css";
+
+/* ------------------------------------------------------------------ Reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--c-body);
+  background: var(--c-bg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { max-width: 100%; }
+img { height: auto; }
+
+a { color: var(--c-accent-blue); }
+
+ul, ol { margin: 0; padding-left: 1.2em; }
+
+/* ----------------------------------------------------------- Tipografía */
+/* Titulares y números grandes → display condensada */
+h1, h2, h3,
+.display {
+  font-family: var(--font-display);
+  color: var(--c-ink);
+  letter-spacing: .01em;   /* tracking ligero */
+  line-height: 1.05;
+  margin: 0 0 .4em;
+  font-weight: 600;
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
+h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
+h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+
+.lead { font-size: clamp(1.05rem, 1.6vw, 1.3rem); color: var(--c-ink-soft); }
+.muted { color: var(--c-ink-soft); }
+
+/* --------------------------------------------------- Foco accesible */
+:focus-visible {
+  outline: 3px solid var(--c-accent-blue);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+/* Sobre fondo azul el azul sería invisible: usamos turquesa (contraste alto). */
+.section--blue :focus-visible,
+.site-header--blue :focus-visible { outline-color: var(--c-accent); }
+
+/* Salto al contenido (accesibilidad de teclado) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--c-ink);
+  color: #fff;
+  padding: var(--sp-2) var(--sp-4);
+  z-index: 100;
+}
+.skip-link:focus { left: var(--sp-2); top: var(--sp-2); }
+
+/* ------------------------------------------------------------- Layout */
+
+/* Contenedor centrado limitado a --maxw */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Sección full-bleed (ocupa todo el ancho; el contenido se centra con .wrap) */
+.section {
+  width: 100%;
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+}
+.section--light {
+  background: var(--c-bg);
+  color: var(--c-body);
+}
+/* Sobre azul: todo el texto en blanco (regla de color del sistema) */
+.section--blue {
+  background: var(--c-bg-blue);
+  color: #fff;
+}
+.section--blue h1,
+.section--blue h2,
+.section--blue h3 { color: #fff; }
+.section--blue a { color: var(--c-accent); }
+.section--blue .lead,
+.section--blue .muted { color: var(--c-white-soft); }
+
+/* Rejilla utilitaria responsiva */
+.grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
+}
+@media (min-width: 700px)  { .grid--2 { --cols: 2; } .grid--3 { --cols: 3; } }
+@media (min-width: 1000px) { .grid--4 { --cols: 4; } }
+/* En móvil, 3/4 columnas caen a 1; 2 columnas cae a 1 (ver media arriba) */
+
+/* Stack vertical con separación uniforme */
+.stack > * + * { margin-top: var(--sp-4); }
+
+/* Línea de chips/botones en fila que envuelve */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+/* Oculto visualmente pero accesible para lectores de pantalla */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}

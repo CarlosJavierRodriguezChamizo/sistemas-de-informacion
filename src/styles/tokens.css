@@ -1,0 +1,60 @@
+/* =========================================================================
+   tokens.css — Variables del sistema de diseño Grupo Báltica / ESIC
+   Única fuente de verdad de color, tipografía y escala. Offline-first:
+   la fuente vive en /public/assets y se sirve localmente (sin CDN).
+   ========================================================================= */
+
+/* --- Fuente display (un único peso) — bundleada, nunca por red --- */
+@font-face {
+  font-family: "Sofia Sans XCond";
+  src: url("/assets/SofiaSansExtraCondensed-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* --- Color (paleta corporativa) --- */
+  --c-ink: #00133f;          /* títulos */
+  --c-body: #222222;         /* texto largo (alternativa: #00133f) */
+  --c-bg: #ffffff;           /* fondo claro */
+  --c-bg-blue: #0047e9;      /* fondo azul corporativo */
+  --c-accent: #0ae4c3;       /* énfasis turquesa (solo detalle gráfico sobre blanco) */
+  --c-accent-blue: #0047e9;  /* énfasis azul */
+  --c-ink-soft: rgba(0, 19, 63, .6);
+
+  /* Derivados útiles (mismos colores, distintos usos) */
+  --c-accent-soft: rgba(10, 228, 195, .16); /* fondo de chip / hover sobre blanco */
+  --c-line: rgba(0, 19, 63, .12);           /* bordes y separadores sobre blanco */
+  --c-line-blue: rgba(255, 255, 255, .28);  /* bordes sobre azul */
+  --c-white-soft: rgba(255, 255, 255, .72); /* texto secundario sobre azul */
+
+  /* --- Badges de bloque (fondo de color + texto blanco, contraste AA) --- */
+  --c-m1: #0047e9;   /* azul */
+  --c-m2: #6a2cf5;   /* violeta */
+  --c-m3: #0a826e;   /* teal oscuro (texto blanco AA: ~4.7:1) */
+
+  /* --- Tipografía --- */
+  --font-display: "Sofia Sans XCond", sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* --- Layout --- */
+  --maxw: 1200px;
+
+  /* --- Escala de espaciado (rem) --- */
+  --sp-1: .25rem;
+  --sp-2: .5rem;
+  --sp-3: .75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+
+  /* --- Radios y sombras --- */
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+  --shadow: 0 8px 30px rgba(0, 19, 63, .10);
+  --shadow-sm: 0 2px 10px rgba(0, 19, 63, .08);
+}
