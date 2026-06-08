@@ -1,0 +1,186 @@
+/* =========================================================================
+   casos.js — "Empresas transformadas por sus SI · Síntesis".
+   Cierre del día: casos reales de empresas que el SI convirtió en su modelo,
+   el patrón común, la síntesis M1→M4 y la tesis del caso Báltica.
+   Estética futurista del proyecto: fondo WebGL (red de nodos que se reconfigura
+   con el scroll), glass + neón, scroll por bloques y revelado con Motion.
+   ========================================================================= */
+import { inView, animate, stagger } from "motion";
+import { createGL } from "./gl/glCanvas.js";
+import { NETWORK_FRAG } from "./gl/shaders.js";
+import { appUrl } from "../components/_util.js";
+
+const I = (id) => `<svg class="ico"><use href="#${id}"/></svg>`;
+
+const SPRITE = `
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9 5 4h14l1 5M4 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 4 0M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-glass" viewBox="0 0 24 24"><path d="M6 3h12l-1 7a5 5 0 0 1-10 0L6 3z"/><path d="M12 17v4M8 21h8"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/><path d="M5 19c3-4 6-6 10-8"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 15h8"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 20V10l5 3V10l5 3V7l3-3 3 3v13z"/><path d="M3 20h18"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M9 15l6-6"/><path d="M10.5 7.5 12 6a3 3 0 1 1 4 4l-1.5 1.5"/><path d="M13.5 16.5 12 18a3 3 0 1 1-4-4l1.5-1.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.2 1 2.5h6c0-1.3.2-1.8 1-2.5A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 3c3 1 5 4 5 8l-2 4H9l-2-4c0-4 2-7 5-8z"/><circle cx="12" cy="9" r="1.6"/><path d="M9 17l-2 4M15 17l2 4"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M9 5a3 3 0 0 0-3 3 3 3 0 0 0-1 5.6A3 3 0 0 0 8 18.5h1"/><path d="M15 5a3 3 0 0 1 3 3 3 3 0 0 1 1 5.6A3 3 0 0 1 16 18.5h-1"/></symbol>
+</svg>`;
+
+/* ------------------------------ Helpers ---------------------------------- */
+const lnk = (href, label, cls = "") =>
+  href ? `<a class="${cls}" href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>` : "";
+
+const caseCard = (id, tag, name, txt, source, video) => `
+  <div class="case glass spot" data-anim>
+    <span class="ico-chip">${I(id)}</span>
+    <span class="tag">${tag}</span>
+    <h3>${name}</h3>
+    <p>${txt}</p>
+    <div class="case__links">
+      ${lnk(source, "Fuente ↗")}
+      ${lnk(video, "▷ Vídeo", "case__video")}
+    </div>
+  </div>`;
+const feat = (id, h, p) => `<div class="feat glass spot" data-anim><span class="ico-chip">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
+const flowStep = (n, id, h, p) => `<div class="flow__step glass spot" data-anim><span class="num">${n}</span> <span class="ico-chip" style="margin:0 0 .4em">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
+const arrow = `<span class="flow__arrow" data-anim>→</span>`;
+
+function topic(n, kicker, title, body) {
+  return `<section class="topic reveal"><div class="wrap">
+    <div class="topic__head"><span class="topic__n" data-anim>${n}</span>
+      <div><span class="kicker" data-anim>${kicker}</span><h2 data-anim>${title}</h2></div></div>
+    ${body}
+  </div></section>`;
+}
+
+/* ------------------------------ Render ----------------------------------- */
+const root = document.querySelector("#app");
+root.innerHTML = `
+  ${SPRITE}
+  <header class="odoo-top">
+    <img class="odoo-logo" src="${appUrl("/assets/logo_ESIC_blanco.svg")}" alt="ESIC" />
+    <a class="odoo-back" href="${appUrl("/index.html")}">Ir al hub →</a>
+  </header>
+
+  <main id="contenido">
+  <section class="odoo-hero reveal"><div class="wrap">
+    <span class="eyebrow" data-anim>Síntesis · Cierre del día</span>
+    <h1 class="odoo-hero__title" data-anim>Empresas que integraron su <span class="shine">SI</span></h1>
+    <p class="lead" data-anim>Casos reales —con <strong>fuente y vídeo</strong>— de empresas españolas que integraron sus sistemas. Y qué nos dicen del caso Báltica.</p>
+    <div class="odoo-hero__hint" data-anim aria-hidden="true">Desplázate ↓</div>
+  </div></section>
+
+  ${topic("01", "Casos reales · España", "Empresas españolas que integraron su SI", `
+    <div class="cases">
+      ${caseCard("i-store", "Distribución", "Mercadona", "Adoptó SAP S/4HANA + Retail + SuccessFactors: una sola plataforma, sin duplicidades y con datos en tiempo real de toda la cadena.", "https://news.sap.com/spain/2017/07/mercadona-acelera-su-plan-de-innovacion-digital-de-la-mano-de-sap/")}
+      ${caseCard("i-glass", "Bebidas", "Estrella Galicia", "Hijos de Rivera planifica de forma integrada demanda y suministro con SAP IBP, dentro de su transformación digital (unidad MOVE).", "https://www.saptools.es/sap-integrated-business-planning-ibp-demand-drp-hijos-de-rivera/")}
+      ${caseCard("i-leaf", "Agrícola", "Atlantic Blue", "Pasó de un escenario multisistema a tener SAP como “la columna que vertebra todos los departamentos”.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://youtu.be/npuWGGhxOaI")}
+      ${caseCard("i-flask", "Alimentación", "Dallant", "Implantó SAP S/4HANA para ganar eficiencia y apoyar un crecimiento de más del 50% en cinco años.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://youtu.be/aLx4px4WJgM")}
+      ${caseCard("i-building", "Construcción", "Aldesa", "Migró a SAP S/4HANA para un control exhaustivo de la planificación de sus obras.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://www.youtube.com/watch?v=Iokb_yCCuZQ")}
+      ${caseCard("i-factory", "Industria · Odoo", "Garber", "Implantó Odoo como ERP para digitalizar y unificar su gestión — testimonio de su CEO en vídeo.", "", "https://www.youtube.com/watch?v=0ZioX9iG8W0")}
+    </div>
+    <p class="fineprint" data-anim style="margin-top:1rem">Fuentes: SAP España News Center y saptools.es · vídeos: canales de YouTube de cada caso.</p>`)}
+
+  ${topic("02", "El denominador común", "El patrón que se repite", `
+    <div class="glass panel" data-anim style="margin-bottom:1rem">
+      <p class="claim">En todas, el sistema dejó de <em>apoyar</em> el negocio para <strong>ser</strong> el negocio. Y el combustible siempre es el mismo: <span class="hl">dato integrado y de calidad</span>.</p>
+    </div>
+    <div class="feats feats--3">
+      ${feat("i-link", "Una sola verdad", "El dato fluye entre áreas sin silos ni copias divergentes.")}
+      ${feat("i-chart", "Decidir con datos", "Menos intuición, más evidencia y en tiempo real.")}
+      ${feat("i-bolt", "Escalar sin romperse", "Procesos y arquitectura que crecen con el negocio.")}
+    </div>`)}
+
+  ${topic("03", "El hilo del día", "De la teoría al caso Báltica", `
+    <div class="flow">
+      ${flowStep("M1", "i-bulb", "Qué es un SI", "Personas + procesos + datos + tecnología que convierten datos en decisiones.")}
+      ${arrow}
+      ${flowStep("M2", "i-link", "Integrar", "ERP/CRM/SCM y una capa común: matar los silos.")}
+      ${arrow}
+      ${flowStep("M3", "i-rocket", "Proyectos", "Integrar pesa más que invertir (lección Lidl–SAP).")}
+      ${arrow}
+      ${flowStep("M4", "i-brain", "IA + MCP", "La IA necesita dato integrado; agentes que componen la vista 360.")}
+    </div>`)}
+
+  ${topic("04", "La tesis", "Báltica tiene las piezas. Le falta que hablen.", `
+    <div class="stats">
+      <div class="stat glass spot" data-anim><span class="bignum" data-count="14.5" data-dec="1" data-pre="+" data-suf=" %">+0 %</span><span class="lab">Crecen las ventas</span></div>
+      <div class="stat glass spot stat--warn" data-anim><span class="bignum">6,0 → 2,5 %</span><span class="lab">…y cae el EBITDA</span></div>
+      <div class="stat glass spot" data-anim><span class="bignum" data-count="18" data-suf=" M€">0 M€</span><span class="lab">En sistemas que no se hablan</span></div>
+    </div>
+    <p class="lead" data-anim style="margin-top:1.2rem;max-width:48ch">Más ventas y menos margen: el problema no está en el mercado, está en la <strong>desintegración</strong>. La ventaja no es tener sistemas, sino <span class="hl">conectarlos</span>.</p>`)}
+
+  <section class="odoo-close reveal"><div class="wrap">
+    <span class="kicker" data-anim>Vuestro turno</span>
+    <h2 data-anim>Defendedlo ante<br><span class="hl">el Comité</span>.</h2>
+    <p class="lead" data-anim style="margin-top:1rem">Llevad la síntesis al pitch: diagnóstico, arquitectura objetivo y el papel de la IA.</p>
+    <div class="cta-row" data-anim>
+      <a class="btn btn--primary" href="${appUrl("/tools/pitch.html")}">Ir a la sala de pitch</a>
+      <a class="btn" href="${appUrl("/index.html")}">Volver al hub</a>
+    </div>
+  </div></section>
+  </main>
+`;
+
+/* ------------------------------ Fondo WebGL (red, sigue al scroll) ------- */
+const bgCanvas = document.querySelector("#odoo-bg");
+if (bgCanvas) {
+  const bg = createGL(bgCanvas, NETWORK_FRAG, { dprCap: 1.6 });
+  window.addEventListener(
+    "pointermove",
+    (e) => bg.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
+    { passive: true }
+  );
+  let target = 0, cur = 0;
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    target = max > 0 ? window.scrollY / max : 0;
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const tick = () => { cur += (target - cur) * 0.06; bg.setScroll(cur); requestAnimationFrame(tick); };
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(tick);
+  else bg.setScroll(0);
+}
+
+/* ------------------------------ Spotlight -------------------------------- */
+document.addEventListener(
+  "pointermove",
+  (e) => {
+    const c = e.target.closest?.(".spot");
+    if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+    c.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+  },
+  { passive: true }
+);
+
+/* ------------------------------ Revelado + contadores -------------------- */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fmt = (v, dec) => v.toLocaleString("es-ES", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+if (!reduce) {
+  inView(
+    "section.reveal",
+    (el) => {
+      animate(el, { opacity: [0, 1] }, { duration: .5 });
+      const items = el.querySelectorAll("[data-anim]");
+      if (items.length) {
+        animate(
+          items,
+          { opacity: [0, 1], transform: ["translateY(32px) scale(.96)", "translateY(0) scale(1)"] },
+          { delay: stagger(0.06, { startDelay: 0.04 }), duration: .6, ease: [0.2, 0.7, 0.2, 1] }
+        );
+      }
+      el.querySelectorAll("[data-count]").forEach((c) => {
+        const to = parseFloat(c.dataset.count), dec = parseInt(c.dataset.dec || "0", 10);
+        const pre = c.dataset.pre || "", suf = c.dataset.suf || "";
+        animate(0, to, { duration: 1.3, ease: [0.2, 0.8, 0.2, 1], onUpdate: (v) => { c.textContent = pre + fmt(v, dec) + suf; } });
+      });
+    },
+    { amount: 0.25 }
+  );
+}

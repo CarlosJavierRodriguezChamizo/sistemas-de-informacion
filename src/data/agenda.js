@@ -56,7 +56,11 @@ export const DIAS = [
           { label: "Migrar o integrar (AS/400)", href: "tools/migrar-integrar.html", kind: "tool" },
         ],
       },
-      { time: "20:25", dur: "30'", cat: "sintesis", title: 'Casos "empresas transformadas por SI" + síntesis' },
+      {
+        time: "20:25", dur: "30'", cat: "sintesis",
+        title: 'Casos "empresas transformadas por SI" + síntesis',
+        links: [{ label: "Casos + síntesis", href: "decks/casos.html", kind: "story" }],
+      },
       { time: "20:55", dur: "", cat: "cierre", title: "Cierre" },
     ],
   },

@@ -1,0 +1,44 @@
+/* =========================================================================
+   casos.css — "Empresas transformadas por sus SI · Síntesis".
+   Reutiliza el sistema visual de odoo.css (glass, hero, topic, snap, spot).
+   Aquí solo lo específico: tarjetas de caso, claim grande y cifras-tesis.
+   ========================================================================= */
+
+/* Rejilla de casos */
+.cases { display: grid; gap: .8rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .cases { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 960px) { .cases { grid-template-columns: repeat(3, 1fr); } }
+
+.case { padding: 1rem 1.1rem; }
+.case .tag { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--c-accent); }
+.case h3 { font-size: 1.15rem; color: #fff; margin: .1em 0 .35em; }
+.case p { font-size: .84rem; color: rgba(255,255,255,.8); margin: 0 0 .55em; line-height: 1.45; }
+.case .lesson { font-size: .8rem; color: #bdeee3; border-top: 1px solid rgba(255,255,255,.12); padding-top: .5em; }
+.case .lesson b { color: var(--c-accent); }
+
+/* Enlaces de fuente / vídeo */
+.case__links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+.case__links a {
+  font-size: .72rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+  padding: .32em .75em; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.26); color: rgba(255,255,255,.85);
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+}
+.case__links a:hover { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.5); transform: translateY(-1px); }
+.case__video { color: #00133f !important; background: var(--c-accent); border-color: var(--c-accent) !important; }
+.case__video:hover { background: #2bf0d3 !important; }
+
+/* Claim grande (patrón común) */
+.claim { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 2rem); line-height: 1.12; color: #fff; margin: 0; }
+.claim em { color: rgba(255,255,255,.6); font-style: normal; }
+.claim strong { color: #fff; }
+
+/* Cifras-tesis */
+.stats { display: flex; flex-wrap: wrap; gap: 1rem; }
+.stat { flex: 1 1 170px; padding: 1.1rem 1.2rem; text-align: center; }
+.stat .bignum {
+  display: block; font-family: var(--font-display); font-size: clamp(1.9rem, 5vw, 3.1rem);
+  color: var(--c-accent); line-height: 1; text-shadow: 0 0 30px rgba(10,228,195,.4);
+}
+.stat .lab { display: block; font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.7); margin-top: .5em; }
+.stat--warn .bignum { color: #ff8a8a; text-shadow: 0 0 30px rgba(255,80,80,.4); }

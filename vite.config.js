@@ -29,6 +29,8 @@ export default defineConfig({
         arquitectura: r('decks/arquitectura.html'),
         // Taller ERP en la nube
         odoo: r('decks/odoo.html'),
+        // Casos + síntesis
+        casos: r('decks/casos.html'),
         // Herramientas interactivas (prácticas)
         clasificador: r('tools/clasificador.html'),
         mapaSilos: r('tools/mapa-silos.html'),
