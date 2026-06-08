@@ -14,9 +14,12 @@ export const DIAS = [
     bloques: [
       {
         time: "16:00", dur: "20'", cat: "pitch",
-        title: "Apertura · la paradoja Báltica + las 3 preguntas del Comité",
-        note: "Se asignan los 5 mandatos de pitch.",
-        links: [{ label: "Asignar mandatos", href: "tools/pitch.html", kind: "pitch" }],
+        title: "Apertura · la paradoja Báltica + el reto del Comité",
+        note: "El profesor presenta el caso apoyándose en la apertura inmersiva.",
+        links: [
+          { label: "Apertura inmersiva", href: "decks/intro.html", kind: "story" },
+          { label: "El reto del Comité", href: "decks/comite.html", kind: "pitch" },
+        ],
       },
       {
         time: "16:20", dur: "60'", cat: "deck", block: "m1",
@@ -102,8 +105,12 @@ export const DIAS = [
         ],
       },
       {
-        time: "12:35", dur: "20'", cat: "pitch", title: "Prep pitch",
-        links: [{ label: "Sala de pitch", href: "tools/pitch.html", kind: "pitch" }],
+        time: "12:35", dur: "20'", cat: "pitch", title: "Asignación de mandatos + preparación del pitch",
+        note: "Cada grupo recibe su pregunta concreta del Comité y prepara su pitch.",
+        links: [
+          { label: "El reto del Comité", href: "decks/comite.html", kind: "pitch" },
+          { label: "Sala de pitch", href: "tools/pitch.html", kind: "pitch" },
+        ],
       },
       {
         time: "12:55", dur: "~65'", cat: "pitch", title: "Pitches + feedback",

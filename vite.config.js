@@ -31,6 +31,8 @@ export default defineConfig({
         odoo: r('decks/odoo.html'),
         // Casos + síntesis
         casos: r('decks/casos.html'),
+        // El reto del Comité (pitch inicial)
+        comite: r('decks/comite.html'),
         // Herramientas interactivas (prácticas)
         clasificador: r('tools/clasificador.html'),
         mapaSilos: r('tools/mapa-silos.html'),
