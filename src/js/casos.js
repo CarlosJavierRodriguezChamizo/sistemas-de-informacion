@@ -88,22 +88,22 @@ root.innerHTML = `
     </div>
     <p class="fineprint" data-anim style="margin-top:1rem">Fuentes: SAP España News Center y saptools.es · vídeos: canales de YouTube de cada caso.</p>`)}
 
-  ${topic("02", "Caso local · Sevilla", "Un estudio de arquitectura, todo conectado", `
+  ${topic("02", "Caso local · Sevilla", "Terapia Urbana, todo conectado", `
     <div class="glass panel" data-anim style="margin-bottom:1rem">
-      <p class="claim">Un <strong>estudio de arquitectura sevillano</strong> orquesta un stack completo: cada herramienta hace su trabajo y <span class="hl">Odoo centraliza la gestión</span>. La <span class="hl">IA</span> se ha convertido en el acelerador de la fase creativa.</p>
-      <p class="fineprint" style="margin-top:.6rem">Caso trabajado de primera mano.</p>
+      <p class="claim"><strong>Terapia Urbana</strong> —empresa sevillana de <span class="hl">jardines verticales</span>, spin-off de la Universidad de Sevilla— orquesta un stack completo: cada herramienta hace su trabajo y <span class="hl">Odoo centraliza la gestión</span>. La <span class="hl">IA</span> se ha vuelto el acelerador de la fase creativa.</p>
+      <p class="fineprint" style="margin-top:.6rem">+31.000 m² instalados en +23 países · tecnología propia Fytotextile® (según la empresa) · caso trabajado de primera mano · <a href="https://www.terapiaurbana.com" target="_blank" rel="noopener noreferrer" style="color:var(--c-accent)">terapiaurbana.com ↗</a></p>
     </div>
     <div class="feats feats--3">
-      ${feat("i-globe", "WordPress", "La web pública: captación de clientes y escaparate del estudio.")}
+      ${feat("i-globe", "WordPress", "La web pública: escaparate de proyectos y captación de clientes.")}
       ${feat("i-chart", "Analytics", "Mide visitas y leads: qué proyectos atraen y por dónde llegan.")}
-      ${feat("i-pen", "AutoCAD", "Planimetría 2D precisa: la base técnica del proyecto.")}
-      ${feat("i-cube", "Revit · BIM", "El edificio como dato 3D, no solo como dibujo.")}
-      ${feat("i-spark", "IA · Renders", "Renders fotorrealistas en minutos: ver la propuesta antes de construir.", "feat--accent")}
+      ${feat("i-pen", "AutoCAD", "Planimetría técnica 2D del jardín y su estructura.")}
+      ${feat("i-cube", "Revit · BIM", "Modelo 3D del jardín integrado en el edificio.")}
+      ${feat("i-spark", "IA · Renders", "Visualiza la fachada verde sobre el edificio del cliente antes de instalarla.", "feat--accent")}
       ${feat("i-receipt", "Odoo", "Toda la gestión comercial y la facturación en un único sistema.")}
     </div>
     <div class="glass panel spot" data-anim style="margin-top:1rem; border-color: rgba(10,228,195,.45)">
       <span class="kicker">El papel de la IA</span>
-      <p style="color:rgba(255,255,255,.86)">Lo que antes era un cuello de botella —renders que tardaban horas o se subcontrataban— hoy se resuelve en <strong>minutos</strong>. La IA <strong>acelera la propuesta al cliente</strong>, multiplica las iteraciones de diseño y libera al equipo para proyectar. <span class="hl">No sustituye al arquitecto: le da velocidad.</span></p>
+      <p style="color:rgba(255,255,255,.86)">Enseñar cómo quedaría un jardín vertical sobre el edificio del cliente exigía renders lentos o subcontratados. Hoy la IA los genera en <strong>minutos</strong>: el cliente “ve” su fachada verde al instante, se <strong>cierran propuestas antes</strong> y el equipo prueba más variantes de diseño. <span class="hl">No sustituye al diseñador: le da velocidad.</span></p>
     </div>`)}
 
   ${topic("03", "El denominador común", "El patrón que se repite", `
