@@ -13,6 +13,7 @@
     "vite": "^4.5.5"
   },
   "dependencies": {
+    "lenis": "^1.3.23",
     "reveal.js": "^4.6.1"
   }
 }

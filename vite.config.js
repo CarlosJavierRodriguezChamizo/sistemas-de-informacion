@@ -17,6 +17,8 @@ export default defineConfig({
       input: {
         // Hub / escaleta viva
         index: r('index.html'),
+        // Apertura inmersiva (WebGL + GLSL + Lenis)
+        intro: r('decks/intro.html'),
         // Mazos de teoría (RevealJS)
         m1: r('decks/m1.html'),
         m2: r('decks/m2.html'),

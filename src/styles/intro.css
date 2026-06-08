@@ -1,0 +1,180 @@
+/* =========================================================================
+   intro.css — Apertura inmersiva (decks/intro.html).
+   Página oscura, autocontenida (no carga base.css). El texto va sobre el
+   lienzo WebGL fijo. Tipografía display de marca, alto contraste AA.
+   ========================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: auto; } /* el suave lo gestiona Lenis */
+
+.introbody {
+  margin: 0;
+  background: #00071c;                 /* fallback bajo el canvas */
+  color: #fff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* --- Lienzo WebGL fijo detrás de todo --- */
+#gl {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+}
+/* Degradado de marca si no hay WebGL */
+#gl.gl--unsupported {
+  background:
+    radial-gradient(120% 90% at 30% 10%, #0047e9 0%, transparent 55%),
+    radial-gradient(120% 90% at 80% 90%, #0ae4c3 0%, transparent 50%),
+    #00071c;
+}
+
+#app { position: relative; z-index: 1; }
+
+/* --- Accesibilidad --- */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 10;
+  background: #fff; color: #00133f; padding: .6rem 1rem; border-radius: 0 0 8px 0;
+  font-weight: 600;
+}
+.skip-link:focus { left: 0; }
+
+/* --- Barra superior --- */
+.intro-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(1rem, 2.5vw, 1.6rem) clamp(1.2rem, 4vw, 2.4rem);
+  pointer-events: none;
+}
+.intro-logo { height: 26px; width: auto; opacity: .95; }
+.intro-skip {
+  pointer-events: auto;
+  color: rgba(255,255,255,.82); text-decoration: none; font-weight: 600;
+  font-size: .9rem; letter-spacing: .01em;
+  padding: .45rem .8rem; border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.intro-skip:hover { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.5); }
+
+/* --- Tipografía display compartida --- */
+.hero__title, .act__h, .closing__h {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: .96;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* --- Hero --- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 6rem 1.2rem 4rem;
+}
+.hero__eyebrow {
+  display: inline-block;
+  text-transform: uppercase; letter-spacing: .22em; font-size: .8rem; font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1.1rem;
+}
+.hero__title {
+  font-size: clamp(3.4rem, 14vw, 11rem);
+  text-shadow: 0 4px 60px rgba(0,0,0,.45);
+}
+.hero__sub {
+  margin: 1.4rem auto 0;
+  max-width: 36ch;
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  color: rgba(255,255,255,.86);
+  line-height: 1.5;
+}
+.hero__sub strong { color: #fff; }
+
+.hero__scrollhint {
+  position: absolute; bottom: clamp(1.4rem, 4vh, 2.6rem); left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .35rem;
+  color: rgba(255,255,255,.7);
+  font-size: .78rem; text-transform: uppercase; letter-spacing: .18em; font-weight: 600;
+}
+.hero__scrollhint svg { animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* --- Actos (un mensaje a pantalla completa cada uno) --- */
+.act {
+  min-height: 100svh;
+  display: flex; align-items: center;
+  padding: 6rem clamp(1.4rem, 8vw, 8rem);
+}
+.act:nth-child(even) .act__inner { margin-left: auto; text-align: right; }
+.act__inner { max-width: 18ch; }
+.act__kicker {
+  display: inline-block;
+  text-transform: uppercase; letter-spacing: .2em; font-size: .78rem; font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 1rem;
+}
+.act__h {
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  text-shadow: 0 4px 50px rgba(0,0,0,.5);
+}
+.act__p {
+  margin: 1.4rem 0 0;
+  max-width: 42ch;
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  line-height: 1.55;
+  color: rgba(255,255,255,.82);
+}
+.act:nth-child(even) .act__p { margin-left: auto; }
+
+/* --- Cierre / CTA --- */
+.closing {
+  min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 7rem clamp(1.4rem, 6vw, 4rem) 8rem;
+}
+.closing__inner { max-width: 24ch; }
+.closing__h {
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  margin-top: .4rem;
+}
+.closing__cta {
+  margin-top: 2.4rem;
+  display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center;
+}
+.ibtn {
+  display: inline-block;
+  padding: .85rem 1.5rem; border-radius: 999px;
+  font-weight: 600; font-size: 1rem; text-decoration: none;
+  color: #fff; border: 1px solid rgba(255,255,255,.34);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background .25s, border-color .25s, transform .25s;
+}
+.ibtn:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.6); transform: translateY(-2px); }
+.ibtn--primary {
+  color: #00133f; background: var(--c-accent); border-color: var(--c-accent);
+}
+.ibtn--primary:hover { background: #2bf0d3; border-color: #2bf0d3; }
+
+/* --- Revelado al hacer scroll --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero__scrollhint svg { animation: none; }
+}
