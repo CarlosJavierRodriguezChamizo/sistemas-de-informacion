@@ -34,13 +34,7 @@ body.arch3d { background: #00071c; color: #e7eefc; }
 /* ----------------------------------------------------- Escenario (stage) */
 .arch3d .scrolly__stage {
   background: transparent; border: none; box-shadow: none; overflow: visible;
-  max-width: 700px;
-}
-/* Ligera inclinación 3D del diagrama (holograma sobre el "suelo"). */
-.arch3d .scrolly__svg {
-  overflow: visible;
-  transform: perspective(1200px) rotateX(15deg);
-  transform-origin: 50% 66%;
+  max-width: 700px; aspect-ratio: auto; display: grid; place-items: center;
 }
 
 /* ----------------------------------------------------- Pasos (glass dark) */
@@ -59,66 +53,96 @@ body.arch3d { background: #00071c; color: #e7eefc; }
   color: #fff; border-color: rgba(255, 255, 255, .4); background: rgba(255, 255, 255, .06);
 }
 
-/* ----------------------------------------------------- Diagrama neón */
-.arch3d .arch-el { opacity: 0; transition: opacity .5s ease; }
+/* ------------------------------------------- Diagrama 3D (CSS preserve-3d) */
+/* Revelado acumulado de capas (JS añade .on). */
+.arch3d .arch-el { opacity: 0; transition: opacity .55s ease, transform .55s ease; }
 .arch3d .arch-el.on { opacity: 1; }
-.arch3d .arch-layer-label {
-  font-family: var(--font-display); font-size: 12px; letter-spacing: .05em;
-  text-transform: uppercase; fill: rgba(255, 255, 255, .55);
+
+/* Escena con perspectiva real */
+.arch3d .a3d { width: 100%; max-width: 580px; perspective: 1150px; perspective-origin: 50% 42%; }
+.arch3d .a3d__world {
+  position: relative; transform-style: preserve-3d;
+  display: flex; flex-direction: column; align-items: center; gap: 54px;
+  /* ángulo base (vista 3/4) + parallax del ratón */
+  transform: rotateX(calc(24deg + var(--ry, 0deg))) rotateY(calc(-16deg + var(--rx, 0deg)));
+  transition: transform .2s ease-out;
 }
 
-/* Nodos = "marcadores" de cristal con halo neón */
-.arch3d .arch-box rect {
-  rx: 12; fill: rgba(8, 28, 60, .55); stroke: rgba(120, 205, 255, .75); stroke-width: 1.5;
-  filter: drop-shadow(0 0 7px rgba(90, 160, 255, .45));
+/* Las capas flotan a distinta profundidad: de aquí sale el 3D real */
+.arch3d .a3d__layer { display: flex; gap: 12px; justify-content: center; transform-style: preserve-3d; }
+.arch3d .a3d__layer--top { transform: translateZ(210px); }
+.arch3d .a3d__layer--dwh { transform: translateZ(140px); }
+.arch3d .a3d__layer--int { transform: translateZ(70px); }
+.arch3d .a3d__layer--src { transform: translateZ(0); }
+
+/* Nodo con grosor (cara trasera) */
+.arch3d .a3d__node {
+  position: relative; transform-style: preserve-3d;
+  padding: 9px 14px; border-radius: 12px;
+  font: 600 12.5px/1.2 var(--font-body); color: #eaf3ff; white-space: nowrap; text-align: center;
+  background: linear-gradient(155deg, rgba(22, 48, 92, .7), rgba(8, 22, 48, .55));
+  border: 1px solid rgba(120, 205, 255, .7);
+  box-shadow: 0 0 12px rgba(90, 160, 255, .4), 0 14px 22px rgba(0, 8, 28, .55);
 }
-.arch3d .arch-box text {
-  font-family: var(--font-body); font-weight: 600; font-size: 13px;
-  fill: #eaf3ff; text-anchor: middle; dominant-baseline: middle;
+.arch3d .a3d__node::after {            /* cara trasera = grosor visible al rotar */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+  transform: translateZ(-18px);
+  background: rgba(3, 10, 26, .95); border: 1px solid rgba(90, 140, 210, .35);
 }
-.arch3d .arch-pin { fill: var(--c-accent); filter: drop-shadow(0 0 5px rgba(10, 228, 195, .9)); }
-
-/* Capa de integración (azul) */
-.arch3d .arch-integration rect {
-  rx: 12; fill: rgba(0, 71, 233, .35); stroke: #5aa0ff; stroke-width: 1.5;
-  filter: drop-shadow(0 0 10px rgba(0, 71, 233, .5));
+.arch3d .a3d__lbl { position: relative; }
+.arch3d .a3d__pin {
+  position: absolute; top: -5px; left: 50%; width: 6px; height: 6px; border-radius: 50%;
+  transform: translateX(-50%); background: var(--c-accent); box-shadow: 0 0 8px rgba(10, 228, 195, .9);
 }
-.arch3d .arch-integration text { fill: #fff; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
 
-/* Data warehouse (turquesa, núcleo) */
-.arch3d .arch-dwh rect {
-  rx: 12; fill: rgba(10, 228, 195, .16); stroke: var(--c-accent); stroke-width: 1.5;
-  filter: drop-shadow(0 0 14px rgba(10, 228, 195, .5));
+/* Capas por tipo */
+.arch3d .a3d__layer--src .a3d__node { font-size: 11px; padding: 7px 10px; }
+.arch3d .is-int { border-color: #5aa0ff; background: linear-gradient(155deg, rgba(0,71,233,.45), rgba(0,40,140,.35)); box-shadow: 0 0 16px rgba(0,71,233,.5), 0 14px 22px rgba(0,8,28,.55); }
+.arch3d .is-dwh { border-color: var(--c-accent); background: linear-gradient(155deg, rgba(10,228,195,.22), rgba(6,120,110,.25)); box-shadow: 0 0 22px rgba(10,228,195,.5), 0 14px 22px rgba(0,8,28,.55); }
+.arch3d .is-ia  { border-color: #b79bff; box-shadow: 0 0 16px rgba(150,110,255,.5), 0 14px 22px rgba(0,8,28,.55); }
+.arch3d .is-as400 { border-color: #ff6b6b; background: linear-gradient(155deg, rgba(211,51,51,.3), rgba(120,20,20,.3)); box-shadow: 0 0 14px rgba(255,80,80,.5), 0 14px 22px rgba(0,8,28,.55); }
+.arch3d .is-as400 .a3d__pin { background: #ff8a8a; box-shadow: 0 0 8px rgba(255,80,80,.9); }
+.arch3d .is-as400.pulse { animation: archpulse 1.3s ease-in-out infinite; }
+@keyframes archpulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(255,80,80,.5), 0 14px 22px rgba(0,8,28,.55); }
+  50%      { box-shadow: 0 0 28px rgba(255,120,120,.95), 0 14px 22px rgba(0,8,28,.55); }
 }
-.arch3d .arch-dwh text { fill: #eafff9; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
 
-/* Consumo (360 / BI / IA) */
-.arch3d .arch-top .arch-box.ia rect { stroke: #b79bff; filter: drop-shadow(0 0 9px rgba(150, 110, 255, .55)); }
-.arch3d .arch-top .arch-box.ia text { fill: #e9e2ff; }
-
-/* AS/400 (legado, rojo) */
-.arch3d .arch-as400 rect { fill: rgba(211, 51, 51, .18); stroke: #ff6b6b; filter: drop-shadow(0 0 8px rgba(255, 80, 80, .5)); }
-.arch3d .arch-as400 text { fill: #ffd9d9; }
-.arch3d .arch-as400.pulse rect { stroke-width: 3; animation: archpulse 1.3s ease-in-out infinite; }
-@keyframes archpulse { 0%, 100% { stroke: #ff6b6b; } 50% { stroke: #ffc2c2; } }
-
-.arch3d .arch-as400-tag { opacity: 0; transition: opacity .4s; }
-.arch3d .arch-as400-tag.on { opacity: 1; }
-.arch3d .arch-as400-tag rect { rx: 8; fill: #b26a00; filter: drop-shadow(0 0 6px rgba(255, 160, 0, .5)); }
-.arch3d .arch-as400-tag text { fill: #fff; font-weight: 700; font-size: 12px; text-anchor: middle; dominant-baseline: middle; }
-
-/* Conexiones: arista base tenue + flujo de datos animado */
-.arch3d .arch-edge { stroke: rgba(120, 200, 255, .28); stroke-width: 2; fill: none; }
-.arch3d .arch-flow {
-  stroke: var(--c-accent); stroke-width: 2.5; fill: none; stroke-linecap: round;
-  stroke-dasharray: 2 15; opacity: .95;
-  filter: drop-shadow(0 0 4px rgba(10, 228, 195, .85));
-  animation: archflow 1s linear infinite;
+/* Etiqueta ¿migrar o integrar? sobre el AS/400 */
+.arch3d .a3d__tag {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap; font: 700 10px var(--font-body); color: #fff;
+  background: #b26a00; padding: 3px 8px; border-radius: 8px;
+  box-shadow: 0 0 8px rgba(255,160,0,.55); opacity: 0; transition: opacity .4s;
 }
-@keyframes archflow { to { stroke-dashoffset: -17; } }
+.arch3d .a3d__tag.on { opacity: 1; }
+
+/* Haces de conexión: bajan desde cada capa revelada, con datos subiendo */
+.arch3d .a3d__beam {
+  position: absolute; top: 100%; left: 50%; width: 2px; height: 60px;
+  transform: translateX(-50%); transform-origin: top center;
+  background: linear-gradient(to bottom, var(--c-accent), rgba(10, 228, 195, 0));
+  box-shadow: 0 0 6px rgba(10, 228, 195, .7);
+  opacity: 0; transition: opacity .5s ease;
+}
+.arch3d .arch-el.on .a3d__beam { opacity: .9; }
+.arch3d .a3d__beam::before {
+  content: ""; position: absolute; left: -2px; width: 6px; height: 6px; border-radius: 50%;
+  background: #aef9ec; box-shadow: 0 0 9px var(--c-accent);
+  animation: a3dflow 1.5s linear infinite;
+}
+@keyframes a3dflow { 0% { top: 100%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: -8%; opacity: 0; } }
+
+/* Suelo de reflejo bajo las fuentes (refuerza la sensación 3D) */
+.arch3d .a3d__floor {
+  position: absolute; left: 50%; top: calc(100% + 4px); width: 80%; height: 70px;
+  transform: translateX(-50%) rotateX(82deg); transform-origin: top center;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(10, 228, 195, .18), transparent 70%);
+  filter: blur(7px); pointer-events: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .arch3d .arch-flow,
-  .arch3d .arch-as400.pulse rect { animation: none; }
+  .arch3d .a3d__world { transition: none; }
+  .arch3d .a3d__beam::before, .arch3d .is-as400.pulse { animation: none; }
   .arch3d .arch-el { transition: none; }
 }

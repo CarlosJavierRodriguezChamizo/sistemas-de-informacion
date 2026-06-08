@@ -1,8 +1,9 @@
 /* =========================================================================
-   arquitectura.js — Scrollytelling "La arquitectura objetivo" (bloque clave).
-   La visual construye, capa a capa, el target state que mata los silos:
-   fuentes → integración/API → data warehouse (SSOT) → 360/BI/IA. Cierra en
-   el explicador de APIs y la matriz migrar/integrar.
+   arquitectura.js — Scrollytelling "La arquitectura objetivo".
+   La visual es un diagrama 3D real (CSS preserve-3d): las capas flotan a
+   distinta profundidad, los nodos tienen grosor y las conexiones son haces
+   con datos que suben. Reacciona al ratón (parallax) y se revela por escena:
+   fuentes → integración → data warehouse (SSOT) → 360/BI/IA.
    ========================================================================= */
 import { Header } from "../components/index.js";
 import { escapeHtml, appUrl } from "../components/_util.js";
@@ -10,78 +11,53 @@ import { initScrolly } from "./scrolly.js";
 import { createGL } from "./gl/glCanvas.js";
 import { BLUEPRINT_FRAG } from "./gl/shaders.js";
 
-/* ----------------------------- Geometría --------------------------------- */
-function box(x, y, w, h, label, cls = "", pin = false) {
-  const dot = pin ? `<circle class="arch-pin" cx="${x + w / 2}" cy="${y + 11}" r="3" />` : "";
-  return `<g class="arch-box ${cls}">
-    <rect x="${x}" y="${y}" width="${w}" height="${h}" />
-    ${dot}
-    <text x="${x + w / 2}" y="${y + h / 2 + (pin ? 4 : 0)}">${escapeHtml(label)}</text>
-  </g>`;
-}
-/** Conexión neón: arista base + "flujo" de datos animado encima. */
-function arrow(x1, y1, x2, y2) {
-  return `<line class="arch-edge" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#ah)" />
-    <line class="arch-flow" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`;
-}
-
-/* Fuentes (abajo) */
+/* ------------------------------- Datos ----------------------------------- */
 const SOURCES = [
   { label: "SAP ERP" }, { label: "CRM" }, { label: "e-commerce" },
-  { label: "WMS" }, { label: "Báltica+ App" }, { label: "AS/400", cls: "arch-as400" },
+  { label: "WMS" }, { label: "Báltica+ App" }, { label: "AS/400", cls: "is-as400" },
 ];
-const SW = 108, SH = 54, SY = 500;
-const SX = SOURCES.map((_, i) => 30 + i * 118);
 
-function stageSvg() {
-  const sources = SOURCES.map((s, i) => box(SX[i], SY, SW, SH, s.label, s.cls, true)).join("");
-  // flechas fuentes -> integración (capa en y 360-414)
-  const arrowsToInt = SX.map((x) => arrow(x + SW / 2, SY, x + SW / 2, 416)).join("");
+/* --------------------------- Nodos 3D (HTML) ----------------------------- */
+function node(label, cls = "", { pin = false, beam = false, tag = "" } = {}) {
+  return `<div class="a3d__node ${cls}">
+    ${beam ? `<span class="a3d__beam"></span>` : ""}
+    ${pin ? `<span class="a3d__pin"></span>` : ""}
+    <span class="a3d__lbl">${escapeHtml(label)}</span>
+    ${tag ? `<span class="a3d__tag">${escapeHtml(tag)}</span>` : ""}
+  </div>`;
+}
+
+function stage3d() {
+  const sources = SOURCES.map((s) =>
+    node(s.label, `is-src ${s.cls || ""}`, { pin: true, tag: s.cls === "is-as400" ? "¿migrar o integrar?" : "" })
+  ).join("");
 
   return `<div class="scrolly__stage">
-    <svg class="scrolly__svg" viewBox="0 0 760 600" role="img"
-      aria-label="Arquitectura objetivo por capas: sistemas fuente, capa de integración con APIs, data warehouse como única fuente de la verdad y, encima, vista 360, BI e IA.">
-      <defs>
-        <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#5aa0ff" />
-        </marker>
-      </defs>
+    <div class="a3d" role="img"
+      aria-label="Arquitectura objetivo en 3D: sistemas fuente abajo, capa de integración, data warehouse como única fuente de la verdad y, arriba, vista 360, BI e IA.">
+      <div class="a3d__world" id="a3dWorld">
 
-      <!-- Fuentes (siempre visibles) -->
-      <text class="arch-layer-label" x="30" y="486">Sistemas fuente</text>
-      <g class="arch-sources">${sources}</g>
+        <div class="a3d__layer a3d__layer--top arch-el" data-layer="top">
+          ${node("Vista 360", "", { beam: true })}
+          ${node("BI / EIS", "", { beam: true })}
+          ${node("IA / Agentes", "is-ia", { beam: true })}
+        </div>
 
-      <!-- Capa de integración -->
-      <g class="arch-el arch-integration" data-layer="integration">
-        ${arrowsToInt}
-        <rect x="40" y="360" width="680" height="54" />
-        <text x="380" y="387">Capa de integración · API / Middleware</text>
-      </g>
+        <div class="a3d__layer a3d__layer--dwh arch-el" data-layer="dwh">
+          ${node("Data Warehouse · SSOT", "is-dwh", { beam: true })}
+        </div>
 
-      <!-- Data warehouse / SSOT -->
-      <g class="arch-el arch-dwh" data-layer="dwh">
-        ${arrow(380, 360, 380, 301)}
-        <rect x="220" y="236" width="320" height="62" />
-        <text x="380" y="261">Data Warehouse</text>
-        <text x="380" y="281" style="font-weight:600;font-size:12px">Single source of truth</text>
-      </g>
+        <div class="a3d__layer a3d__layer--int arch-el" data-layer="integration">
+          ${node("Capa de integración · API / Middleware", "is-int", { beam: true })}
+        </div>
 
-      <!-- Consumo: 360 / BI / IA -->
-      <g class="arch-el arch-top" data-layer="top">
-        ${arrow(320, 236, 150, 158)}
-        ${arrow(380, 236, 380, 158)}
-        ${arrow(440, 236, 610, 158)}
-        ${box(50, 92, 200, 64, "Vista 360 del cliente")}
-        ${box(280, 92, 200, 64, "BI / EIS del Comité")}
-        ${box(510, 92, 200, 64, "IA / Agentes", "ia")}
-      </g>
+        <div class="a3d__layer a3d__layer--src">
+          ${sources}
+        </div>
 
-      <!-- Etiqueta migrar/integrar sobre el AS/400 -->
-      <g class="arch-as400-tag">
-        <rect x="${SX[5] - 16}" y="${SY - 42}" width="140" height="28" />
-        <text x="${SX[5] + 54}" y="${SY - 28}">¿migrar o integrar?</text>
-      </g>
-    </svg>
+        <span class="a3d__floor" aria-hidden="true"></span>
+      </div>
+    </div>
   </div>`;
 }
 
@@ -93,8 +69,8 @@ function onScene(scene) {
   setOn('[data-layer="integration"]', n >= 2);
   setOn('[data-layer="dwh"]', n >= 3);
   setOn('[data-layer="top"]', n >= 4);
-  setOn(".arch-as400-tag", n >= 5);
-  root.querySelector(".arch-as400")?.classList.toggle("pulse", n >= 5);
+  root.querySelector(".is-as400")?.classList.toggle("pulse", n >= 5);
+  root.querySelector(".a3d__tag")?.classList.toggle("on", n >= 5);
 }
 
 const STEPS = [
@@ -141,7 +117,7 @@ app.innerHTML = [
     </div>
     <div class="scrolly" data-scene="1">
       <div class="scrolly__inner">
-        <div class="scrolly__visual">${stageSvg()}</div>
+        <div class="scrolly__visual">${stage3d()}</div>
         <div class="scrolly__steps">${STEPS.map(stepHtml).join("")}</div>
       </div>
     </div>
@@ -149,6 +125,21 @@ app.innerHTML = [
 ].join("");
 
 initScrolly(app.querySelector(".scrolly"), onScene);
+
+/* Parallax 3D del diagrama con el ratón. */
+const world = document.getElementById("a3dWorld");
+if (world && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      world.style.setProperty("--rx", `${(x * 18).toFixed(1)}deg`);
+      world.style.setProperty("--ry", `${(-y * 10).toFixed(1)}deg`);
+    },
+    { passive: true }
+  );
+}
 
 /* Fondo WebGL: rejilla en perspectiva (suelo de "mapa 3D" futurista). */
 const archBg = document.querySelector("#arch-bg");
