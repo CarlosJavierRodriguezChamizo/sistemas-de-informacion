@@ -11,7 +11,7 @@ import Reveal from "reveal.js";
 import "reveal.js/dist/reveal.css";
 import "../styles/deck.css";
 import { createGL } from "./gl/glCanvas.js";
-import { MATRIX_FRAG, SERVER_FRAG } from "./gl/shaders.js";
+import { MATRIX_FRAG, SERVER_FRAG, NETWORK_FRAG } from "./gl/shaders.js";
 
 const deck = new Reveal({
   hash: true,            // hash de slide en la URL (offline-friendly)
@@ -32,27 +32,29 @@ function sincronizarLogo() {
   document.body.classList.toggle("light-slide", esClara);
 }
 
-/** Monta la capa WebGL (fondo + sala de servidores en las portadas). */
-function montarGL() {
-  const bgC = document.createElement("canvas");
-  bgC.id = "deck-bg";
-  bgC.setAttribute("aria-hidden", "true");
-  const svC = document.createElement("canvas");
-  svC.id = "deck-server";
-  svC.setAttribute("aria-hidden", "true");
+/** Crea un <canvas> de capa GL a pantalla completa. */
+function glCanvasEl(id) {
+  const c = document.createElement("canvas");
+  c.id = id;
+  c.setAttribute("aria-hidden", "true");
+  return c;
+}
+
+/** M1: lluvia de código "Matrix" + sala de servidores en las portadas. */
+function montarMatrix() {
+  const bgC = glCanvasEl("deck-bg");
+  const svC = glCanvasEl("deck-server");
   document.body.prepend(bgC, svC); // bgC debajo, svC (servidores) encima
 
-  createGL(bgC, MATRIX_FRAG, { dprCap: 1.75 });                  // fondo: lluvia de código
-  const server = createGL(svC, SERVER_FRAG, { dprCap: 1.5, paused: true }); // servidores: bajo demanda
+  createGL(bgC, MATRIX_FRAG, { dprCap: 1.75 });
+  const server = createGL(svC, SERVER_FRAG, { dprCap: 1.5, paused: true });
 
-  // Parallax sutil de la sala con el ratón
   window.addEventListener(
     "pointermove",
     (e) => server.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
     { passive: true }
   );
 
-  // La sala solo se pinta (y consume) en las slides de portada.
   const sincronizarServer = () => {
     const actual = deck.getCurrentSlide();
     const enPortada = !!actual && actual.classList.contains("slide--cover");
@@ -61,6 +63,41 @@ function montarGL() {
   };
   deck.addEventListener("slidechanged", sincronizarServer);
   sincronizarServer();
+}
+
+/** M2: red 3D de nodos que se reconfigura al cambiar de diapositiva. */
+function montarRed() {
+  const bgC = glCanvasEl("deck-bg");
+  document.body.prepend(bgC);
+  const net = createGL(bgC, NETWORK_FRAG, { dprCap: 1.75 });
+
+  window.addEventListener(
+    "pointermove",
+    (e) => net.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
+    { passive: true }
+  );
+
+  // "Escena" = índice de slide normalizado; se anima suavemente hacia el destino.
+  const sceneTarget = () => {
+    const n = deck.getTotalSlides();
+    return n > 1 ? deck.getIndices().h / (n - 1) : 0;
+  };
+  let target = sceneTarget();
+  let current = target;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  deck.addEventListener("slidechanged", () => { target = sceneTarget(); });
+  const tick = () => {
+    current += (target - current) * 0.05;
+    net.setScroll(current);
+    requestAnimationFrame(tick);
+  };
+  if (reduce) { net.setScroll(target); } else { requestAnimationFrame(tick); }
+}
+
+/** Monta la capa WebGL según el deck (data-gl). */
+function montarGL() {
+  if (document.body.dataset.gl === "m2") montarRed();
+  else montarMatrix();
 }
 
 deck.initialize().then(() => {

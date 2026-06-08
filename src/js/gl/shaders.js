@@ -146,6 +146,74 @@ void main(){
 }
 `;
 
+/* --- Red 3D de servidores intercomunicados (nodos + aristas). ----------
+   Doce nodos proyectados en perspectiva, unidos por aristas (anillo + cuerdas).
+   u_scroll = "escena" (índice de slide animado): reorganiza los nodos y gira la
+   cámara, de modo que cada diapositiva muestra una configuración distinta. ---- */
+export const NETWORK_FRAG = `
+precision highp float;
+uniform vec2 u_res; uniform float u_time; uniform float u_scroll; uniform vec2 u_mouse;
+
+float hash11(float n){ return fract(sin(n)*43758.5453123); }
+mat3 rotY(float a){ float c=cos(a), s=sin(a); return mat3(c,0.0,-s, 0.0,1.0,0.0, s,0.0,c); }
+mat3 rotX(float a){ float c=cos(a), s=sin(a); return mat3(1.0,0.0,0.0, 0.0,c,-s, 0.0,s,c); }
+
+vec3 nodePos(float fi, float scene, float t){
+  vec3 b = vec3(hash11(fi*1.3+0.1), hash11(fi*2.7+0.5), hash11(fi*3.9+0.9)) * 2.0 - 1.0;
+  b *= 1.25;
+  // cada escena (slide) reorganiza la nube de nodos + respiración leve
+  b += 0.45 * vec3(sin(fi*1.7 + scene*6.2831),
+                   cos(fi*2.3 + scene*4.6 + 1.0),
+                   sin(fi*0.9 + scene*5.4 + 2.0));
+  b.y += 0.05 * sin(t*0.6 + fi);
+  return b;
+}
+// (x,y proyectado en pantalla, z = profundidad)
+vec3 proj(float fi, mat3 rot, float scene, float t, float camZ){
+  vec3 w = rot * nodePos(fi, scene, t);
+  float z = w.z + camZ;
+  return vec3(w.xy / (z*0.42), z);
+}
+float seg(vec2 p, vec2 a, vec2 b){ vec2 pa=p-a, ba=b-a; float h=clamp(dot(pa,ba)/dot(ba,ba),0.0,1.0); return length(pa-ba*h); }
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5*u_res.xy) / u_res.y;
+  float t = u_time; float scene = u_scroll; float camZ = 3.6;
+  mat3 rot = rotY(t*0.05 + scene*1.2) * rotX(0.35 + (u_mouse.y-0.5)*0.4);
+
+  vec3 col  = vec3(0.0, 0.03, 0.085);   // navy
+  vec3 teal = vec3(0.06, 0.95, 0.80);
+  vec3 blue = vec3(0.05, 0.5, 1.0);
+  const float NF = 12.0;
+
+  // Aristas: anillo (i,i+1) + cuerdas (i,i+5)
+  for(int i = 0; i < 12; i++){
+    float fi = float(i);
+    vec3 a = proj(fi, rot, scene, t, camZ);
+    vec3 b = proj(mod(fi+1.0, NF), rot, scene, t, camZ);
+    vec3 c = proj(mod(fi+5.0, NF), rot, scene, t, camZ);
+    float f1 = 1.0 / (0.6 + 0.5*(a.z+b.z));
+    col += blue * smoothstep(0.006, 0.0, seg(uv, a.xy, b.xy)) * f1 * 0.9;
+    float f2 = 1.0 / (0.6 + 0.5*(a.z+c.z));
+    col += mix(blue, teal, 0.5) * smoothstep(0.004, 0.0, seg(uv, a.xy, c.xy)) * f2 * 0.5;
+  }
+  // Nodos (servidores): núcleo + halo, tamaño por profundidad
+  for(int i = 0; i < 12; i++){
+    vec3 a = proj(float(i), rot, scene, t, camZ);
+    float d = length(uv - a.xy);
+    float size = 0.018 * (camZ / a.z);
+    col += teal * smoothstep(size, size*0.2, d) * 1.2;
+    col += mix(teal, blue, 0.4) * smoothstep(size*3.5, size, d) * 0.35;
+  }
+
+  // Atenuar centro (legibilidad) + viñeta
+  vec2 dd = (gl_FragCoord.xy/u_res.xy) - 0.5;
+  col *= mix(0.55, 1.0, smoothstep(0.1, 0.7, length(dd*vec2(1.05,1.0))));
+  col *= smoothstep(1.25, 0.35, length(dd*vec2(1.15,1.0)));
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
 /* --- Sala de servidores (raymarching): racks en niebla + LEDs. ---------- */
 export const SERVER_FRAG = `
 precision highp float;
