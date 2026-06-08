@@ -7,6 +7,23 @@
   <title>M1 · Introducción a los SI — ESIC / Báltica</title>
 </head>
 <body class="deck" data-gl="m1">
+  <!-- Sprite de iconos (ilustraciones de línea, heredan color turquesa) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17.5" cy="9" r="2.2"/><path d="M15.5 14.6c2.6.2 4.5 1.7 4.5 4.4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4h-4"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 7V4M14 7V4M10 20v-3M14 20v-3M7 10H4M7 14H4M20 10h-3M20 14h-3"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path d="M3 12h9m0 0-3-3m3 3-3 3"/><path d="M13 5h6a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3"/><path d="M12 13v4M9 20h6"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.2 1 2.5h6c0-1.3.2-1.8 1-2.5A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.2-8.5C1.2 8.3 2.8 5 6 5c2 0 3.2 1.2 4 2.3C10.8 6.2 12 5 14 5c3.2 0 4.8 3.3 3.2 6.5C19 15.6 12 20 12 20z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9 5 4h14l1 5M4 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 4 0M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></symbol>
+  </svg>
+
   <!-- Logo persistente: blanco sobre azul, azul sobre slides claras (swap en deck.js) -->
   <img class="deck-logo deck-logo--white" src="/assets/logo_ESIC_blanco.svg" alt="ESIC" />
   <img class="deck-logo deck-logo--blue" src="/assets/logo_ESIC_azul.svg" alt="ESIC" />
@@ -34,10 +51,10 @@
           </div>
           <div class="col-r">
             <div class="feats">
-              <div class="feat"><span class="feat__n">01</span><h3>Personas</h3><p>Quienes usan y deciden con la información.</p></div>
-              <div class="feat"><span class="feat__n">02</span><h3>Procesos</h3><p>Las reglas y flujos de trabajo del negocio.</p></div>
-              <div class="feat"><span class="feat__n">03</span><h3>Datos</h3><p>La materia prima: hechos del negocio.</p></div>
-              <div class="feat feat--accent"><span class="feat__n">04</span><h3>Tecnología</h3><p>Hardware, software y redes que lo sostienen.</p></div>
+              <div class="feat"><span class="feat__n">01</span><span class="ico-chip"><svg class="ico"><use href="#i-people"/></svg></span><h3>Personas</h3><p>Quienes usan y deciden con la información.</p></div>
+              <div class="feat"><span class="feat__n">02</span><span class="ico-chip"><svg class="ico"><use href="#i-gear"/></svg></span><h3>Procesos</h3><p>Las reglas y flujos de trabajo del negocio.</p></div>
+              <div class="feat"><span class="feat__n">03</span><span class="ico-chip"><svg class="ico"><use href="#i-db"/></svg></span><h3>Datos</h3><p>La materia prima: hechos del negocio.</p></div>
+              <div class="feat feat--accent"><span class="feat__n">04</span><span class="ico-chip"><svg class="ico"><use href="#i-chip"/></svg></span><h3>Tecnología</h3><p>Hardware, software y redes que lo sostienen.</p></div>
             </div>
           </div>
         </div>
@@ -48,11 +65,11 @@
         <span class="kicker">Cómo funciona</span>
         <h2>Componentes y flujo</h2>
         <div class="flow">
-          <div class="flow__step"><span class="num">01</span><h3>Entrada</h3><p>Captura de datos: ventas, stock, clientes.</p></div>
+          <div class="flow__step"><span class="ico-chip"><svg class="ico"><use href="#i-in"/></svg></span><span class="num">01</span><h3>Entrada</h3><p>Captura de datos: ventas, stock, clientes.</p></div>
           <div class="flow__arrow">→</div>
-          <div class="flow__step"><span class="num">02</span><h3>Proceso</h3><p>Transformación: cálculo, agregación, reglas.</p></div>
+          <div class="flow__step"><span class="ico-chip"><svg class="ico"><use href="#i-gear"/></svg></span><span class="num">02</span><h3>Proceso</h3><p>Transformación: cálculo, agregación, reglas.</p></div>
           <div class="flow__arrow">→</div>
-          <div class="flow__step"><span class="num">03</span><h3>Salida</h3><p>Información útil: informes, cuadros de mando.</p></div>
+          <div class="flow__step"><span class="ico-chip"><svg class="ico"><use href="#i-chart"/></svg></span><span class="num">03</span><h3>Salida</h3><p>Información útil: informes, cuadros de mando.</p></div>
         </div>
         <div class="loopback">↺&nbsp; <strong>Retroalimentación</strong>: la salida ajusta la entrada y mejora el sistema.</div>
       </section>
@@ -81,10 +98,10 @@
         <span class="kicker">Valor estratégico</span>
         <h2>Por qué importan</h2>
         <div class="bens">
-          <div class="ben"><span class="ben__n">01</span><h3>Ventaja competitiva</h3><p>Hacer lo que otros no pueden.</p></div>
-          <div class="ben"><span class="ben__n">02</span><h3>Mejores decisiones</h3><p>Datos fiables y a tiempo.</p></div>
-          <div class="ben"><span class="ben__n">03</span><h3>Eficiencia</h3><p>Menos errores, menos coste, más velocidad.</p></div>
-          <div class="ben"><span class="ben__n">04</span><h3>Experiencia de cliente</h3><p>Personalización y servicio.</p></div>
+          <div class="ben"><span class="ben__n">01</span><span class="ico-chip"><svg class="ico"><use href="#i-trophy"/></svg></span><h3>Ventaja competitiva</h3><p>Hacer lo que otros no pueden.</p></div>
+          <div class="ben"><span class="ben__n">02</span><span class="ico-chip"><svg class="ico"><use href="#i-bulb"/></svg></span><h3>Mejores decisiones</h3><p>Datos fiables y a tiempo.</p></div>
+          <div class="ben"><span class="ben__n">03</span><span class="ico-chip"><svg class="ico"><use href="#i-bolt"/></svg></span><h3>Eficiencia</h3><p>Menos errores, menos coste, más velocidad.</p></div>
+          <div class="ben"><span class="ben__n">04</span><span class="ico-chip"><svg class="ico"><use href="#i-heart"/></svg></span><h3>Experiencia de cliente</h3><p>Personalización y servicio.</p></div>
         </div>
       </section>
 
@@ -104,9 +121,9 @@
         <span class="kicker">El SI como núcleo del negocio</span>
         <h2>Empresas transformadas por sus SI</h2>
         <div class="orgs">
-          <div class="org"><span class="tag">Moda</span><h3>Inditex / Zara</h3><p>Logística y reposición guiadas por datos.</p></div>
-          <div class="org"><span class="tag">E-commerce</span><h3>Amazon</h3><p>Recomendación, precios y cadena de suministro.</p></div>
-          <div class="org"><span class="tag">Retail</span><h3>Mercadona</h3><p>SAP + analítica para eficiencia operativa.</p></div>
+          <div class="org"><span class="ico-chip"><svg class="ico"><use href="#i-bag"/></svg></span><span class="tag">Moda</span><h3>Inditex / Zara</h3><p>Logística y reposición guiadas por datos.</p></div>
+          <div class="org"><span class="ico-chip"><svg class="ico"><use href="#i-box"/></svg></span><span class="tag">E-commerce</span><h3>Amazon</h3><p>Recomendación, precios y cadena de suministro.</p></div>
+          <div class="org"><span class="ico-chip"><svg class="ico"><use href="#i-store"/></svg></span><span class="tag">Retail</span><h3>Mercadona</h3><p>SAP + analítica para eficiencia operativa.</p></div>
         </div>
         <p class="statement" style="margin-top:.7em;font-size:1.05em">El sistema no apoya el negocio: <span class="hl">es</span> el negocio.</p>
       </section>

@@ -11,7 +11,7 @@ import Reveal from "reveal.js";
 import "reveal.js/dist/reveal.css";
 import "../styles/deck.css";
 import { createGL } from "./gl/glCanvas.js";
-import { DECK_BG_FRAG, SERVER_FRAG } from "./gl/shaders.js";
+import { MATRIX_FRAG, SERVER_FRAG } from "./gl/shaders.js";
 
 const deck = new Reveal({
   hash: true,            // hash de slide en la URL (offline-friendly)
@@ -42,7 +42,7 @@ function montarGL() {
   svC.setAttribute("aria-hidden", "true");
   document.body.prepend(bgC, svC); // bgC debajo, svC (servidores) encima
 
-  createGL(bgC, DECK_BG_FRAG, { dprCap: 1.75 });                 // fondo: siempre activo
+  createGL(bgC, MATRIX_FRAG, { dprCap: 1.75 });                  // fondo: lluvia de código
   const server = createGL(svC, SERVER_FRAG, { dprCap: 1.5, paused: true }); // servidores: bajo demanda
 
   // Parallax sutil de la sala con el ratón

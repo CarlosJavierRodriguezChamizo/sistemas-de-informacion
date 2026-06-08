@@ -182,6 +182,19 @@ body[data-gl] .slide--cover p { text-shadow: 0 2px 28px rgba(0, 5, 20, .75); }
 .reveal h2 { font-size: 1.9em; letter-spacing: 0; }
 .reveal .muted { color: rgba(255, 255, 255, .8); }
 
+/* --- Iconos / ilustraciones de línea --- */
+.reveal .ico-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2em; height: 2em; border-radius: 12px; margin-bottom: .5em;
+  background: rgba(10, 228, 195, .12); border: 1px solid rgba(10, 228, 195, .35);
+  box-shadow: 0 0 18px rgba(10, 228, 195, .18), inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+.reveal .ico {
+  width: 1.15em; height: 1.15em;
+  fill: none; stroke: var(--c-accent); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
 /* --- Kicker con barra de acento --- */
 .reveal .kicker {
   display: inline-flex; align-items: center; gap: .55em;
