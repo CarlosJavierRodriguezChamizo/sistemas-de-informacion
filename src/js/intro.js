@@ -36,8 +36,8 @@ const STEPS = [
   },
   {
     kicker: "El dato existe",
-    h: "Lo que falta<br>no es información.<br>Es integración.",
-    p: "El AS/400, la app y el sistema de tickets encierran el dato más valioso del cliente — sin conectar con el resto.",
+    h: "Lo que falta<br>no es <em>más</em> información.",
+    p: "El AS/400, la app y el sistema de tickets encierran el dato más valioso del cliente. ¿Dónde está entonces el problema?",
   },
   {
     kicker: "El punto de inflexión",
@@ -68,7 +68,7 @@ app.innerHTML = `
     <div class="hero__inner reveal is-in">
       <span class="hero__eyebrow">Executive MBA · ESIC</span>
       <h1 class="hero__title">Sistemas de<br>Información</h1>
-      <p class="hero__sub">Caso <strong>Grupo Báltica Sports</strong> — el crecimiento que no se puede sostener.</p>
+      <p class="hero__sub">Dos días para ver cómo los datos y los sistemas deciden la estrategia — y llevarlo a la práctica. En clase trabajaremos y desarrollaremos el <strong>Caso Grupo Báltica Sports</strong>: el crecimiento que no se puede sostener.</p>
     </div>
     <div class="hero__scrollhint" aria-hidden="true">
       <span>Desplázate</span>
@@ -87,9 +87,9 @@ app.innerHTML = `
       <div class="profe__body">
         <span class="act__kicker">Tu profesor</span>
         <h2 class="profe__name">Carlos Chamizo</h2>
-        <p class="profe__role">Consultor digital · Sistemas de Información</p>
-        <p class="profe__bio">Ayudo a empresas a convertir sus datos y sistemas dispersos en una ventaja competitiva: integración de ERP/CRM/SCM, arquitectura de datos y adopción de IA con criterio de negocio. En esta sesión llevamos esa experiencia del caso real a la decisión.</p>
-        <div class="profe__tags"><span>Integración de sistemas</span><span>Arquitectura de datos</span><span>IA aplicada al negocio</span></div>
+        <p class="profe__role">Consultor digital</p>
+        <p class="profe__bio">Consultor digital. Entiendo los <strong>procesos</strong>, la <strong>tecnología</strong> y las <strong>personas</strong>, y los conecto para que las empresas decidan mejor. Esta sesión será muy <strong>práctica</strong>: del caso real a la decisión.</p>
+        <div class="profe__tags"><span>Procesos</span><span>Tecnología</span><span>Personas</span></div>
         <a class="profe__link" href="https://www.linkedin.com/in/carloschamizo/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
     </div>
@@ -102,7 +102,7 @@ app.innerHTML = `
       ${autenticado
         ? `<p class="gate__msg">Ya tienes acceso en esta sesión.</p>
            <nav class="closing__cta"><a class="ibtn ibtn--primary" href="${appUrl("/index.html")}">Entrar al hub</a></nav>`
-        : `<p class="gate__msg">El contenido del curso está protegido. Introduce la clave que te darán en clase.</p>
+        : `<p class="gate__msg">El contenido del curso está protegido. Introduce la clave que te daré en clase.</p>
            <form class="gate__form" id="gate-form" autocomplete="off">
              <input class="gate__input" id="gate-pass" type="password" placeholder="Clave de acceso" aria-label="Clave de acceso" />
              <button class="ibtn ibtn--primary" type="submit">Entrar</button>
