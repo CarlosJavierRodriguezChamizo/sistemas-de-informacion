@@ -98,7 +98,10 @@ app.innerHTML = [
     html: `
       <h1 class="hero__title">Sistemas de Información</h1>
       <p class="hero__subtitle">Del concepto al diagnóstico — Caso Grupo Báltica Sports</p>
-      <p style="margin-top:var(--sp-5)"><a class="btn btn--primary" href="decks/intro.html">▶ Abrir apertura inmersiva</a></p>`,
+      <p class="row" style="margin-top:var(--sp-5)">
+        <a class="btn btn--primary" href="decks/intro.html">▶ Abrir apertura inmersiva</a>
+        <a class="btn btn--secondary" href="decks/odoo.html">Taller · Demo Odoo</a>
+      </p>`,
   }),
 
   /* Banda azul con el gancho del caso */

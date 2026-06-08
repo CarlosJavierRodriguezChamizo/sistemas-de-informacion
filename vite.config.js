@@ -27,6 +27,8 @@ export default defineConfig({
         // Historias visuales (scrollytelling) de los bloques clave
         silos: r('decks/silos.html'),
         arquitectura: r('decks/arquitectura.html'),
+        // Taller ERP en la nube
+        odoo: r('decks/odoo.html'),
         // Herramientas interactivas (prácticas)
         clasificador: r('tools/clasificador.html'),
         mapaSilos: r('tools/mapa-silos.html'),

@@ -1,0 +1,185 @@
+/* =========================================================================
+   odoo.css — Taller "ERP en la Nube · Demo Odoo".
+   Página autocontenida (solo tokens.css + esto), estética futurista oscura
+   coherente con M4 / arquitectura: fondo WebGL, glass, neón, marca.
+   ========================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.odoo {
+  margin: 0; background: #00071c; color: #e7eefc;
+  font-family: var(--font-body); -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Lienzo WebGL de fondo */
+#odoo-bg {
+  position: fixed; inset: 0; width: 100vw; height: 100vh; display: block;
+  z-index: 0; pointer-events: none;
+}
+#odoo-bg.gl--unsupported {
+  background: radial-gradient(120% 100% at 50% 0%, #0a235e 0%, #00133f 60%, #00071c 100%);
+}
+#app { position: relative; z-index: 1; }
+
+.wrap { width: min(1080px, 92vw); margin-inline: auto; }
+
+/* Accesibilidad */
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 20; background: #fff; color: #00133f; padding: .6rem 1rem; border-radius: 0 0 8px 0; font-weight: 600; }
+.skip-link:focus { left: 0; }
+
+/* ---------------------------------------------------------- Barra superior */
+.odoo-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(.9rem, 2.2vw, 1.4rem) clamp(1.1rem, 4vw, 2.2rem);
+  pointer-events: none;
+}
+.odoo-logo { height: 24px; width: auto; opacity: .95; }
+.odoo-back {
+  pointer-events: auto; color: rgba(255,255,255,.82); text-decoration: none; font-weight: 600;
+  font-size: .9rem; padding: .45rem .85rem; border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+  transition: background .25s, border-color .25s, color .25s;
+}
+.odoo-back:hover { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.5); }
+
+/* ---------------------------------------------------------- Tipografía */
+.odoo h1, .odoo h2, .odoo h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.02; margin: 0; }
+.eyebrow { display: inline-block; text-transform: uppercase; letter-spacing: .2em; font-size: .78rem; font-weight: 700; color: var(--c-accent); }
+.kicker {
+  display: inline-flex; align-items: center; gap: .55em;
+  font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em;
+  font-size: .72rem; color: var(--c-accent); margin-bottom: .5em;
+}
+.kicker::before { content: ""; width: 2.2em; height: .14em; background: var(--c-accent); border-radius: 2px; box-shadow: 0 0 14px rgba(10,228,195,.7); }
+.lead { color: rgba(255,255,255,.82); line-height: 1.55; }
+.hl { color: var(--c-accent); }
+.shine {
+  background: linear-gradient(100deg, var(--c-accent) 10%, #79d9ff 35%, #b79bff 55%, #79d9ff 75%, var(--c-accent) 95%);
+  background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shine 6s linear infinite;
+}
+@keyframes shine { to { background-position: 220% 0; } }
+
+/* ---------------------------------------------------------- Hero */
+.odoo-hero { min-height: 92svh; display: flex; flex-direction: column; justify-content: center; padding: 7rem 0 4rem; }
+.odoo-hero .wrap { max-width: min(1080px, 92vw); }
+.odoo-hero__title { font-size: clamp(3rem, 11vw, 8rem); margin: .2em 0 0; max-width: 16ch; }
+.odoo-hero .lead { font-size: clamp(1.05rem, 2.2vw, 1.4rem); max-width: 34ch; margin-top: 1.1rem; }
+.odoo-hero__hint { margin-top: 2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .18em; color: rgba(255,255,255,.6); }
+
+/* ---------------------------------------------------------- Bloques tema */
+.topic { padding: clamp(3rem, 8vh, 6rem) 0; }
+.topic__head { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.6rem; }
+.topic__n {
+  font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 4rem); line-height: .8;
+  color: transparent; -webkit-text-stroke: 1.5px rgba(10,228,195,.55); flex: none;
+}
+.topic__head h2 { font-size: clamp(1.8rem, 4.5vw, 3rem); }
+
+/* Panel de cristal reutilizable */
+.glass {
+  background: linear-gradient(155deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255,255,255,.16); border-radius: 18px;
+  box-shadow: 0 16px 46px rgba(0,8,28,.45), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.panel { padding: clamp(1.1rem, 2.5vw, 1.6rem); }
+.panel p { color: rgba(255,255,255,.84); line-height: 1.6; margin: 0 0 .6em; }
+.panel p:last-child { margin-bottom: 0; }
+.panel strong { color: #fff; }
+
+.split2 { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .split2 { grid-template-columns: 1fr 1fr; align-items: start; } }
+.split2--wide { grid-template-columns: 1fr; }
+@media (min-width: 860px) { .split2--text { grid-template-columns: 0.95fr 1.05fr; } }
+
+/* Iconos */
+.ico-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.1em; height: 2.1em; border-radius: 12px; margin-bottom: .5em;
+  background: rgba(10,228,195,.12); border: 1px solid rgba(10,228,195,.35);
+  box-shadow: 0 0 16px rgba(10,228,195,.16), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.ico { width: 1.15em; height: 1.15em; fill: none; stroke: var(--c-accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Rejilla de apps (módulos) */
+.appgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
+@media (min-width: 560px) { .appgrid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 860px) { .appgrid { grid-template-columns: repeat(4, 1fr); } }
+.app {
+  display: flex; align-items: center; gap: .6rem; padding: .65rem .75rem; border-radius: 12px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); font-size: .85rem; color: #eaf3ff;
+}
+.app svg { width: 18px; height: 18px; fill: none; stroke: var(--c-accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* Tarjetas de feature */
+.feats { display: grid; gap: .8rem; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .feats { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 920px) { .feats--3 { grid-template-columns: repeat(3, 1fr); } }
+.feat { padding: 1rem 1.1rem; }
+.feat h3 { font-size: 1.05rem; color: #fff; margin: 0 0 .25em; }
+.feat p { font-size: .9rem; color: rgba(255,255,255,.78); margin: 0; line-height: 1.5; }
+.feat--accent { border-color: rgba(10,228,195,.5); box-shadow: 0 0 26px rgba(10,228,195,.18), inset 0 1px 0 rgba(10,228,195,.25); }
+
+/* Comparativa Enterprise vs Community */
+.vs { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .vs { grid-template-columns: 1fr 1fr; } }
+.vs__col { padding: 1.2rem 1.3rem; }
+.vs__col h3 { font-size: 1.3rem; color: #fff; margin: 0 0 .1em; }
+.vs__tag { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--c-accent); }
+.vs__col--ent { border-color: rgba(150,110,255,.5); box-shadow: 0 0 26px rgba(150,110,255,.18), inset 0 1px 0 rgba(150,110,255,.25); }
+.vs__col--ent .vs__tag { color: #b79bff; }
+.vs__list { list-style: none; margin: .9rem 0 0; padding: 0; }
+.vs__list li { position: relative; padding-left: 1.6em; margin: .5em 0; font-size: .9rem; color: rgba(255,255,255,.86); }
+.vs__list li::before { content: "✓"; position: absolute; left: 0; color: var(--c-accent); font-weight: 700; }
+.vs__col--ent .vs__list li::before { color: #b79bff; }
+.vs__list li.no { color: rgba(255,255,255,.5); }
+.vs__list li.no::before { content: "✕"; color: #ff7676; }
+
+/* Flujo horizontal (Odoo.sh / Verifactu) */
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: .5rem; }
+.flow__step { flex: 1 1 0; min-width: 150px; padding: .9rem 1rem; }
+.flow__step .num { font-family: var(--font-display); color: var(--c-accent); font-size: .85rem; }
+.flow__step h3 { font-size: 1rem; color: #fff; margin: .15em 0; }
+.flow__step p { font-size: .82rem; color: rgba(255,255,255,.76); margin: 0; line-height: 1.45; }
+.flow__arrow { align-self: center; color: var(--c-accent); font-size: 1.5rem; text-shadow: 0 0 16px rgba(10,228,195,.6); }
+@media (max-width: 640px) { .flow__arrow { transform: rotate(90deg); } }
+
+/* Multiempresa: una BD → varias compañías */
+.multi { display: grid; gap: 1rem; justify-items: center; }
+.multi__db {
+  display: inline-flex; align-items: center; gap: .6rem; padding: .8rem 1.3rem; border-radius: 14px; color: #eafff9;
+  background: linear-gradient(155deg, rgba(10,228,195,.2), rgba(6,120,110,.22));
+  border: 1px solid var(--c-accent); box-shadow: 0 0 24px rgba(10,228,195,.4); font-weight: 600;
+}
+.multi__db svg { width: 20px; height: 20px; fill: none; stroke: var(--c-accent); stroke-width: 2; }
+.multi__rule { width: 2px; height: 26px; background: linear-gradient(rgba(10,228,195,.8), rgba(10,228,195,0)); }
+.multi__cos { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; }
+.multi__co { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1rem; border-radius: 12px; font-size: .9rem; color: #eaf3ff; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); }
+.multi__co svg { width: 18px; height: 18px; fill: none; stroke: var(--c-accent); stroke-width: 2; flex: none; }
+.multi__db svg { fill: none; }
+.multi__note { font-size: .85rem; color: rgba(255,255,255,.72); text-align: center; max-width: 50ch; }
+
+/* CTA cierre */
+.odoo-close { min-height: 70svh; display: flex; flex-direction: column; justify-content: center; padding: 5rem 0 8rem; }
+.odoo-close h2 { font-size: clamp(2rem, 6vw, 4rem); max-width: 16ch; }
+.odoo-close .lead { max-width: 42ch; }
+.cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+.btn {
+  display: inline-block; padding: .85rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none;
+  color: #fff; border: 1px solid rgba(255,255,255,.34); background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background .25s, transform .25s, border-color .25s;
+}
+.btn:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); border-color: rgba(255,255,255,.6); }
+.btn--primary { color: #00133f; background: var(--c-accent); border-color: var(--c-accent); }
+.btn--primary:hover { background: #2bf0d3; border-color: #2bf0d3; }
+
+/* Nota legal pequeña */
+.fineprint { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 1rem; line-height: 1.5; }
+
+/* ---------------------------------------------------------- Revelado (Motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; }
+  .reveal [data-anim] { opacity: 0; }
+}
