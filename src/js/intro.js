@@ -81,7 +81,8 @@ app.innerHTML = `
   <section class="profe" id="profe">
     <div class="profe__card reveal">
       <div class="profe__photo" data-ini="CC">
-        <img src="${appUrl("/assets/carlos-chamizo.jpg")}" alt="Carlos Chamizo" loading="lazy" onerror="this.remove()" />
+        <img src="${appUrl("/assets/carlos-chamizo.png")}" alt="Carlos Chamizo" loading="lazy"
+          onerror="this.onerror=null; if(/\\.png(\\?|$)/.test(this.src)){this.src=this.src.replace('.png','.jpg'); this.onerror=function(){this.remove();};} else {this.remove();}" />
       </div>
       <div class="profe__body">
         <span class="act__kicker">Tu profesor</span>
