@@ -165,6 +165,49 @@ html { scroll-behavior: auto; } /* el suave lo gestiona Lenis */
 }
 .ibtn--primary:hover { background: #2bf0d3; border-color: #2bf0d3; }
 
+/* --- Sección "Tu profesor" --- */
+.profe {
+  min-height: 100svh; display: flex; align-items: center; justify-content: center;
+  padding: 5rem clamp(1.4rem, 6vw, 4rem);
+}
+.profe__card {
+  display: flex; flex-wrap: wrap; gap: clamp(1.4rem, 4vw, 3rem); align-items: center;
+  max-width: 60rem; padding: clamp(1.4rem, 3vw, 2.4rem);
+  background: linear-gradient(155deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255,255,255,.16); border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+.profe__photo {
+  position: relative; flex: none; width: clamp(120px, 22vw, 180px); aspect-ratio: 1; border-radius: 50%;
+  overflow: hidden; background: linear-gradient(155deg, #0047e9, #0a3); display: grid; place-items: center;
+  border: 2px solid rgba(10,228,195,.5); box-shadow: 0 0 30px rgba(10,228,195,.3);
+}
+.profe__photo::before { content: attr(data-ini); font-family: var(--font-display); font-size: 2.6rem; color: #fff; }
+.profe__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.profe__body { flex: 1; min-width: 240px; }
+.profe__name { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); line-height: 1; margin: .15em 0 .1em; }
+.profe__role { color: var(--c-accent); font-weight: 600; margin: 0 0 .8em; }
+.profe__bio { color: rgba(255,255,255,.85); line-height: 1.6; margin: 0 0 1em; max-width: 46ch; }
+.profe__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.1em; }
+.profe__tags span { font-size: .78rem; padding: .35em .8em; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); color: rgba(255,255,255,.85); }
+.profe__link { display: inline-block; color: var(--c-accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.profe__link:hover { border-color: var(--c-accent); }
+
+/* --- Puerta de acceso --- */
+.gate { min-height: 100svh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5rem clamp(1.4rem, 6vw, 4rem) 8rem; }
+.gate__inner { max-width: 30rem; }
+.gate__msg { color: rgba(255,255,255,.82); line-height: 1.55; margin: 1rem auto 1.4rem; max-width: 34ch; }
+.gate__form { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+.gate__input {
+  flex: 1 1 14rem; min-width: 0; padding: .85rem 1.2rem; border-radius: 999px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.28); color: #fff; font: inherit;
+}
+.gate__input::placeholder { color: rgba(255,255,255,.5); }
+.gate__input:focus { outline: 2px solid var(--c-accent); outline-offset: 1px; border-color: transparent; }
+.gate__error { color: #ff9a9a; font-size: .9rem; margin-top: 1rem; }
+.gate__error[hidden] { display: none; }
+
 /* --- Revelado al hacer scroll --- */
 .reveal {
   opacity: 0;

@@ -8,6 +8,19 @@ import Lenis from "lenis";
 import { createShaderBg } from "./gl/shaderBg.js";
 import { appUrl } from "../components/_util.js";
 
+/* --------------------------- Puerta de acceso ---------------------------- */
+// Disuasorio del lado del cliente (sitio estático): evita que los alumnos se
+// adelanten, NO es seguridad real. Para cambiar la clave, genera el SHA-256:
+//   node -e "console.log(require('crypto').createHash('sha256').update('TU_CLAVE').digest('hex'))"
+const AUTH_KEY = "baltica-acceso";
+const AUTH_HASH = "2287f05a660060d81f01c0bfb3064cb145e9613c3726ab12b1e21c3da2d12a89"; // = SHA-256("baltica2026")
+const autenticado = (() => { try { return sessionStorage.getItem(AUTH_KEY) === "ok"; } catch { return false; } })();
+
+async function sha256hex(str) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
 /* --------------------------- Contenido (narrativa) ----------------------- */
 // Cada paso es un "acto" a pantalla completa. La copia ancla el shader al caso.
 const STEPS = [
@@ -48,7 +61,7 @@ const stepHtml = (st, i) => `
 app.innerHTML = `
   <header class="intro-top">
     <img class="intro-logo" src="${appUrl("/assets/logo_ESIC_blanco.svg")}" alt="ESIC" />
-    <a class="intro-skip" href="${appUrl("/index.html")}">Ir al hub →</a>
+    <a class="intro-skip" href="#acceso">Acceso ↓</a>
   </header>
 
   <section class="hero">
@@ -65,15 +78,35 @@ app.innerHTML = `
 
   ${STEPS.map(stepHtml).join("")}
 
-  <section class="closing" id="cierre">
-    <div class="closing__inner reveal">
-      <span class="act__kicker">Empecemos</span>
-      <h2 class="closing__h">Dos días para convertir<br>el caos en ventaja.</h2>
-      <nav class="closing__cta">
-        <a class="ibtn ibtn--primary" href="${appUrl("/index.html")}">Abrir el hub de la sesión</a>
-        <a class="ibtn" href="${appUrl("/decks/m1.html")}">Empezar por M1</a>
-        <a class="ibtn" href="${appUrl("/decks/silos.html")}">Ver el problema de los silos</a>
-      </nav>
+  <section class="profe" id="profe">
+    <div class="profe__card reveal">
+      <div class="profe__photo" data-ini="CC">
+        <img src="${appUrl("/assets/carlos-chamizo.jpg")}" alt="Carlos Chamizo" loading="lazy" onerror="this.remove()" />
+      </div>
+      <div class="profe__body">
+        <span class="act__kicker">Tu profesor</span>
+        <h2 class="profe__name">Carlos Chamizo</h2>
+        <p class="profe__role">Consultor digital · Sistemas de Información</p>
+        <p class="profe__bio">Ayudo a empresas a convertir sus datos y sistemas dispersos en una ventaja competitiva: integración de ERP/CRM/SCM, arquitectura de datos y adopción de IA con criterio de negocio. En esta sesión llevamos esa experiencia del caso real a la decisión.</p>
+        <div class="profe__tags"><span>Integración de sistemas</span><span>Arquitectura de datos</span><span>IA aplicada al negocio</span></div>
+        <a class="profe__link" href="https://www.linkedin.com/in/carloschamizo/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gate" id="acceso">
+    <div class="gate__inner reveal">
+      <span class="act__kicker">Material reservado</span>
+      <h2 class="closing__h">El aula,<br>a partir de aquí.</h2>
+      ${autenticado
+        ? `<p class="gate__msg">Ya tienes acceso en esta sesión.</p>
+           <nav class="closing__cta"><a class="ibtn ibtn--primary" href="${appUrl("/index.html")}">Entrar al hub</a></nav>`
+        : `<p class="gate__msg">El contenido del curso está protegido. Introduce la clave que te darán en clase.</p>
+           <form class="gate__form" id="gate-form" autocomplete="off">
+             <input class="gate__input" id="gate-pass" type="password" placeholder="Clave de acceso" aria-label="Clave de acceso" />
+             <button class="ibtn ibtn--primary" type="submit">Entrar</button>
+           </form>
+           <p class="gate__error" id="gate-error" role="alert" hidden>Clave incorrecta. Inténtalo de nuevo.</p>`}
     </div>
   </section>
 `;
@@ -132,3 +165,22 @@ const io = new IntersectionObserver(
   { threshold: 0.35 }
 );
 app.querySelectorAll(".reveal:not(.is-in)").forEach((el) => io.observe(el));
+
+/* --------------------------- Validación de la clave ---------------------- */
+const gateForm = document.querySelector("#gate-form");
+if (gateForm) {
+  gateForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = document.querySelector("#gate-pass");
+    const error = document.querySelector("#gate-error");
+    const ok = (await sha256hex(input.value.trim())) === AUTH_HASH;
+    if (ok) {
+      try { sessionStorage.setItem(AUTH_KEY, "ok"); } catch { /* sin storage: igualmente navega */ }
+      window.location.href = appUrl("/index.html");
+    } else {
+      error.hidden = false;
+      input.value = "";
+      input.focus();
+    }
+  });
+}
