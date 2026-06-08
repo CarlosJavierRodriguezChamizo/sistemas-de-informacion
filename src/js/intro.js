@@ -36,8 +36,8 @@ const STEPS = [
   },
   {
     kicker: "El dato existe",
-    h: "Lo que falta<br>no es <em>más</em> información.",
-    p: "El AS/400, la app y el sistema de tickets encierran el dato más valioso del cliente. ¿Dónde está entonces el problema?",
+    h: "Tienen todo el dato.<br>Aun así…",
+    p: "Qué ocurre a partir de aquí —y cómo se resuelve— lo trabajamos juntos en clase.",
   },
   {
     kicker: "El punto de inflexión",
@@ -88,7 +88,7 @@ app.innerHTML = `
         <span class="act__kicker">Tu profesor</span>
         <h2 class="profe__name">Carlos Chamizo</h2>
         <p class="profe__role">Consultor digital</p>
-        <p class="profe__bio">Consultor digital. Entiendo los <strong>procesos</strong>, la <strong>tecnología</strong> y las <strong>personas</strong>, y los conecto para que las empresas decidan mejor. Esta sesión será muy <strong>práctica</strong>: del caso real a la decisión.</p>
+        <p class="profe__bio">Ayudo a las empresas a unir negocio y tecnología: entiendo los <strong>procesos</strong>, la <strong>tecnología</strong> y las <strong>personas</strong>, y los conecto para decidir mejor y ejecutar más rápido. Acompaño la transformación digital de principio a fin, del diagnóstico a la puesta en marcha. Esta sesión será muy <strong>práctica</strong>: del caso real a la decisión.</p>
         <div class="profe__tags"><span>Procesos</span><span>Tecnología</span><span>Personas</span></div>
         <a class="profe__link" href="https://www.linkedin.com/in/carloschamizo/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
