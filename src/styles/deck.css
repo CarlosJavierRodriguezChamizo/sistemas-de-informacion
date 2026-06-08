@@ -129,3 +129,27 @@ body.light-slide .reveal .slide-number { color: var(--c-ink-soft); }
 
 /* Foco visible accesible sobre el deck */
 .reveal a:focus-visible, .deck-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* ============================================ Capa WebGL (solo data-gl) */
+/* Lienzos a pantalla completa, por detrás de las slides. */
+body[data-gl] #deck-bg,
+body[data-gl] #deck-server {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  display: block; z-index: 0; pointer-events: none;
+}
+/* La sala de servidores aparece solo en las portadas (fundido suave). */
+body[data-gl] #deck-server { opacity: 0; transition: opacity .6s ease; }
+body[data-gl] #deck-server.is-on { opacity: 1; }
+/* Fallback si no hay WebGL: degradado de marca discreto. */
+body[data-gl] #deck-bg.gl--unsupported {
+  background: radial-gradient(120% 100% at 50% 0%, #0a235e 0%, #00133f 60%, #00091f 100%);
+}
+/* El deck va por encima de los lienzos; su fondo plano se vuelve transparente
+   para dejar ver el shader (las slides .slide--light siguen tapándolo). */
+body[data-gl].reveal-viewport,
+body[data-gl] .reveal-viewport { background-color: transparent; }
+body[data-gl] .reveal { position: relative; z-index: 1; }
+/* Refuerzo de legibilidad del texto sobre la sala de servidores. */
+body[data-gl] .slide--cover h1,
+body[data-gl] .slide--cover h2,
+body[data-gl] .slide--cover p { text-shadow: 0 2px 28px rgba(0, 5, 20, .75); }
