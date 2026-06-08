@@ -297,6 +297,13 @@ body[data-gl] .slide--cover p { text-shadow: 0 2px 28px rgba(0, 5, 20, .75); }
 .reveal .pyramid--xl .pyramid__row--dss { background: rgba(0, 71, 233, .8); border: none; }
 .reveal .pyramid--xl .pyramid__row--eis { background: var(--c-accent); box-shadow: 0 0 30px rgba(10, 228, 195, .5); }
 
+/* Glosario de siglas (slide de la pirámide) */
+.reveal .pyr-defs { margin: .5em 0 0; display: grid; gap: .4em; text-align: left; }
+.reveal .pyr-defs > div { display: grid; grid-template-columns: 2.7em 1fr; gap: .7em; align-items: baseline; }
+.reveal .pyr-defs dt { font-family: var(--font-display); color: var(--c-accent); font-size: 1.05em; letter-spacing: .03em; }
+.reveal .pyr-defs dd { margin: 0; font-size: .62em; color: rgba(255, 255, 255, .82); line-height: 1.32; }
+.reveal .pyr-defs dd i { color: #fff; font-style: italic; }
+
 /* --- Beneficios: tarjetas glass con número fantasma --- */
 .reveal .bens { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7em; text-align: left; }
 .reveal .ben { overflow: hidden; padding: .8em .9em .8em 1em; border-left: 3px solid var(--c-accent); }
