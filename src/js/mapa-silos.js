@@ -15,10 +15,27 @@ const byName = new Map(sistemas.map((s) => [s.sistema, s.id]));
 
 /* Etiqueta corta para el grafo (el nombre completo va en la ficha). */
 const SHORT = {
-  1: "SAP S/4HANA", 2: "SF Sales Cloud", 3: "SF Commerce Cloud", 4: "SAP BW/4HANA",
+  1: "SAP S/4HANA", 2: "Salesforce Sales", 3: "Salesforce Commerce", 4: "SAP BW/4HANA",
   5: "Power BI", 6: "Zendesk", 7: "Manhattan WMS", 8: "AS/400",
   9: "Google Analytics 4", 10: "Emarsys", 11: "Bazaarvoice", 12: "Báltica+ App",
 };
+
+/* Glosario de siglas — para no usar acrónimos sin explicar (tipos, niveles…). */
+const GLOSARIO = [
+  ["ERP", "Enterprise Resource Planning · procesos internos: finanzas, compras, inventario."],
+  ["CRM", "Customer Relationship Management · relación con el cliente: ventas, marketing, servicio."],
+  ["SCM", "Supply Chain Management · cadena de suministro y logística."],
+  ["WMS", "Warehouse Management System · gestión de almacén."],
+  ["BI", "Business Intelligence · analítica e informes de negocio."],
+  ["BW", "(SAP) Business Warehouse · almacén de datos de SAP."],
+  ["TPS", "Transaction Processing System · transacciones del día a día."],
+  ["MIS", "Management Information System · informes y control para mandos."],
+  ["DSS", "Decision Support System · apoyo al análisis y la decisión."],
+  ["EIS", "Executive Information System · información ejecutiva para dirección."],
+  ["NPS", "Net Promoter Score · índice de recomendación del cliente."],
+  ["B2B", "Business to Business · negocio entre empresas."],
+  ["UGC", "User-Generated Content · contenido de usuarios (p. ej. reseñas)."],
+];
 
 /* Posiciones manuales (lienzo 1040×640) — claras para proyección.
    Clúster integrado a la izquierda/centro; silos separados a la derecha. */
@@ -142,6 +159,41 @@ function gapListHtml() {
     .join("")}</div>`;
 }
 
+/* ------------------------------ Glosario --------------------------------- */
+function glosarioHtml() {
+  return `<details class="glossary">
+    <summary>Glosario de siglas</summary>
+    <dl class="gloss-dl">${GLOSARIO
+      .map(([k, v]) => `<div><dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd></div>`)
+      .join("")}</dl>
+  </details>`;
+}
+
+/* ------------------------- Reto del Comité (pista gated) ----------------- */
+const GAPS_PARA_PISTA = 3;
+let hintOpen = false;
+function hintBoxHtml() {
+  const n = gaps.size;
+  const unlocked = n >= GAPS_PARA_PISTA;
+  return `
+    <p class="hint-reto"><strong>El Comité no os da la respuesta.</strong> Primero, respondedos vosotros:</p>
+    <ul class="hint-q">
+      <li>¿Dónde se <strong>concentran las incidencias</strong>?</li>
+      <li>¿Qué sistemas <strong>tocan al cliente</strong> y no comparten su dato?</li>
+      <li>¿Qué <strong>dato valioso</strong> está atrapado en un silo sin integrar?</li>
+    </ul>
+    ${unlocked
+      ? `<p class="hint-unlocked"><strong>✓ Pista desbloqueada.</strong> Un gap crítico no es (solo) el sistema con más incidencias: es el <strong>dato de cliente atrapado</strong> que, al no integrarse, impide la visión 360 y arrastra al resto. Priorizad cruzando <em>incidencias × valor del dato × aislamiento</em>.</p>`
+      : `<p class="hint-locked"><strong>🔒 Pista bloqueada.</strong> Se desbloquea cuando marquéis al menos <strong>${GAPS_PARA_PISTA} gaps candidatos</strong> en el mapa (desde la ficha o con doble clic en un nodo). Lleváis <strong>${n}/${GAPS_PARA_PISTA}</strong>.</p>`}
+  `;
+}
+function repintarHint() {
+  const box = $("#hint-box");
+  box.hidden = !hintOpen;
+  box.innerHTML = hintOpen ? hintBoxHtml() : "";
+  $("#btn-hint").setAttribute("aria-expanded", String(hintOpen));
+}
+
 /* ------------------------------ Composición ------------------------------ */
 const app = $("#app");
 app.innerHTML = [
@@ -180,6 +232,7 @@ app.innerHTML = [
           <span><i class="swatch swatch--parcial"></i> Conexión parcial</span>
           <span>Tamaño ∝ inversión · grosor del borde ∝ incidencias</span>
         </div>
+        ${glosarioHtml()}
       </div>
 
       <aside class="side">
@@ -192,12 +245,8 @@ app.innerHTML = [
           <div id="gap-list">${gapListHtml()}</div>
           <label for="gap-notes" style="font-size:.85rem;font-weight:600">Tus notas sobre los gaps</label>
           <textarea class="gap-notes" id="gap-notes" placeholder="Escribe aquí los gaps de integración que detectes…"></textarea>
-          <button class="btn btn--ghost" type="button" id="btn-hint" style="margin-top:var(--sp-3)" aria-expanded="false">💡 Pista del Comité</button>
-          <div class="hint-box" id="hint-box" hidden>
-            El Comité no os da la respuesta. Pero fijaos en <strong>dónde se concentran las incidencias</strong>
-            y en <strong>dónde vive el dato de cliente</strong> que no llega al resto de sistemas.
-            Un gap crítico suele ser un dato valioso atrapado sin integrar.
-          </div>
+          <button class="btn btn--ghost" type="button" id="btn-hint" style="margin-top:var(--sp-3)" aria-expanded="false">🧭 Reto del Comité</button>
+          <div class="hint-box" id="hint-box" hidden></div>
         </div>
       </aside>
     </div>
@@ -235,6 +284,7 @@ function toggleGap(id) {
   aplicarEstadoNodos();
   repintarFicha();
   repintarGapList();
+  if (hintOpen) repintarHint();
   anunciar(`${gaps.size} sistema(s) marcados como gap.`);
 }
 
@@ -280,10 +330,8 @@ $("#toggle-crudo").addEventListener("change", (e) => {
     : "Mostrando el dato normalizado: Sí / No / Parcial.");
 });
 
-/* Pista del Comité */
-$("#btn-hint").addEventListener("click", (e) => {
-  const box = $("#hint-box");
-  const abrir = box.hidden;
-  box.hidden = !abrir;
-  e.currentTarget.setAttribute("aria-expanded", String(abrir));
+/* Reto del Comité (pista bloqueada hasta marcar ≥ N gaps) */
+$("#btn-hint").addEventListener("click", () => {
+  hintOpen = !hintOpen;
+  repintarHint();
 });
