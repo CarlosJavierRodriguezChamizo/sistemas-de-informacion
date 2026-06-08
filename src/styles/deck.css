@@ -125,6 +125,8 @@ body.light-slide .reveal .slide-number { color: var(--c-ink-soft); }
   font: 600 .9em/1 var(--font-body); text-decoration: none;
 }
 .deck-cta:hover { background: #08c7aa; color: var(--c-ink); }
+/* Gana a `.reveal a` (turquesa), si no el texto quedaría invisible sobre el pill. */
+.reveal .deck-cta, .reveal .deck-cta:hover { color: var(--c-ink); }
 .reveal .deck-cta::after { content: "→"; }
 
 /* Foco visible accesible sobre el deck */
@@ -153,3 +155,112 @@ body[data-gl] .reveal { position: relative; z-index: 1; }
 body[data-gl] .slide--cover h1,
 body[data-gl] .slide--cover h2,
 body[data-gl] .slide--cover p { text-shadow: 0 2px 28px rgba(0, 5, 20, .75); }
+
+/* ====================================================================== */
+/* ===============  Maquetación editorial de slides (M1)  =============== */
+/* ====================================================================== */
+
+/* --- Kicker con barra de acento --- */
+.reveal .kicker {
+  display: inline-flex; align-items: center; gap: .55em;
+  font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em;
+  font-size: .6em; color: var(--c-accent); margin-bottom: .7em;
+}
+.reveal .kicker::before { content: ""; width: 2.4em; height: .14em; background: var(--c-accent); border-radius: 2px; }
+.reveal .slide--light .kicker { color: var(--c-accent-blue); }
+.reveal .slide--light .kicker::before { background: var(--c-accent-blue); }
+
+/* --- Columnas asimétricas --- */
+.reveal .split { display: grid; grid-template-columns: .92fr 1.08fr; gap: 1.3em; align-items: center; text-align: left; }
+.reveal .split > .col-l h2 { font-size: 2.05em; margin-bottom: .25em; }
+.reveal .statement { font-family: var(--font-display); font-size: 1.25em; line-height: 1.05; color: #fff; }
+.reveal .statement .hl { color: var(--c-accent); }
+
+/* --- Rejilla de "piezas" con número fantasma --- */
+.reveal .feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65em; }
+.reveal .feat {
+  position: relative; overflow: hidden; text-align: left;
+  background: rgba(255, 255, 255, .06); border: 1px solid var(--c-line-blue);
+  border-radius: 16px; padding: .7em .85em;
+}
+.reveal .feat__n {
+  position: absolute; right: .12em; top: -.18em; font-family: var(--font-display);
+  font-size: 2.7em; line-height: 1; color: rgba(255, 255, 255, .08); pointer-events: none;
+}
+.reveal .feat h3 { font-size: .92em; margin: 0 0 .12em; color: #fff; }
+.reveal .feat p { font-size: .6em; color: var(--c-white-soft); margin: 0; }
+.reveal .feat--accent {
+  border-color: rgba(10, 228, 195, .5);
+  box-shadow: inset 0 0 0 1px rgba(10, 228, 195, .18), 0 10px 34px rgba(0, 0, 0, .35);
+}
+.reveal .feat--accent .feat__n { color: rgba(10, 228, 195, .22); }
+
+/* --- Flujo horizontal con flechas (slides claras) --- */
+.reveal .flow { display: flex; align-items: stretch; gap: .45em; justify-content: center; margin-top: .6em; }
+.reveal .flow__step {
+  flex: 1; background: #f4f6fb; border: 1px solid var(--c-line); border-radius: 14px;
+  padding: .65em .7em; text-align: left;
+}
+.reveal .flow__step h3 { font-size: .92em; color: var(--c-ink); margin: 0 0 .15em; }
+.reveal .flow__step p { font-size: .6em; color: var(--c-ink-soft); margin: 0; }
+.reveal .flow__step .num { font-family: var(--font-display); color: var(--c-accent-blue); font-size: .7em; }
+.reveal .flow__arrow { align-self: center; font-size: 1.5em; color: var(--c-accent-blue); line-height: 1; }
+.reveal .loopback {
+  margin: .7em auto 0; max-width: 26em; text-align: center; color: var(--c-ink); font-size: .72em;
+  border: 1px dashed rgba(0, 71, 233, .5); border-radius: 999px; padding: .35em 1em;
+}
+.reveal .loopback strong { color: var(--c-accent-blue); }
+
+/* --- Pirámide grande y con degradado --- */
+.reveal .pyramid--xl .pyramid__row { padding: .5em 1em; font-size: 1.05em; }
+.reveal .pyramid--xl .pyramid__row--tps { background: rgba(255,255,255,.10); }
+.reveal .pyramid--xl .pyramid__row--mis { background: rgba(0,71,233,.45); border-color: rgba(255,255,255,.35); }
+.reveal .pyramid--xl .pyramid__row--dss { background: rgba(0,71,233,.75); border: none; }
+.reveal .pyramid--xl .pyramid__row--eis { background: var(--c-accent); }
+
+/* --- Beneficios: rejilla 2x2 con números fantasma grandes --- */
+.reveal .bens { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6em; text-align: left; }
+.reveal .ben { position: relative; padding: .55em .7em .55em 2.4em; border-left: 2px solid var(--c-accent); }
+.reveal .ben__n { position: absolute; left: .35em; top: .15em; font-family: var(--font-display); color: var(--c-accent); font-size: 1.1em; }
+.reveal .ben h3 { font-size: .98em; margin: 0 0 .1em; }
+.reveal .ben p { font-size: .62em; color: var(--c-white-soft); margin: 0; }
+
+/* --- Timeline horizontal con línea --- */
+.reveal .htl { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1em; margin-top: 1.6em; text-align: left; }
+.reveal .htl::before { content: ""; position: absolute; top: -.7em; left: 6%; right: 6%; height: 2px; background: linear-gradient(90deg, var(--c-accent-blue), var(--c-accent)); }
+.reveal .htl__node { position: relative; }
+.reveal .htl__dot { position: absolute; top: -1.0em; left: 0; width: .55em; height: .55em; border-radius: 50%; background: var(--c-accent-blue); box-shadow: 0 0 0 .22em rgba(0, 71, 233, .18); }
+.reveal .htl__node:last-child .htl__dot { background: var(--c-accent); box-shadow: 0 0 0 .22em rgba(10, 228, 195, .22); }
+.reveal .htl h3 { font-size: 1.0em; color: var(--c-ink); margin: 0 0 .12em; }
+.reveal .htl p { font-size: .62em; color: var(--c-ink-soft); margin: 0; }
+
+/* --- Empresas: nombre en display grande --- */
+.reveal .orgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7em; }
+.reveal .org { text-align: left; background: rgba(255, 255, 255, .06); border: 1px solid var(--c-line-blue); border-radius: 16px; padding: .75em .8em; }
+.reveal .org h3 { font-size: 1.35em; color: #fff; margin: 0 0 .15em; }
+.reveal .org p { font-size: .6em; color: var(--c-white-soft); margin: 0; }
+.reveal .org .tag { display: inline-block; font-size: .5em; letter-spacing: .12em; text-transform: uppercase; color: var(--c-accent); margin-bottom: .3em; }
+
+/* --- Portada dramática --- */
+.reveal .slide--cover .cover { text-align: left; max-width: 20em; }
+.reveal .slide--cover .cover__title { font-size: 2.7em; line-height: .95; margin: 0; }
+.reveal .slide--cover .cover__title .hl { color: var(--c-accent); }
+.reveal .slide--cover .cover__sub { font-size: .92em; color: rgba(255,255,255,.9); margin: .55em 0 0; max-width: 18em; }
+.reveal .slide--cover .cover__rule { width: 4.6em; height: .15em; background: var(--c-accent); border-radius: 3px; margin-top: .7em; box-shadow: 0 0 26px rgba(10, 228, 195, .7); }
+.reveal .slide--cover .cover .eyebrow { color: var(--c-accent); }
+/* Scrim que oscurece el lado del texto para legibilidad sobre los racks. */
+body[data-gl] .slide--cover::before {
+  content: ""; position: absolute; inset: -50% -10%; z-index: -1;
+  background: linear-gradient(100deg, rgba(0,5,20,.94) 0%, rgba(0,5,20,.7) 34%, rgba(0,5,20,.12) 62%, rgba(0,5,20,0) 80%);
+  pointer-events: none;
+}
+
+/* --- Entrada al presentar (la slide actual anima su contenido) --- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal .slide--cover.present .cover > * { animation: rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
+  .reveal .slide--cover.present .cover > *:nth-child(1) { animation-delay: .05s; }
+  .reveal .slide--cover.present .cover > *:nth-child(2) { animation-delay: .14s; }
+  .reveal .slide--cover.present .cover > *:nth-child(3) { animation-delay: .23s; }
+  .reveal .slide--cover.present .cover > *:nth-child(4) { animation-delay: .32s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+}

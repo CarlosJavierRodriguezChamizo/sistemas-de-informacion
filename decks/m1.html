@@ -14,88 +14,111 @@
   <div class="reveal">
     <div class="slides">
 
-      <!-- 1 · Portada (con sala de servidores WebGL de fondo) -->
+      <!-- 1 · Portada (sala de servidores WebGL de fondo) -->
       <section class="slide--cover">
-        <span class="eyebrow">Bloque M1 · 15 min</span>
-        <h1>Introducción a los Sistemas de Información</h1>
-        <p class="muted">Qué son, de qué se componen y por qué deciden la estrategia.</p>
-      </section>
-
-      <!-- 2 · ¿Qué es un SI? -->
-      <section>
-        <h2>¿Qué es un Sistema de Información?</h2>
-        <p>No es solo software. Es la combinación de cuatro piezas que trabajan juntas:</p>
-        <div class="cards cards--2">
-          <div class="ccard"><h3>Personas</h3><p>Quienes usan y deciden con la información.</p></div>
-          <div class="ccard"><h3>Procesos</h3><p>Las reglas y flujos de trabajo del negocio.</p></div>
-          <div class="ccard"><h3>Datos</h3><p>La materia prima: hechos del negocio.</p></div>
-          <div class="ccard"><h3>Tecnología</h3><p>Hardware, software y redes que lo sostienen.</p></div>
+        <div class="cover">
+          <span class="eyebrow">Bloque M1 · 15 min</span>
+          <h1 class="cover__title">Introducción a los<br><span class="hl">Sistemas de Información</span></h1>
+          <p class="cover__sub">Qué son, de qué se componen y por qué deciden la estrategia.</p>
+          <div class="cover__rule"></div>
         </div>
-        <p class="muted" style="margin-top:.5em">Un SI convierte <strong>datos</strong> en <strong>decisiones</strong>.</p>
       </section>
 
-      <!-- 3 · Componentes -->
+      <!-- 2 · ¿Qué es un SI? — split + piezas numeradas -->
+      <section>
+        <div class="split">
+          <div class="col-l">
+            <span class="kicker">Definición</span>
+            <h2>¿Qué es un Sistema de Información?</h2>
+            <p class="statement">No es solo software.<br><span class="hl">Convierte datos en decisiones.</span></p>
+          </div>
+          <div class="col-r">
+            <div class="feats">
+              <div class="feat"><span class="feat__n">01</span><h3>Personas</h3><p>Quienes usan y deciden con la información.</p></div>
+              <div class="feat"><span class="feat__n">02</span><h3>Procesos</h3><p>Las reglas y flujos de trabajo del negocio.</p></div>
+              <div class="feat"><span class="feat__n">03</span><h3>Datos</h3><p>La materia prima: hechos del negocio.</p></div>
+              <div class="feat feat--accent"><span class="feat__n">04</span><h3>Tecnología</h3><p>Hardware, software y redes que lo sostienen.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 · Componentes y flujo (claro) — flujo con flechas -->
       <section class="slide--light" data-background-color="#ffffff">
+        <span class="kicker">Cómo funciona</span>
         <h2>Componentes y flujo</h2>
-        <div class="cards">
-          <div class="ccard"><h3>Entrada</h3><p>Captura de datos (ventas, stock, clientes).</p></div>
-          <div class="ccard"><h3>Proceso</h3><p>Transformación: cálculo, agregación, reglas.</p></div>
-          <div class="ccard"><h3>Salida</h3><p>Información útil: informes, cuadros de mando.</p></div>
+        <div class="flow">
+          <div class="flow__step"><span class="num">01</span><h3>Entrada</h3><p>Captura de datos: ventas, stock, clientes.</p></div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__step"><span class="num">02</span><h3>Proceso</h3><p>Transformación: cálculo, agregación, reglas.</p></div>
+          <div class="flow__arrow">→</div>
+          <div class="flow__step"><span class="num">03</span><h3>Salida</h3><p>Información útil: informes, cuadros de mando.</p></div>
         </div>
-        <p style="margin-top:.6em">+ <strong>Retroalimentación</strong>: la salida ajusta la entrada y mejora el sistema.</p>
+        <div class="loopback">↺&nbsp; <strong>Retroalimentación</strong>: la salida ajusta la entrada y mejora el sistema.</div>
       </section>
 
-      <!-- 4 · Pirámide de tipos -->
+      <!-- 4 · Pirámide de tipos — split texto / pirámide -->
       <section>
-        <span class="eyebrow">Tipos de SI según el nivel de decisión</span>
-        <h2>La pirámide TPS → EIS</h2>
-        <div class="pyramid">
-          <div class="pyramid__row pyramid__row--eis"><b>EIS</b> <small>Dirección · visión global</small></div>
-          <div class="pyramid__row pyramid__row--dss"><b>DSS</b> <small>Análisis · apoyo a decisiones</small></div>
-          <div class="pyramid__row pyramid__row--mis"><b>MIS</b> <small>Mandos intermedios · control e informes</small></div>
-          <div class="pyramid__row pyramid__row--tps"><b>TPS</b> <small>Operación · transacciones del día a día</small></div>
+        <div class="split">
+          <div class="col-l">
+            <span class="kicker">Niveles de decisión</span>
+            <h2>De la operación<br>a la estrategia</h2>
+            <p class="muted">La base mueve el día a día; la cima decide el rumbo. Cuanto más arriba, más resumen y más estrategia.</p>
+          </div>
+          <div class="col-r">
+            <div class="pyramid pyramid--xl">
+              <div class="pyramid__row pyramid__row--eis"><b>EIS</b> <small>Dirección · visión global</small></div>
+              <div class="pyramid__row pyramid__row--dss"><b>DSS</b> <small>Análisis · apoyo a decisiones</small></div>
+              <div class="pyramid__row pyramid__row--mis"><b>MIS</b> <small>Mandos intermedios · control</small></div>
+              <div class="pyramid__row pyramid__row--tps"><b>TPS</b> <small>Operación · transacciones del día a día</small></div>
+            </div>
+          </div>
         </div>
-        <p class="muted" style="margin-top:.5em">Cuanto más arriba, más resumen y más estrategia.</p>
       </section>
 
-      <!-- 5 · Importancia estratégica -->
+      <!-- 5 · Importancia estratégica — rejilla de beneficios -->
       <section>
-        <h2>Por qué importan estratégicamente</h2>
-        <ul>
-          <li><strong>Ventaja competitiva</strong>: hacer lo que otros no pueden.</li>
-          <li><strong>Mejores decisiones</strong>: datos fiables y a tiempo.</li>
-          <li><strong>Eficiencia</strong>: menos errores, menos coste, más velocidad.</li>
-          <li><strong>Experiencia de cliente</strong>: personalización y servicio.</li>
-        </ul>
+        <span class="kicker">Valor estratégico</span>
+        <h2>Por qué importan</h2>
+        <div class="bens">
+          <div class="ben"><span class="ben__n">01</span><h3>Ventaja competitiva</h3><p>Hacer lo que otros no pueden.</p></div>
+          <div class="ben"><span class="ben__n">02</span><h3>Mejores decisiones</h3><p>Datos fiables y a tiempo.</p></div>
+          <div class="ben"><span class="ben__n">03</span><h3>Eficiencia</h3><p>Menos errores, menos coste, más velocidad.</p></div>
+          <div class="ben"><span class="ben__n">04</span><h3>Experiencia de cliente</h3><p>Personalización y servicio.</p></div>
+        </div>
       </section>
 
-      <!-- 6 · Evolución -->
+      <!-- 6 · Evolución (claro) — timeline horizontal -->
       <section class="slide--light" data-background-color="#ffffff">
+        <span class="kicker">Línea de tiempo</span>
         <h2>Cómo han evolucionado</h2>
-        <div class="timeline">
-          <div><h3>On-premise</h3><p>Servidores propios. Control total, coste y rigidez altos.</p></div>
-          <div><h3>Nube</h3><p>SaaS y pago por uso. Escala y rapidez de despliegue.</p></div>
-          <div><h3>Big Data &amp; IA</h3><p>Decidir con grandes volúmenes en tiempo real.</p></div>
+        <div class="htl">
+          <div class="htl__node"><span class="htl__dot"></span><h3>On-premise</h3><p>Servidores propios. Control total; coste y rigidez altos.</p></div>
+          <div class="htl__node"><span class="htl__dot"></span><h3>Nube</h3><p>SaaS y pago por uso. Escala y rapidez de despliegue.</p></div>
+          <div class="htl__node"><span class="htl__dot"></span><h3>Big Data &amp; IA</h3><p>Decidir con grandes volúmenes en tiempo real.</p></div>
         </div>
       </section>
 
       <!-- 7 · Empresas transformadas por SI -->
       <section>
-        <span class="eyebrow">El SI como núcleo del modelo de negocio</span>
+        <span class="kicker">El SI como núcleo del negocio</span>
         <h2>Empresas transformadas por sus SI</h2>
-        <div class="cards">
-          <div class="ccard"><h3>Inditex / Zara</h3><p>Logística y reposición guiadas por datos.</p></div>
-          <div class="ccard"><h3>Amazon</h3><p>Recomendación, precios y cadena de suministro.</p></div>
-          <div class="ccard"><h3>Mercadona</h3><p>SAP + analítica para eficiencia operativa.</p></div>
+        <div class="orgs">
+          <div class="org"><span class="tag">Moda</span><h3>Inditex / Zara</h3><p>Logística y reposición guiadas por datos.</p></div>
+          <div class="org"><span class="tag">E-commerce</span><h3>Amazon</h3><p>Recomendación, precios y cadena de suministro.</p></div>
+          <div class="org"><span class="tag">Retail</span><h3>Mercadona</h3><p>SAP + analítica para eficiencia operativa.</p></div>
         </div>
-        <p class="muted" style="margin-top:.5em">El sistema no apoya el negocio: <strong>es</strong> el negocio.</p>
+        <p class="statement" style="margin-top:.7em;font-size:1.05em">El sistema no apoya el negocio: <span class="hl">es</span> el negocio.</p>
       </section>
 
-      <!-- 8 · Cierre + práctica -->
-      <section data-background-color="#0036b3">
-        <h2>Vuestro turno</h2>
-        <p>Ahora clasificad los <strong>12 sistemas</strong> reales de Grupo Báltica por tipo y nivel.</p>
-        <a class="deck-cta" href="../tools/clasificador.html">Ir al clasificador de sistemas</a>
+      <!-- 8 · Cierre + práctica (sala de servidores de nuevo: bookend) -->
+      <section class="slide--cover">
+        <div class="cover">
+          <span class="eyebrow">Vuestro turno</span>
+          <h1 class="cover__title">Clasificad los<br><span class="hl">12 sistemas</span> de Báltica</h1>
+          <p class="cover__sub">Por tipo y por nivel de decisión. El diagnóstico empieza aquí.</p>
+          <a class="deck-cta" href="../tools/clasificador.html">Ir al clasificador de sistemas</a>
+        </div>
       </section>
 
     </div>
