@@ -11,7 +11,7 @@ import Reveal from "reveal.js";
 import "reveal.js/dist/reveal.css";
 import "../styles/deck.css";
 import { createGL } from "./gl/glCanvas.js";
-import { MATRIX_FRAG, SERVER_FRAG, NETWORK_FRAG, BLUEPRINT_FRAG } from "./gl/shaders.js";
+import { MATRIX_FRAG, SERVER_FRAG, NETWORK_FRAG, BLUEPRINT_FRAG, NEURAL_FRAG } from "./gl/shaders.js";
 
 const deck = new Reveal({
   hash: true,            // hash de slide en la URL (offline-friendly)
@@ -65,19 +65,19 @@ function montarMatrix() {
   sincronizarServer();
 }
 
-/** M2: red 3D de nodos que se reconfigura al cambiar de diapositiva. */
-function montarRed() {
+/** Fondo cuya "escena" (u_scroll) sigue al índice de slide, animado suave.
+ *  Lo usan M2 (red 3D) y M4 (red neuronal). */
+function montarFondoEscena(frag, dprCap) {
   const bgC = glCanvasEl("deck-bg");
   document.body.prepend(bgC);
-  const net = createGL(bgC, NETWORK_FRAG, { dprCap: 1.75 });
+  const gl = createGL(bgC, frag, { dprCap });
 
   window.addEventListener(
     "pointermove",
-    (e) => net.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
+    (e) => gl.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
     { passive: true }
   );
 
-  // "Escena" = índice de slide normalizado; se anima suavemente hacia el destino.
   const sceneTarget = () => {
     const n = deck.getTotalSlides();
     return n > 1 ? deck.getIndices().h / (n - 1) : 0;
@@ -88,10 +88,10 @@ function montarRed() {
   deck.addEventListener("slidechanged", () => { target = sceneTarget(); });
   const tick = () => {
     current += (target - current) * 0.05;
-    net.setScroll(current);
+    gl.setScroll(current);
     requestAnimationFrame(tick);
   };
-  if (reduce) { net.setScroll(target); } else { requestAnimationFrame(tick); }
+  if (reduce) { gl.setScroll(target); } else { requestAnimationFrame(tick); }
 }
 
 /** M3: rejilla "blueprint" en perspectiva (mismo lenguaje, fondo propio). */
@@ -109,8 +109,9 @@ function montarBlueprint() {
 /** Monta la capa WebGL según el deck (data-gl). */
 function montarGL() {
   const which = document.body.dataset.gl;
-  if (which === "m2") montarRed();
+  if (which === "m2") montarFondoEscena(NETWORK_FRAG, 1.75);
   else if (which === "m3") montarBlueprint();
+  else if (which === "m4") montarFondoEscena(NEURAL_FRAG, 1.3);
   else montarMatrix();
 }
 

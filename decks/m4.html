@@ -6,7 +6,22 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>M4 · IA, agentes y MCP — ESIC / Báltica</title>
 </head>
-<body class="deck">
+<body class="deck" data-gl="m4" data-motion>
+  <!-- Sprite de iconos (ilustraciones de línea) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4v-4H4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="2"/><path d="M12 4v4M9 13h.01M15 13h.01M3 12h2M19 12h2"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M9 5a3 3 0 0 0-3 3 3 3 0 0 0-1 5.6A3 3 0 0 0 8 18.5h1"/><path d="M15 5a3 3 0 0 1 3 3 3 3 0 0 1 1 5.6A3 3 0 0 1 16 18.5h-1"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 2v6M15 2v6"/><path d="M7 8h10v3a5 5 0 0 1-10 0V8z"/><path d="M12 16v6"/></symbol>
+    <symbol id="i-hub" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="4" r="1.6"/><circle cx="12" cy="20" r="1.6"/><circle cx="4" cy="12" r="1.6"/><circle cx="20" cy="12" r="1.6"/><path d="M12 6v3.5M12 14.5V18M6 12h3.5M14.5 12H18"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.6 4.8L18 9l-4.4 1.2L12 15l-1.6-4.8L6 9l4.4-1.2L12 3z"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4 3 19h18L12 4z"/><path d="M12 10v4M12 17v.4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17.5" cy="9" r="2.2"/><path d="M15.5 14.6c2.6.2 4.5 1.7 4.5 4.4"/></symbol>
+  </svg>
+
   <img class="deck-logo deck-logo--white" src="/assets/logo_ESIC_blanco.svg" alt="ESIC" />
   <img class="deck-logo deck-logo--blue" src="/assets/logo_ESIC_azul.svg" alt="ESIC" />
 
@@ -14,67 +29,85 @@
     <div class="slides">
 
       <!-- 1 · Portada -->
-      <section>
-        <span class="eyebrow">Bloque M4 · 15 min</span>
-        <h1>IA, agentes y MCP en los Sistemas de Información</h1>
-        <p class="muted">Por qué la IA hace que integrar los datos importe más que nunca.</p>
+      <section class="slide--cover">
+        <div class="cover">
+          <span class="eyebrow">Bloque M4 · 15 min</span>
+          <h1 class="cover__title">IA, agentes y<br><span class="shine">MCP</span></h1>
+          <p class="cover__sub">Por qué la IA hace que integrar los datos importe más que nunca.</p>
+          <div class="cover__rule"></div>
+        </div>
       </section>
 
-      <!-- 2 · De informes a copilotos -->
+      <!-- 2 · De informes a copilotos y agentes -->
       <section>
-        <span class="eyebrow">Cómo cambia la IA el SI</span>
+        <span class="kicker">Cómo cambia la IA el SI</span>
         <h2>De informes a copilotos y agentes</h2>
-        <div class="cards">
-          <div class="ccard"><h3>Antes</h3><p>El SI te daba un informe. Tú interpretabas y decidías.</p></div>
-          <div class="ccard"><h3>Ahora</h3><p>Un copiloto resume, explica y sugiere en lenguaje natural.</p></div>
-          <div class="ccard"><h3>Siguiente</h3><p>Agentes que, con permiso, ejecutan acciones entre sistemas.</p></div>
+        <div class="feats feats--3" style="margin-top:.8em">
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-doc"/></svg></span><h3>Antes</h3><p>El SI te daba un informe. Tú interpretabas y decidías.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-chat"/></svg></span><h3>Ahora</h3><p>Un copiloto resume, explica y sugiere en lenguaje natural.</p></div>
+          <div class="feat feat--accent glow-border spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-bot"/></svg></span><h3>Siguiente</h3><p>Agentes que, con permiso, ejecutan acciones entre sistemas.</p></div>
         </div>
       </section>
 
       <!-- 3 · La IA necesita datos -->
-      <section data-background-color="#0036b3">
-        <span class="eyebrow">El combustible de la IA es el dato</span>
-        <h2>Garbage in, garbage out — elevado</h2>
-        <p>Una IA solo es tan buena como los datos que ve. Con <strong>silos</strong> y dato sucio,
-        la IA acelera… los errores.</p>
-        <p class="muted">Integrar y limpiar el dato no es un proyecto técnico: es el <strong>requisito</strong> para usar IA con cabeza.</p>
-      </section>
-
-      <!-- 4 · De API a MCP -->
-      <section class="slide--light" data-background-color="#ffffff">
-        <span class="eyebrow">La pieza que faltaba</span>
-        <h2>De la API al MCP</h2>
-        <div class="cards cards--2">
-          <div class="ccard"><h3>API</h3><p>Un "camarero" entre dos sistemas. Conectas de uno en uno.</p></div>
-          <div class="ccard"><h3>MCP</h3><p>Un estándar para que <strong>un agente</strong> hable con <strong>muchos</strong> sistemas. El camarero universal — el USB-C de los datos.</p></div>
-        </div>
-        <p style="margin-top:.5em">Con MCP, un agente reúne CRM + AS/400 + Zendesk y da una sola respuesta.</p>
-      </section>
-
-      <!-- 5 · Qué cambia para Báltica -->
       <section>
-        <span class="eyebrow">El caso</span>
+        <div class="split">
+          <div class="col-l">
+            <span class="kicker">El combustible de la IA es el dato</span>
+            <h2>Garbage in,<br>garbage out — elevado</h2>
+            <p class="statement">Una IA es tan buena<br><span class="hl">como el dato que ve.</span></p>
+          </div>
+          <div class="col-r">
+            <div class="glass panel" data-anim>
+              <p style="margin:0 0 .4em;font-size:.8em">Con <strong>silos</strong> y dato sucio, la IA acelera… los errores.</p>
+              <ul class="checks">
+                <li>Integrar y limpiar el dato no es un proyecto técnico.</li>
+                <li>Es el <strong>requisito</strong> para usar IA con cabeza.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 · De la API al MCP -->
+      <section>
+        <span class="kicker">La pieza que faltaba</span>
+        <h2>De la API al MCP</h2>
+        <div class="feats" style="margin-top:.8em">
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-plug"/></svg></span><h3>API</h3><p>Un “camarero” entre dos sistemas. Conectas de uno en uno.</p></div>
+          <div class="feat feat--accent glow-border spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-hub"/></svg></span><h3>MCP</h3><p>Un estándar para que <strong>un agente</strong> hable con <strong>muchos</strong> sistemas. El USB-C de los datos.</p></div>
+        </div>
+        <p class="statement" data-anim style="margin-top:.7em;font-size:.95em">Con MCP, un agente reúne CRM + AS/400 + Zendesk y da <span class="hl">una sola respuesta</span>.</p>
+      </section>
+
+      <!-- 5 · Qué cambiaría para Báltica (cifra animada) -->
+      <section>
+        <span class="kicker">El caso</span>
         <h2>Qué cambiaría para Báltica</h2>
-        <p>Un agente con MCP daría, por fin, la <span class="big">vista 360</span></p>
-        <p class="muted">…que hoy no existe: saldo del AS/400, NPS de Zendesk e historial de la app, en una frase. Pero solo si el dato está integrado.</p>
+        <p class="muted" data-anim style="margin-top:.3em">Un agente con MCP daría, por fin, la vista…</p>
+        <div class="bignum" data-anim data-count="360" data-suf="º">0º</div>
+        <p class="muted" data-anim>…que hoy no existe: saldo del AS/400, NPS de Zendesk e historial de la app, <strong>en una frase</strong>. Pero solo si el dato está integrado.</p>
       </section>
 
       <!-- 6 · Riesgos y gobierno -->
-      <section class="slide--light" data-background-color="#ffffff">
-        <span class="eyebrow">Con los pies en el suelo</span>
+      <section>
+        <span class="kicker">Con los pies en el suelo</span>
         <h2>Riesgos y gobierno</h2>
-        <div class="cards">
-          <div class="ccard"><h3>Alucinaciones</h3><p>La IA puede inventar. Hace falta anclar en datos y verificar.</p></div>
-          <div class="ccard"><h3>Privacidad / RGPD</h3><p>Datos de cliente = responsabilidad legal. Permisos y trazabilidad.</p></div>
-          <div class="ccard"><h3>Humano en el bucle</h3><p>La IA propone; las decisiones críticas las valida una persona.</p></div>
+        <div class="feats feats--3" style="margin-top:.8em">
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-warning"/></svg></span><h3>Alucinaciones</h3><p>La IA puede inventar. Anclar en datos y verificar.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-shield"/></svg></span><h3>Privacidad / RGPD</h3><p>Dato de cliente = responsabilidad legal. Permisos y trazabilidad.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-people"/></svg></span><h3>Humano en el bucle</h3><p>La IA propone; las decisiones críticas las valida una persona.</p></div>
         </div>
       </section>
 
       <!-- 7 · Cierre + práctica -->
-      <section data-background-color="#0036b3">
-        <h2>Vuestro turno</h2>
-        <p>Ved a un agente de IA usar <strong>MCP</strong> para componer la vista 360 de un cliente B2B.</p>
-        <a class="deck-cta" href="../tools/mcp.html">Ir al interactivo API → MCP → agente</a>
+      <section class="slide--cover">
+        <div class="cover">
+          <span class="eyebrow">Vuestro turno</span>
+          <h1 class="cover__title">Un agente componiendo<br>la <span class="shine">vista 360</span></h1>
+          <p class="cover__sub">Vedlo usar MCP para unir varios sistemas en una sola respuesta.</p>
+          <a class="deck-cta" href="../tools/mcp.html">Ir al interactivo API → MCP → agente</a>
+        </div>
       </section>
 
     </div>

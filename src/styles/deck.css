@@ -327,6 +327,15 @@ body[data-gl] .slide--cover p { text-shadow: 0 2px 28px rgba(0, 5, 20, .75); }
 .reveal .slide--cover .cover__sub { font-size: .95em; color: rgba(255, 255, 255, .92); margin: .6em 0 0; max-width: 18em; }
 .reveal .slide--cover .cover__rule { width: 4.6em; height: .15em; background: var(--c-accent); border-radius: 3px; margin-top: .75em; box-shadow: 0 0 26px rgba(10, 228, 195, .8); }
 .reveal .slide--cover .cover .eyebrow { color: var(--c-accent); }
+/* Título con shimmer (gradiente animado) — portada de M4. */
+.reveal .cover__title .shine {
+  background: linear-gradient(100deg, var(--c-accent) 10%, #79d9ff 30%, #b79bff 50%, #79d9ff 70%, var(--c-accent) 90%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shine 6s linear infinite;
+}
+@keyframes shine { to { background-position: 220% 0; } }
+@media (prefers-reduced-motion: reduce) { .reveal .cover__title .shine { animation: none; } }
 /* Scrim que oscurece el lado del texto para legibilidad sobre los racks. */
 body[data-gl] .slide--cover::before {
   content: ""; position: absolute; inset: -50% -10%; z-index: -1;

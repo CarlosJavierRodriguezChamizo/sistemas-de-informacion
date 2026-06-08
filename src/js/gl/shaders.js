@@ -146,6 +146,75 @@ void main(){
 }
 `;
 
+/* --- Red neuronal con pulsos de datos (fondo de M4: IA · agentes · MCP). -
+   4 capas × 4 nodos, conexiones entre capas con "pulsos" que viajan (mensajes
+   entre agentes / MCP). u_scroll = escena: reordena la red por diapositiva. -- */
+export const NEURAL_FRAG = `
+precision highp float;
+uniform vec2 u_res; uniform float u_time; uniform float u_scroll; uniform vec2 u_mouse;
+
+float hash(float n){ return fract(sin(n)*43758.5453123); }
+mat3 rotY(float a){ float c=cos(a), s=sin(a); return mat3(c,0.0,-s, 0.0,1.0,0.0, s,0.0,c); }
+mat3 rotX(float a){ float c=cos(a), s=sin(a); return mat3(1.0,0.0,0.0, 0.0,c,-s, 0.0,s,c); }
+
+vec3 nodeP(float L, float i, float scene, float t){
+  float x = (L - 1.5) * 1.45;
+  float y = (i - 1.5) * 1.05 + 0.14*sin(t*0.7 + L*1.3 + i*2.1);
+  float z = 0.5*sin(L*1.7 + i*0.9 + scene*3.0);
+  return vec3(x, y, z);
+}
+vec3 proj(vec3 w, mat3 rot, float camZ){
+  w = rot * w; float z = w.z + camZ; return vec3(w.xy / (z*0.5), z);
+}
+float seg(vec2 p, vec2 a, vec2 b, out float h){
+  vec2 pa = p-a, ba = b-a; h = clamp(dot(pa,ba)/dot(ba,ba), 0.0, 1.0); return length(pa - ba*h);
+}
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5*u_res.xy) / u_res.y;
+  float t = u_time, scene = u_scroll, camZ = 4.2;
+  mat3 rot = rotY(0.25 + t*0.04 + scene*0.6) * rotX(0.18 + (u_mouse.y-0.5)*0.3);
+
+  vec3 col  = vec3(0.0, 0.025, 0.07);
+  vec3 teal = vec3(0.10, 0.98, 0.82);
+  vec3 blue = vec3(0.10, 0.50, 1.0);
+  vec3 viol = vec3(0.55, 0.35, 1.0);
+
+  // Conexiones entre capas adyacentes + pulsos viajeros
+  for(int L = 0; L < 3; L++){
+    for(int i = 0; i < 4; i++){
+      vec3 a = proj(nodeP(float(L), float(i), scene, t), rot, camZ);
+      for(int j = 0; j < 4; j++){
+        vec3 b = proj(nodeP(float(L+1), float(j), scene, t), rot, camZ);
+        float h; float d = seg(uv, a.xy, b.xy, h);
+        float fade = 1.0 / (0.5 + 0.4*(a.z + b.z));
+        col += blue * smoothstep(0.0045, 0.0, d) * fade * 0.32;
+        float seed = hash(float(L)*4.0 + float(i) + float(j)*0.137);
+        float pp = fract(t*0.45 + seed);
+        float pulse = smoothstep(0.045, 0.0, abs(h - pp)) * smoothstep(0.012, 0.0, d);
+        col += mix(teal, viol, seed) * pulse * fade * 1.7;
+      }
+    }
+  }
+  // Nodos (servidores/neuronas) con latido
+  for(int L = 0; L < 4; L++){
+    for(int i = 0; i < 4; i++){
+      vec3 a = proj(nodeP(float(L), float(i), scene, t), rot, camZ);
+      float d = length(uv - a.xy);
+      float size = 0.02 * (camZ / a.z);
+      float beat = 0.6 + 0.4*sin(t*1.5 + float(L)*1.1 + float(i));
+      col += teal * smoothstep(size, size*0.2, d) * (1.0 + beat*0.6);
+      col += blue * smoothstep(size*3.5, size, d) * 0.3;
+    }
+  }
+
+  vec2 dd = (gl_FragCoord.xy/u_res.xy) - 0.5;
+  col *= mix(0.6, 1.0, smoothstep(0.1, 0.7, length(dd*vec2(1.05,1.0))));
+  col *= smoothstep(1.25, 0.35, length(dd*vec2(1.15,1.0)));
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
 /* --- Rejilla "blueprint" en perspectiva (fondo de M3: proyectos/plan). --- */
 export const BLUEPRINT_FRAG = `
 precision highp float;
