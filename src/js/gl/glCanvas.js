@@ -131,7 +131,13 @@ export function createGL(canvas, frag, opts = {}) {
     raf = 0;
   }
 
-  const onVisibility = () => (document.hidden ? stop() : (opts.paused ? null : start()));
+  // Al ocultar la pestaña se pausa; al volver se reanuda SOLO si estaba activo
+  // (así un canvas detenido a propósito —p.ej. la sala fuera de portada— sigue parado).
+  let wasRunning = false;
+  const onVisibility = () => {
+    if (document.hidden) { wasRunning = running; stop(); }
+    else if (wasRunning) { start(); }
+  };
   document.addEventListener("visibilitychange", onVisibility);
 
   const onResize = () => { if (reduceMotion) { resize(); draw(performance.now()); } };
