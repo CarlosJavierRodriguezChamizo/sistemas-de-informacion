@@ -7,16 +7,22 @@
 import { Header } from "../components/index.js";
 import { escapeHtml, appUrl } from "../components/_util.js";
 import { initScrolly } from "./scrolly.js";
+import { createGL } from "./gl/glCanvas.js";
+import { BLUEPRINT_FRAG } from "./gl/shaders.js";
 
 /* ----------------------------- Geometría --------------------------------- */
-function box(x, y, w, h, label, cls = "") {
+function box(x, y, w, h, label, cls = "", pin = false) {
+  const dot = pin ? `<circle class="arch-pin" cx="${x + w / 2}" cy="${y + 11}" r="3" />` : "";
   return `<g class="arch-box ${cls}">
     <rect x="${x}" y="${y}" width="${w}" height="${h}" />
-    <text x="${x + w / 2}" y="${y + h / 2}">${escapeHtml(label)}</text>
+    ${dot}
+    <text x="${x + w / 2}" y="${y + h / 2 + (pin ? 4 : 0)}">${escapeHtml(label)}</text>
   </g>`;
 }
+/** Conexión neón: arista base + "flujo" de datos animado encima. */
 function arrow(x1, y1, x2, y2) {
-  return `<line class="arch-arrow" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#ah)" />`;
+  return `<line class="arch-edge" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#ah)" />
+    <line class="arch-flow" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />`;
 }
 
 /* Fuentes (abajo) */
@@ -28,7 +34,7 @@ const SW = 108, SH = 54, SY = 500;
 const SX = SOURCES.map((_, i) => 30 + i * 118);
 
 function stageSvg() {
-  const sources = SOURCES.map((s, i) => box(SX[i], SY, SW, SH, s.label, s.cls)).join("");
+  const sources = SOURCES.map((s, i) => box(SX[i], SY, SW, SH, s.label, s.cls, true)).join("");
   // flechas fuentes -> integración (capa en y 360-414)
   const arrowsToInt = SX.map((x) => arrow(x + SW / 2, SY, x + SW / 2, 416)).join("");
 
@@ -37,7 +43,7 @@ function stageSvg() {
       aria-label="Arquitectura objetivo por capas: sistemas fuente, capa de integración con APIs, data warehouse como única fuente de la verdad y, encima, vista 360, BI e IA.">
       <defs>
         <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#9aa3b8" />
+          <path d="M0,0 L8,4 L0,8 Z" fill="#5aa0ff" />
         </marker>
       </defs>
 
@@ -54,7 +60,7 @@ function stageSvg() {
 
       <!-- Data warehouse / SSOT -->
       <g class="arch-el arch-dwh" data-layer="dwh">
-        <line class="arch-arrow" x1="380" y1="360" x2="380" y2="301" marker-end="url(#ah)" />
+        ${arrow(380, 360, 380, 301)}
         <rect x="220" y="236" width="320" height="62" />
         <text x="380" y="261">Data Warehouse</text>
         <text x="380" y="281" style="font-weight:600;font-size:12px">Single source of truth</text>
@@ -62,9 +68,9 @@ function stageSvg() {
 
       <!-- Consumo: 360 / BI / IA -->
       <g class="arch-el arch-top" data-layer="top">
-        <line class="arch-arrow" x1="320" y1="236" x2="150" y2="158" marker-end="url(#ah)" />
-        <line class="arch-arrow" x1="380" y1="236" x2="380" y2="158" marker-end="url(#ah)" />
-        <line class="arch-arrow" x1="440" y1="236" x2="610" y2="158" marker-end="url(#ah)" />
+        ${arrow(320, 236, 150, 158)}
+        ${arrow(380, 236, 380, 158)}
+        ${arrow(440, 236, 610, 158)}
         ${box(50, 92, 200, 64, "Vista 360 del cliente")}
         ${box(280, 92, 200, 64, "BI / EIS del Comité")}
         ${box(510, 92, 200, 64, "IA / Agentes", "ia")}
@@ -120,7 +126,7 @@ function stepHtml(st) {
 const app = document.querySelector("#app");
 app.innerHTML = [
   Header({
-    variant: "light",
+    variant: "blue",
     breadcrumb: [
       { label: "Hub", href: "/index.html" },
       { label: "La arquitectura objetivo", current: true },
@@ -143,3 +149,14 @@ app.innerHTML = [
 ].join("");
 
 initScrolly(app.querySelector(".scrolly"), onScene);
+
+/* Fondo WebGL: rejilla en perspectiva (suelo de "mapa 3D" futurista). */
+const archBg = document.querySelector("#arch-bg");
+if (archBg) {
+  const bg = createGL(archBg, BLUEPRINT_FRAG, { dprCap: 1.75 });
+  window.addEventListener(
+    "pointermove",
+    (e) => bg.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
+    { passive: true }
+  );
+}

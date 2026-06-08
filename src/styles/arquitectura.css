@@ -1,38 +1,124 @@
 /* =========================================================================
-   arquitectura.css — Capa visual del scrollytelling "Arquitectura objetivo".
-   La maquetación la aporta scrolly.css; aquí solo el diagrama por capas.
-   Las capas se revelan de forma acumulada (clase .on añadida por JS).
+   arquitectura.css — Scrollytelling "Arquitectura objetivo".
+   Tema FUTURISTA oscuro/neón (estética M4), scopeado a .arch3d para NO afectar
+   a silos.html (que comparte scrolly.css). Fondo WebGL (rejilla en perspectiva)
+   + diagrama holográfico con nodos neón y datos fluyendo por las conexiones.
    ========================================================================= */
-.arch-el { opacity: 0; transition: opacity .45s ease, transform .45s ease; }
-.arch-el.on { opacity: 1; }
 
-.arch-box rect { rx: 10; fill: #e9eeff; stroke: #0047e9; stroke-width: 2; }
-.arch-box text { font-family: var(--font-body); font-weight: 600; font-size: 13px; fill: var(--c-ink); text-anchor: middle; dominant-baseline: middle; }
+/* ----------------------------------------------------- Lienzo / página */
+body.arch3d { background: #00071c; color: #e7eefc; }
 
-/* AS/400 (siempre visible como fuente, en rojo) */
-.arch-as400 rect { fill: #fdeaea; stroke: #d33; }
-.arch-as400 text { fill: #b01e1e; }
-.arch-as400.pulse rect { stroke-width: 4; }
-.arch-as400-tag { opacity: 0; transition: opacity .4s; }
-.arch-as400-tag rect { rx: 8; fill: #b26a00; }
-.arch-as400-tag text { fill: #fff; font-weight: 700; font-size: 12px; text-anchor: middle; dominant-baseline: middle; }
-.arch-as400-tag.on { opacity: 1; }
+#arch-bg {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  display: block; z-index: 0; pointer-events: none;
+}
+#arch-bg.gl--unsupported {
+  background: radial-gradient(120% 100% at 50% 0%, #0a235e 0%, #00133f 60%, #00071c 100%);
+}
+.arch3d #app { position: relative; z-index: 1; }
 
-/* Capa de integración */
-.arch-integration rect { rx: 12; fill: var(--c-accent-blue); }
-.arch-integration text { fill: #fff; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
+/* ----------------------------------------------------- Cabecera / intro */
+.arch3d .site-header { background: transparent; border: none; box-shadow: none; }
+.arch3d .site-header a,
+.arch3d .breadcrumb a,
+.arch3d .breadcrumb span,
+.arch3d .site-header__nav a { color: rgba(255, 255, 255, .82); }
+.arch3d .site-header__nav a:hover,
+.arch3d .breadcrumb a:hover { color: #fff; }
 
-/* Data warehouse / SSOT */
-.arch-dwh rect { rx: 12; fill: #0a826e; }
-.arch-dwh text { fill: #fff; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
+.arch3d .section--light { background: transparent; color: #e7eefc; }
+.arch3d .tool-intro h1 { color: #fff; }
+.arch3d .tool-intro .lead { color: rgba(255, 255, 255, .8); }
+.arch3d .badge--m2 { background: #6a2cf5; color: #fff; }
 
-/* Consumo (360, BI, IA) */
-.arch-top .arch-box rect { fill: #fff; stroke: var(--c-accent-blue); }
-.arch-top .arch-box.ia rect { stroke: #6a2cf5; }
-.arch-top .arch-box.ia text { fill: #4b2bb0; }
+/* ----------------------------------------------------- Escenario (stage) */
+.arch3d .scrolly__stage {
+  background: transparent; border: none; box-shadow: none; overflow: visible;
+  max-width: 700px;
+}
+/* Ligera inclinación 3D del diagrama (holograma sobre el "suelo"). */
+.arch3d .scrolly__svg {
+  overflow: visible;
+  transform: perspective(1200px) rotateX(15deg);
+  transform-origin: 50% 66%;
+}
 
-/* Flechas */
-.arch-arrow { stroke: var(--c-ink-soft); stroke-width: 2; fill: none; }
+/* ----------------------------------------------------- Pasos (glass dark) */
+.arch3d .scrolly__card {
+  background: linear-gradient(155deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .035));
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, .16); border-left: 3px solid var(--c-accent);
+  box-shadow: 0 16px 46px rgba(0, 8, 28, .5);
+  opacity: .4; color: #e7eefc;
+}
+.arch3d .scrolly__step.is-active .scrolly__card { opacity: 1; box-shadow: 0 20px 60px rgba(0, 8, 28, .6); }
+.arch3d .scrolly__kicker { color: var(--c-accent); }
+.arch3d .scrolly__card h3 { color: #fff; }
+.arch3d .scrolly__card p { color: rgba(255, 255, 255, .82); }
+.arch3d .scrolly__card .btn--secondary {
+  color: #fff; border-color: rgba(255, 255, 255, .4); background: rgba(255, 255, 255, .06);
+}
 
-/* Etiqueta de capa (lateral) */
-.arch-layer-label { font-family: var(--font-display); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; fill: var(--c-ink-soft); }
+/* ----------------------------------------------------- Diagrama neón */
+.arch3d .arch-el { opacity: 0; transition: opacity .5s ease; }
+.arch3d .arch-el.on { opacity: 1; }
+.arch3d .arch-layer-label {
+  font-family: var(--font-display); font-size: 12px; letter-spacing: .05em;
+  text-transform: uppercase; fill: rgba(255, 255, 255, .55);
+}
+
+/* Nodos = "marcadores" de cristal con halo neón */
+.arch3d .arch-box rect {
+  rx: 12; fill: rgba(8, 28, 60, .55); stroke: rgba(120, 205, 255, .75); stroke-width: 1.5;
+  filter: drop-shadow(0 0 7px rgba(90, 160, 255, .45));
+}
+.arch3d .arch-box text {
+  font-family: var(--font-body); font-weight: 600; font-size: 13px;
+  fill: #eaf3ff; text-anchor: middle; dominant-baseline: middle;
+}
+.arch3d .arch-pin { fill: var(--c-accent); filter: drop-shadow(0 0 5px rgba(10, 228, 195, .9)); }
+
+/* Capa de integración (azul) */
+.arch3d .arch-integration rect {
+  rx: 12; fill: rgba(0, 71, 233, .35); stroke: #5aa0ff; stroke-width: 1.5;
+  filter: drop-shadow(0 0 10px rgba(0, 71, 233, .5));
+}
+.arch3d .arch-integration text { fill: #fff; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
+
+/* Data warehouse (turquesa, núcleo) */
+.arch3d .arch-dwh rect {
+  rx: 12; fill: rgba(10, 228, 195, .16); stroke: var(--c-accent); stroke-width: 1.5;
+  filter: drop-shadow(0 0 14px rgba(10, 228, 195, .5));
+}
+.arch3d .arch-dwh text { fill: #eafff9; font-weight: 700; font-size: 14px; text-anchor: middle; dominant-baseline: middle; }
+
+/* Consumo (360 / BI / IA) */
+.arch3d .arch-top .arch-box.ia rect { stroke: #b79bff; filter: drop-shadow(0 0 9px rgba(150, 110, 255, .55)); }
+.arch3d .arch-top .arch-box.ia text { fill: #e9e2ff; }
+
+/* AS/400 (legado, rojo) */
+.arch3d .arch-as400 rect { fill: rgba(211, 51, 51, .18); stroke: #ff6b6b; filter: drop-shadow(0 0 8px rgba(255, 80, 80, .5)); }
+.arch3d .arch-as400 text { fill: #ffd9d9; }
+.arch3d .arch-as400.pulse rect { stroke-width: 3; animation: archpulse 1.3s ease-in-out infinite; }
+@keyframes archpulse { 0%, 100% { stroke: #ff6b6b; } 50% { stroke: #ffc2c2; } }
+
+.arch3d .arch-as400-tag { opacity: 0; transition: opacity .4s; }
+.arch3d .arch-as400-tag.on { opacity: 1; }
+.arch3d .arch-as400-tag rect { rx: 8; fill: #b26a00; filter: drop-shadow(0 0 6px rgba(255, 160, 0, .5)); }
+.arch3d .arch-as400-tag text { fill: #fff; font-weight: 700; font-size: 12px; text-anchor: middle; dominant-baseline: middle; }
+
+/* Conexiones: arista base tenue + flujo de datos animado */
+.arch3d .arch-edge { stroke: rgba(120, 200, 255, .28); stroke-width: 2; fill: none; }
+.arch3d .arch-flow {
+  stroke: var(--c-accent); stroke-width: 2.5; fill: none; stroke-linecap: round;
+  stroke-dasharray: 2 15; opacity: .95;
+  filter: drop-shadow(0 0 4px rgba(10, 228, 195, .85));
+  animation: archflow 1s linear infinite;
+}
+@keyframes archflow { to { stroke-dashoffset: -17; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .arch3d .arch-flow,
+  .arch3d .arch-as400.pulse rect { animation: none; }
+  .arch3d .arch-el { transition: none; }
+}
