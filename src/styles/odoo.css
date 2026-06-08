@@ -6,6 +6,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Scroll por bloques (cada sección ocupa la pantalla) */
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
 .odoo {
   margin: 0; background: #00071c; color: #e7eefc;
   font-family: var(--font-body); -webkit-font-smoothing: antialiased;
@@ -62,14 +65,17 @@
 @keyframes shine { to { background-position: 220% 0; } }
 
 /* ---------------------------------------------------------- Hero */
-.odoo-hero { min-height: 92svh; display: flex; flex-direction: column; justify-content: center; padding: 7rem 0 4rem; }
+.odoo-hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 7rem 0 4rem; scroll-snap-align: start; }
 .odoo-hero .wrap { max-width: min(1080px, 92vw); }
 .odoo-hero__title { font-size: clamp(3rem, 11vw, 8rem); margin: .2em 0 0; max-width: 16ch; }
 .odoo-hero .lead { font-size: clamp(1.05rem, 2.2vw, 1.4rem); max-width: 34ch; margin-top: 1.1rem; }
 .odoo-hero__hint { margin-top: 2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .18em; color: rgba(255,255,255,.6); }
 
 /* ---------------------------------------------------------- Bloques tema */
-.topic { padding: clamp(3rem, 8vh, 6rem) 0; }
+.topic {
+  min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(2.5rem, 6vh, 4.5rem) 0; scroll-snap-align: start;
+}
 .topic__head { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.6rem; }
 .topic__n {
   font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 4rem); line-height: .8;
@@ -162,7 +168,7 @@
 .multi__note { font-size: .85rem; color: rgba(255,255,255,.72); text-align: center; max-width: 50ch; }
 
 /* CTA cierre */
-.odoo-close { min-height: 70svh; display: flex; flex-direction: column; justify-content: center; padding: 5rem 0 8rem; }
+.odoo-close { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 5rem 0; scroll-snap-align: start; }
 .odoo-close h2 { font-size: clamp(2rem, 6vw, 4rem); max-width: 16ch; }
 .odoo-close .lead { max-width: 42ch; }
 .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
@@ -177,6 +183,35 @@
 
 /* Nota legal pequeña */
 .fineprint { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 1rem; line-height: 1.5; }
+
+/* ---------------------------------------------------------- Micro-interacciones */
+/* Elevación al hover */
+.feat, .vs__col, .flow__step, .app, .multi__co {
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
+}
+.feat:hover, .vs__col:hover, .flow__step:hover {
+  transform: translateY(-5px); border-color: rgba(10,228,195,.5);
+  box-shadow: 0 24px 60px rgba(0,8,28,.6), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.app:hover, .multi__co:hover { transform: translateY(-3px); border-color: rgba(10,228,195,.45); }
+
+/* Spotlight que sigue al cursor (estética 21st.dev) */
+.spot { position: relative; }
+.spot::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(200px circle at var(--mx,50%) var(--my,50%), rgba(10,228,195,.18), transparent 60%);
+  opacity: 0; transition: opacity .35s ease;
+}
+.spot:hover::after { opacity: 1; }
+
+/* Latido sutil de los iconos */
+@media (prefers-reduced-motion: no-preference) {
+  .ico-chip { animation: pulse-ico 4.5s ease-in-out infinite; }
+}
+@keyframes pulse-ico {
+  0%, 100% { box-shadow: 0 0 16px rgba(10,228,195,.16), inset 0 1px 0 rgba(255,255,255,.12); }
+  50%      { box-shadow: 0 0 24px rgba(10,228,195,.4), inset 0 1px 0 rgba(255,255,255,.12); }
+}
 
 /* ---------------------------------------------------------- Revelado (Motion) */
 @media (prefers-reduced-motion: no-preference) {

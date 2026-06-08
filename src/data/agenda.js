@@ -40,6 +40,7 @@ export const DIAS = [
         time: "18:50", dur: "20'", cat: "demo",
         title: "Taller ERP en la nube · Demo Odoo",
         note: "Demostración en vivo.",
+        links: [{ label: "Guía visual del taller", href: "decks/odoo.html", kind: "story" }],
       },
       {
         time: "19:10", dur: "15'", cat: "kahoot", title: "Kahoot #1",

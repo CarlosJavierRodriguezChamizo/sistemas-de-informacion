@@ -4,7 +4,6 @@
    proyecto: fondo WebGL (rejilla en perspectiva), scroll suave con Lenis,
    glass + neón y revelado por scroll con Motion. Offline (npm, sin CDN).
    ========================================================================= */
-import Lenis from "lenis";
 import { inView, animate, stagger } from "motion";
 import { createGL } from "./gl/glCanvas.js";
 import { BLUEPRINT_FRAG } from "./gl/shaders.js";
@@ -46,15 +45,15 @@ const SPRITE = `
 </svg>`;
 
 /* ------------------------------ Helpers ---------------------------------- */
-const app = (id, label) => `<div class="app">${appI(id)}<span>${label}</span></div>`;
-const feat = (id, h, p, cls = "") => `<div class="feat glass ${cls}" data-anim><span class="ico-chip">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
-const flowStep = (n, id, h, p) => `<div class="flow__step glass" data-anim><span class="num">${n}</span> <span class="ico-chip" style="margin:0 0 .4em">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
-const arrow = `<span class="flow__arrow">→</span>`;
+const app = (id, label) => `<div class="app" data-anim>${appI(id)}<span>${label}</span></div>`;
+const feat = (id, h, p, cls = "") => `<div class="feat glass spot ${cls}" data-anim><span class="ico-chip">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
+const flowStep = (n, id, h, p) => `<div class="flow__step glass spot" data-anim><span class="num">${n}</span> <span class="ico-chip" style="margin:0 0 .4em">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
+const arrow = `<span class="flow__arrow" data-anim>→</span>`;
 
 function topic(n, kicker, title, body) {
   return `<section class="topic reveal"><div class="wrap">
-    <div class="topic__head"><span class="topic__n">${n}</span>
-      <div><span class="kicker">${kicker}</span><h2>${title}</h2></div></div>
+    <div class="topic__head"><span class="topic__n" data-anim>${n}</span>
+      <div><span class="kicker" data-anim>${kicker}</span><h2 data-anim>${title}</h2></div></div>
     ${body}
   </div></section>`;
 }
@@ -70,10 +69,10 @@ root.innerHTML = `
 
   <main id="contenido">
   <section class="odoo-hero reveal"><div class="wrap">
-    <span class="eyebrow">Taller · ERP en la Nube</span>
-    <h1 class="odoo-hero__title">Demo <span class="shine">Odoo</span></h1>
-    <p class="lead">El ERP open source y modular: qué es, por qué destaca y cómo encaja en un caso como Báltica — antes de verlo en vivo.</p>
-    <div class="odoo-hero__hint" aria-hidden="true">Desplázate ↓</div>
+    <span class="eyebrow" data-anim>Taller · ERP en la Nube</span>
+    <h1 class="odoo-hero__title" data-anim>Demo <span class="shine">Odoo</span></h1>
+    <p class="lead" data-anim>El ERP open source y modular: qué es, por qué destaca y cómo encaja en un caso como Báltica — antes de verlo en vivo.</p>
+    <div class="odoo-hero__hint" data-anim aria-hidden="true">Desplázate ↓</div>
   </div></section>
 
   ${topic("01", "El qué", "¿Qué es Odoo?", `
@@ -105,7 +104,7 @@ root.innerHTML = `
 
   ${topic("03", "Las dos ediciones", "Odoo Enterprise vs Community", `
     <div class="vs">
-      <div class="vs__col glass" data-anim>
+      <div class="vs__col glass spot" data-anim>
         <span class="vs__tag">Gratis · Open source (LGPL)</span>
         <h3>Community</h3>
         <ul class="vs__list">
@@ -117,7 +116,7 @@ root.innerHTML = `
           <li class="no">Sin soporte oficial ni upgrades asistidos</li>
         </ul>
       </div>
-      <div class="vs__col vs__col--ent glass" data-anim>
+      <div class="vs__col vs__col--ent glass spot" data-anim>
         <span class="vs__tag">Suscripción · por usuario/app</span>
         <h3>Enterprise</h3>
         <ul class="vs__list">
@@ -192,12 +191,12 @@ root.innerHTML = `
     </div>`)}
 
   <section class="odoo-close reveal"><div class="wrap">
-    <span class="kicker">Y ahora…</span>
-    <h2>Vamos a verlo<br><span class="hl">en vivo</span>.</h2>
-    <p class="lead" style="margin-top:1rem">Abrimos una instancia de Odoo y recorremos estas ideas sobre el caso Báltica.</p>
-    <div class="cta-row">
-      <a class="btn btn--primary" href="${appUrl("/index.html")}">Volver al hub</a>
-      <a class="btn" href="${appUrl("/decks/arquitectura.html")}">Ver la arquitectura objetivo</a>
+    <span class="kicker" data-anim>Y ahora…</span>
+    <h2 data-anim>Vamos a verlo<br><span class="hl">en vivo</span>.</h2>
+    <p class="lead" data-anim style="margin-top:1rem">Abrimos una instancia de Odoo y recorremos estas ideas sobre el caso Báltica.</p>
+    <div class="cta-row" data-anim>
+      <a class="btn btn--primary" href="https://www.odoo.com" target="_blank" rel="noopener noreferrer">Ir a odoo.com ↗</a>
+      <a class="btn" href="${appUrl("/index.html")}">Volver al hub</a>
     </div>
   </div></section>
   </main>
@@ -214,14 +213,23 @@ if (bgCanvas) {
   );
 }
 
-/* ------------------------------ Scroll + reveal -------------------------- */
+/* ------------------------------ Spotlight (cursor) ----------------------- */
+document.addEventListener(
+  "pointermove",
+  (e) => {
+    const c = e.target.closest?.(".spot");
+    if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+    c.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+  },
+  { passive: true }
+);
+
+/* ------------------------------ Revelado por bloque ---------------------- */
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (!reduce) {
-  const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-  const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
-  requestAnimationFrame(raf);
-
   inView(
     "section.reveal",
     (el) => {
@@ -230,11 +238,11 @@ if (!reduce) {
       if (items.length) {
         animate(
           items,
-          { opacity: [0, 1], transform: ["translateY(26px) scale(.98)", "translateY(0) scale(1)"] },
-          { delay: stagger(0.08, { startDelay: 0.05 }), duration: .6, ease: [0.2, 0.7, 0.2, 1] }
+          { opacity: [0, 1], transform: ["translateY(32px) scale(.96)", "translateY(0) scale(1)"] },
+          { delay: stagger(0.06, { startDelay: 0.04 }), duration: .6, ease: [0.2, 0.7, 0.2, 1] }
         );
       }
     },
-    { amount: 0.2 }
+    { amount: 0.25 }
   );
 }
