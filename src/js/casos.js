@@ -26,6 +26,11 @@ const SPRITE = `
   <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18h5M10.5 21h3"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.2 1 2.5h6c0-1.3.2-1.8 1-2.5A6 6 0 0 0 12 3z"/></symbol>
   <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 3c3 1 5 4 5 8l-2 4H9l-2-4c0-4 2-7 5-8z"/><circle cx="12" cy="9" r="1.6"/><path d="M9 17l-2 4M15 17l2 4"/></symbol>
   <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M9 5a3 3 0 0 0-3 3 3 3 0 0 0-1 5.6A3 3 0 0 0 8 18.5h1"/><path d="M15 5a3 3 0 0 1 3 3 3 3 0 0 1 1 5.6A3 3 0 0 1 16 18.5h-1"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.2 2.5 13.8 0 16M12 4c-2.5 2.2-2.5 13.8 0 16"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/><path d="M14 5l3 3"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.6 4.8L18 9l-4.4 1.2L12 15l-1.6-4.8L6 9l4.4-1.2z"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21z"/><path d="M9 8h6M9 12h6"/></symbol>
 </svg>`;
 
 /* ------------------------------ Helpers ---------------------------------- */
@@ -43,7 +48,7 @@ const caseCard = (id, tag, name, txt, source, video) => `
       ${lnk(video, "▷ Vídeo", "case__video")}
     </div>
   </div>`;
-const feat = (id, h, p) => `<div class="feat glass spot" data-anim><span class="ico-chip">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
+const feat = (id, h, p, cls = "") => `<div class="feat glass spot ${cls}" data-anim><span class="ico-chip">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
 const flowStep = (n, id, h, p) => `<div class="flow__step glass spot" data-anim><span class="num">${n}</span> <span class="ico-chip" style="margin:0 0 .4em">${I(id)}</span><h3>${h}</h3><p>${p}</p></div>`;
 const arrow = `<span class="flow__arrow" data-anim>→</span>`;
 
@@ -79,11 +84,29 @@ root.innerHTML = `
       ${caseCard("i-leaf", "Agrícola", "Atlantic Blue", "Pasó de un escenario multisistema a tener SAP como “la columna que vertebra todos los departamentos”.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://youtu.be/npuWGGhxOaI")}
       ${caseCard("i-flask", "Alimentación", "Dallant", "Implantó SAP S/4HANA para ganar eficiencia y apoyar un crecimiento de más del 50% en cinco años.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://youtu.be/aLx4px4WJgM")}
       ${caseCard("i-building", "Construcción", "Aldesa", "Migró a SAP S/4HANA para un control exhaustivo de la planificación de sus obras.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://www.youtube.com/watch?v=Iokb_yCCuZQ")}
-      ${caseCard("i-factory", "Industria · Odoo", "Garber", "Implantó Odoo como ERP para digitalizar y unificar su gestión — testimonio de su CEO en vídeo.", "", "https://www.youtube.com/watch?v=0ZioX9iG8W0")}
+      ${caseCard("i-factory", "Industria", "Inquiba", "Completó su migración a SAP S/4HANA, integrando procesos y funcionalidades en un único sistema.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://www.youtube.com/watch?v=v_wwYWNqiwE")}
     </div>
     <p class="fineprint" data-anim style="margin-top:1rem">Fuentes: SAP España News Center y saptools.es · vídeos: canales de YouTube de cada caso.</p>`)}
 
-  ${topic("02", "El denominador común", "El patrón que se repite", `
+  ${topic("02", "Caso local · Sevilla", "Un estudio de arquitectura, todo conectado", `
+    <div class="glass panel" data-anim style="margin-bottom:1rem">
+      <p class="claim">Un <strong>estudio de arquitectura sevillano</strong> orquesta un stack completo: cada herramienta hace su trabajo y <span class="hl">Odoo centraliza la gestión</span>. La <span class="hl">IA</span> se ha convertido en el acelerador de la fase creativa.</p>
+      <p class="fineprint" style="margin-top:.6rem">Caso trabajado de primera mano.</p>
+    </div>
+    <div class="feats feats--3">
+      ${feat("i-globe", "WordPress", "La web pública: captación de clientes y escaparate del estudio.")}
+      ${feat("i-chart", "Analytics", "Mide visitas y leads: qué proyectos atraen y por dónde llegan.")}
+      ${feat("i-pen", "AutoCAD", "Planimetría 2D precisa: la base técnica del proyecto.")}
+      ${feat("i-cube", "Revit · BIM", "El edificio como dato 3D, no solo como dibujo.")}
+      ${feat("i-spark", "IA · Renders", "Renders fotorrealistas en minutos: ver la propuesta antes de construir.", "feat--accent")}
+      ${feat("i-receipt", "Odoo", "Toda la gestión comercial y la facturación en un único sistema.")}
+    </div>
+    <div class="glass panel spot" data-anim style="margin-top:1rem; border-color: rgba(10,228,195,.45)">
+      <span class="kicker">El papel de la IA</span>
+      <p style="color:rgba(255,255,255,.86)">Lo que antes era un cuello de botella —renders que tardaban horas o se subcontrataban— hoy se resuelve en <strong>minutos</strong>. La IA <strong>acelera la propuesta al cliente</strong>, multiplica las iteraciones de diseño y libera al equipo para proyectar. <span class="hl">No sustituye al arquitecto: le da velocidad.</span></p>
+    </div>`)}
+
+  ${topic("03", "El denominador común", "El patrón que se repite", `
     <div class="glass panel" data-anim style="margin-bottom:1rem">
       <p class="claim">En todas, el sistema dejó de <em>apoyar</em> el negocio para <strong>ser</strong> el negocio. Y el combustible siempre es el mismo: <span class="hl">dato integrado y de calidad</span>.</p>
     </div>
@@ -93,7 +116,7 @@ root.innerHTML = `
       ${feat("i-bolt", "Escalar sin romperse", "Procesos y arquitectura que crecen con el negocio.")}
     </div>`)}
 
-  ${topic("03", "El hilo del día", "De la teoría al caso Báltica", `
+  ${topic("04", "El hilo del día", "De la teoría al caso Báltica", `
     <div class="flow">
       ${flowStep("M1", "i-bulb", "Qué es un SI", "Personas + procesos + datos + tecnología que convierten datos en decisiones.")}
       ${arrow}
@@ -104,23 +127,13 @@ root.innerHTML = `
       ${flowStep("M4", "i-brain", "IA + MCP", "La IA necesita dato integrado; agentes que componen la vista 360.")}
     </div>`)}
 
-  ${topic("04", "La tesis", "Báltica tiene las piezas. Le falta que hablen.", `
+  ${topic("05", "La tesis", "Báltica tiene las piezas. Le falta que hablen.", `
     <div class="stats">
       <div class="stat glass spot" data-anim><span class="bignum" data-count="14.5" data-dec="1" data-pre="+" data-suf=" %">+0 %</span><span class="lab">Crecen las ventas</span></div>
       <div class="stat glass spot stat--warn" data-anim><span class="bignum">6,0 → 2,5 %</span><span class="lab">…y cae el EBITDA</span></div>
       <div class="stat glass spot" data-anim><span class="bignum" data-count="18" data-suf=" M€">0 M€</span><span class="lab">En sistemas que no se hablan</span></div>
     </div>
     <p class="lead" data-anim style="margin-top:1.2rem;max-width:48ch">Más ventas y menos margen: el problema no está en el mercado, está en la <strong>desintegración</strong>. La ventaja no es tener sistemas, sino <span class="hl">conectarlos</span>.</p>`)}
-
-  <section class="odoo-close reveal"><div class="wrap">
-    <span class="kicker" data-anim>Vuestro turno</span>
-    <h2 data-anim>Defendedlo ante<br><span class="hl">el Comité</span>.</h2>
-    <p class="lead" data-anim style="margin-top:1rem">Llevad la síntesis al pitch: diagnóstico, arquitectura objetivo y el papel de la IA.</p>
-    <div class="cta-row" data-anim>
-      <a class="btn btn--primary" href="${appUrl("/tools/pitch.html")}">Ir a la sala de pitch</a>
-      <a class="btn" href="${appUrl("/index.html")}">Volver al hub</a>
-    </div>
-  </div></section>
   </main>
 `;
 
