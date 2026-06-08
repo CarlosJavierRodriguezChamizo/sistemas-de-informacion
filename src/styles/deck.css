@@ -209,6 +209,45 @@ body[data-gl] .slide--cover p { text-shadow: 0 2px 28px rgba(0, 5, 20, .75); }
 .reveal .statement { font-family: var(--font-display); font-size: 1.3em; line-height: 1.06; color: #fff; }
 .reveal .statement .hl { color: var(--c-accent); }
 
+/* ============================================ Estética 21st.dev + Motion */
+/* Evita el "flash" antes de que Motion anime (si hay JS y no reduce-motion). */
+@media (prefers-reduced-motion: no-preference) {
+  body[data-motion] [data-anim] { opacity: 0; }
+}
+/* Spotlight: brillo que sigue al cursor (recreación de la tarjeta 21st.dev). */
+.reveal .spot::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(10, 228, 195, .20), transparent 60%);
+  opacity: 0; transition: opacity .35s ease;
+}
+.reveal .spot:hover::after { opacity: 1; }
+/* Micro-interacción: elevación al hover. */
+.reveal .lift { transition: transform .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease; }
+.reveal .lift:hover { transform: translateY(-4px); box-shadow: 0 22px 60px rgba(0, 8, 28, .55), inset 0 1px 0 rgba(255, 255, 255, .2); }
+/* Borde con glow animado (conic) para la tarjeta destacada. */
+.reveal .glow-border { position: relative; }
+.reveal .glow-border::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: conic-gradient(from var(--ang, 0deg), transparent 0 70%, rgba(10, 228, 195, .9) 85%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: spin-border 4s linear infinite;
+}
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin-border { to { --ang: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .reveal .glow-border::before { animation: none; } }
+
+/* --- Cifras grandes animadas (Motion) + fila de estadísticas --- */
+.reveal .bignum {
+  display: block; font-family: var(--font-display); line-height: .9;
+  font-size: 4.2em; color: var(--c-accent); margin: .15em 0;
+  text-shadow: 0 0 40px rgba(10, 228, 195, .45);
+}
+.reveal .bignum--sm { font-size: 1.9em; }
+.reveal .statrow { display: flex; gap: .8em; justify-content: center; margin: .2em 0 .2em; }
+.reveal .stat { flex: 1; max-width: 9em; padding: .6em .5em; text-align: center; }
+.reveal .stat__lab { display: block; font-size: .55em; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .7); margin-top: .2em; }
+
 /* --- Panel glass genérico + lista con checks --- */
 .reveal .panel { padding: .95em 1.15em; text-align: left; }
 .reveal .checks { list-style: none; margin: 0; }

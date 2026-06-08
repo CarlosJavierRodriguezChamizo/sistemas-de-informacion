@@ -146,6 +146,40 @@ void main(){
 }
 `;
 
+/* --- Rejilla "blueprint" en perspectiva (fondo de M3: proyectos/plan). --- */
+export const BLUEPRINT_FRAG = `
+precision highp float;
+uniform vec2 u_res; uniform float u_time; uniform vec2 u_mouse;
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5*u_res.xy) / u_res.y;
+  vec3 col = vec3(0.0, 0.025, 0.07);              // navy
+
+  float horizon = 0.10 + (u_mouse.y - 0.5) * 0.04;
+  if (uv.y < horizon){
+    float z = 1.0 / (horizon - uv.y);             // profundidad (suelo en perspectiva)
+    z = min(z, 40.0);
+    float x = (uv.x + (u_mouse.x - 0.5) * 0.1) * z;
+    float speed = u_time * 0.5;
+    vec2 g  = vec2(x, z + speed);
+    vec2 gl = abs(fract(g) - 0.5);
+    float line = min(gl.x, gl.y);
+    float grid = smoothstep(0.07, 0.0, line);
+    float fade = exp(-z * 0.09);
+    col += vec3(0.0, 0.45, 0.95) * grid * fade * 0.55;
+    // líneas maestras cada 5 celdas, algo más marcadas
+    vec2 g5 = abs(fract(g/5.0) - 0.5);
+    float maj = smoothstep(0.02, 0.0, min(g5.x, g5.y));
+    col += vec3(0.05, 0.9, 0.8) * maj * fade * 0.4;
+  }
+
+  vec2 dd = (gl_FragCoord.xy/u_res.xy) - 0.5;
+  col *= mix(0.6, 1.0, smoothstep(0.1, 0.7, length(dd*vec2(1.05,1.0))));
+  col *= smoothstep(1.25, 0.35, length(dd*vec2(1.15,1.0)));
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
 /* --- Red 3D de servidores intercomunicados (nodos + aristas). ----------
    Doce nodos proyectados en perspectiva, unidos por aristas (anillo + cuerdas).
    u_scroll = "escena" (índice de slide animado): reorganiza los nodos y gira la

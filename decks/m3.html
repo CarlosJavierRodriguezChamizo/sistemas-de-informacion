@@ -6,7 +6,25 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>M3 · Proyectos de SI + Lidl-SAP — ESIC / Báltica</title>
 </head>
-<body class="deck">
+<body class="deck" data-gl="m3" data-motion>
+  <!-- Sprite de iconos (ilustraciones de línea) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/><path d="M14 5l3 3"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 3c3 1 5 4 5 8l-2 4H9l-2-4c0-4 2-7 5-8z"/><circle cx="12" cy="9" r="1.6"/><path d="M9 17l-2 4M15 17l2 4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4h-4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4 3 9l9 5 9-5-9-5z"/><path d="M3 14l9 5 9-5"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6l3 2M20 12a8 8 0 0 1-13 6l-3-2"/><path d="M20 4v4h-4M4 20v-4h4"/></symbol>
+    <symbol id="i-infinity" viewBox="0 0 24 24"><path d="M7 9a3 3 0 1 0 0 6c2 0 3-2 5-3s3-3 5-3a3 3 0 1 1 0 6c-2 0-3-2-5-3S9 9 7 9z"/></symbol>
+    <symbol id="i-trending" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-7"/><path d="M17 8h4v4"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M5 18a8 8 0 1 1 14 0"/><path d="M12 14l4-3"/><circle cx="12" cy="14" r="1.2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4 3 19h18L12 4z"/><path d="M12 10v4M12 17v.4"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><circle cx="17.5" cy="9" r="2.2"/><path d="M15.5 14.6c2.6.2 4.5 1.7 4.5 4.4"/></symbol>
+  </svg>
+
   <img class="deck-logo deck-logo--white" src="/assets/logo_ESIC_blanco.svg" alt="ESIC" />
   <img class="deck-logo deck-logo--blue" src="/assets/logo_ESIC_azul.svg" alt="ESIC" />
 
@@ -14,70 +32,84 @@
     <div class="slides">
 
       <!-- 1 · Portada -->
-      <section>
-        <span class="eyebrow">Bloque M3 · 15 min</span>
-        <h1>Proyectos de Sistemas de Información</h1>
-        <p class="muted">Cómo se llevan a cabo, cómo se evalúan y por qué fracasan.</p>
+      <section class="slide--cover">
+        <div class="cover">
+          <span class="eyebrow">Bloque M3 · 15 min</span>
+          <h1 class="cover__title">Proyectos de<br><span class="hl">Sistemas de Información</span></h1>
+          <p class="cover__sub">Cómo se llevan a cabo, cómo se evalúan y por qué fracasan.</p>
+          <div class="cover__rule"></div>
+        </div>
       </section>
 
       <!-- 2 · Ciclo de vida -->
-      <section class="slide--light" data-background-color="#ffffff">
-        <h2>Ciclo de vida de un proyecto SI</h2>
-        <div class="cards">
-          <div class="ccard"><h3>1. Planificar</h3><p>Objetivos, alcance y caso de negocio.</p></div>
-          <div class="ccard"><h3>2. Analizar</h3><p>Requisitos del negocio y procesos.</p></div>
-          <div class="ccard"><h3>3. Diseñar</h3><p>Arquitectura y solución técnica.</p></div>
-          <div class="ccard"><h3>4. Desarrollar</h3><p>Construcción, configuración y pruebas.</p></div>
-          <div class="ccard"><h3>5. Implantar</h3><p>Despliegue, datos y formación.</p></div>
-          <div class="ccard"><h3>6. Operar</h3><p>Soporte, mejora y evolución.</p></div>
+      <section>
+        <span class="kicker">Ciclo de vida</span>
+        <h2>De la idea a la operación</h2>
+        <div class="feats feats--3" style="margin-top:.8em">
+          <div class="feat spot lift" data-anim><span class="feat__n">01</span><span class="ico-chip"><svg class="ico"><use href="#i-target"/></svg></span><h3>Planificar</h3><p>Objetivos, alcance y caso de negocio.</p></div>
+          <div class="feat spot lift" data-anim><span class="feat__n">02</span><span class="ico-chip"><svg class="ico"><use href="#i-search"/></svg></span><h3>Analizar</h3><p>Requisitos del negocio y procesos.</p></div>
+          <div class="feat spot lift" data-anim><span class="feat__n">03</span><span class="ico-chip"><svg class="ico"><use href="#i-pen"/></svg></span><h3>Diseñar</h3><p>Arquitectura y solución técnica.</p></div>
+          <div class="feat spot lift" data-anim><span class="feat__n">04</span><span class="ico-chip"><svg class="ico"><use href="#i-code"/></svg></span><h3>Desarrollar</h3><p>Construcción, configuración y pruebas.</p></div>
+          <div class="feat spot lift" data-anim><span class="feat__n">05</span><span class="ico-chip"><svg class="ico"><use href="#i-rocket"/></svg></span><h3>Implantar</h3><p>Despliegue, datos y formación.</p></div>
+          <div class="feat spot lift" data-anim><span class="feat__n">06</span><span class="ico-chip"><svg class="ico"><use href="#i-gear"/></svg></span><h3>Operar</h3><p>Soporte, mejora y evolución.</p></div>
         </div>
       </section>
 
       <!-- 3 · Metodologías -->
       <section>
+        <span class="kicker">Cómo se ejecuta</span>
         <h2>Metodologías</h2>
-        <div class="cards">
-          <div class="ccard"><h3>Cascada</h3><p>Fases secuenciales. Predecible, pero rígido ante cambios.</p></div>
-          <div class="ccard"><h3>Ágil</h3><p>Iteraciones cortas. Entrega valor pronto y se adapta.</p></div>
-          <div class="ccard"><h3>DevOps</h3><p>Integración y despliegue continuos. Velocidad + fiabilidad.</p></div>
+        <div class="feats feats--3" style="margin-top:.8em">
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-layers"/></svg></span><h3>Cascada</h3><p>Fases secuenciales. Predecible, pero rígido ante cambios.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-loop"/></svg></span><h3>Ágil</h3><p>Iteraciones cortas. Entrega valor pronto y se adapta.</p></div>
+          <div class="feat feat--accent glow-border spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-infinity"/></svg></span><h3>DevOps</h3><p>Integración y despliegue continuos. Velocidad + fiabilidad.</p></div>
         </div>
       </section>
 
       <!-- 4 · Evaluación -->
       <section>
+        <span class="kicker">¿Funcionó?</span>
         <h2>Cómo se evalúa el éxito</h2>
-        <ul>
-          <li><strong>ROI</strong>: retorno frente a la inversión.</li>
-          <li><strong>Métricas de éxito</strong>: adopción, calidad del dato, tiempo de proceso.</li>
-          <li><strong>Gestión del riesgo</strong>: identificar y mitigar antes de que escale.</li>
-        </ul>
+        <div class="feats feats--3" style="margin-top:.8em">
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-trending"/></svg></span><h3>ROI</h3><p>Retorno frente a la inversión.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-gauge"/></svg></span><h3>Métricas</h3><p>Adopción, calidad del dato, tiempo de proceso.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-shield"/></svg></span><h3>Riesgo</h3><p>Identificar y mitigar antes de que escale.</p></div>
+        </div>
       </section>
 
-      <!-- 5 · Por qué fracasan -->
-      <section data-background-color="#0036b3">
-        <span class="eyebrow">El riesgo más caro es no integrar</span>
+      <!-- 5 · Por qué fracasan (cifra animada) -->
+      <section>
+        <span class="kicker">El riesgo más caro es no integrar</span>
         <h2>Por qué fracasan</h2>
-        <p>Invertir mucho no garantiza valor. Báltica ha puesto <span class="big">18 M€</span></p>
-        <p class="muted">…en sistemas que <strong>no se hablan entre sí</strong>. Sin integración, la inversión no rinde.</p>
+        <p class="muted" data-anim style="margin-top:.3em">Invertir mucho no garantiza valor. Báltica ha puesto…</p>
+        <div class="bignum" data-anim data-count="18" data-suf=" M€">0 M€</div>
+        <p class="muted" data-anim>…en sistemas que <strong>no se hablan entre sí</strong>. Sin integración, la inversión no rinde.</p>
       </section>
 
       <!-- 6 · Mini-caso Lidl-SAP -->
-      <section class="slide--light" data-background-color="#ffffff">
-        <span class="eyebrow">Mini-caso</span>
+      <section>
+        <span class="kicker">Mini-caso</span>
         <h2>Lidl &amp; SAP — el proyecto eLWIS</h2>
-        <p><strong>~7 años</strong> y <strong>~500 M€</strong>, abandonado en 2018.</p>
-        <div class="cards">
-          <div class="ccard"><h3>Personalizar de más</h3><p>Adaptaron el ERP a su proceso en vez de adaptar el proceso al estándar.</p></div>
-          <div class="ccard"><h3>Gestión del cambio</h3><p>La organización no acompañó la transformación.</p></div>
-          <div class="ccard"><h3>Alcance</h3><p>Objetivo demasiado ambicioso y poco acotado.</p></div>
+        <div class="statrow" data-anim>
+          <div class="stat glass"><span class="bignum bignum--sm" data-count="7" data-pre="~" data-suf=" años">~0 años</span><span class="stat__lab">de proyecto</span></div>
+          <div class="stat glass"><span class="bignum bignum--sm" data-count="500" data-pre="~" data-suf=" M€">~0 M€</span><span class="stat__lab">invertidos</span></div>
+          <div class="stat glass"><span class="bignum bignum--sm">2018</span><span class="stat__lab">abandonado</span></div>
+        </div>
+        <div class="feats feats--3" style="margin-top:.7em">
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-warning"/></svg></span><h3>Personalizar de más</h3><p>Adaptaron el ERP a su proceso en vez del proceso al estándar.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-people"/></svg></span><h3>Gestión del cambio</h3><p>La organización no acompañó la transformación.</p></div>
+          <div class="feat spot lift" data-anim><span class="ico-chip"><svg class="ico"><use href="#i-target"/></svg></span><h3>Alcance</h3><p>Objetivo demasiado ambicioso y poco acotado.</p></div>
         </div>
       </section>
 
       <!-- 7 · Cierre + práctica -->
-      <section data-background-color="#0036b3">
-        <h2>Vuestro turno</h2>
-        <p>Decidid qué hacer con el <strong>AS/400</strong> de Báltica: ¿migrar o integrar?</p>
-        <a class="deck-cta" href="../tools/migrar-integrar.html">Ir a la matriz de decisión</a>
+      <section class="slide--cover">
+        <div class="cover">
+          <span class="eyebrow">Vuestro turno</span>
+          <h1 class="cover__title">El AS/400 de Báltica:<br><span class="hl">¿migrar o integrar?</span></h1>
+          <p class="cover__sub">Decididlo con criterio en la matriz de decisión.</p>
+          <a class="deck-cta" href="../tools/migrar-integrar.html">Ir a la matriz de decisión</a>
+        </div>
       </section>
 
     </div>

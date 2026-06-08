@@ -11,7 +11,7 @@ import Reveal from "reveal.js";
 import "reveal.js/dist/reveal.css";
 import "../styles/deck.css";
 import { createGL } from "./gl/glCanvas.js";
-import { MATRIX_FRAG, SERVER_FRAG, NETWORK_FRAG } from "./gl/shaders.js";
+import { MATRIX_FRAG, SERVER_FRAG, NETWORK_FRAG, BLUEPRINT_FRAG } from "./gl/shaders.js";
 
 const deck = new Reveal({
   hash: true,            // hash de slide en la URL (offline-friendly)
@@ -94,14 +94,32 @@ function montarRed() {
   if (reduce) { net.setScroll(target); } else { requestAnimationFrame(tick); }
 }
 
+/** M3: rejilla "blueprint" en perspectiva (mismo lenguaje, fondo propio). */
+function montarBlueprint() {
+  const bgC = glCanvasEl("deck-bg");
+  document.body.prepend(bgC);
+  const grid = createGL(bgC, BLUEPRINT_FRAG, { dprCap: 1.75 });
+  window.addEventListener(
+    "pointermove",
+    (e) => grid.setMouse(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight),
+    { passive: true }
+  );
+}
+
 /** Monta la capa WebGL según el deck (data-gl). */
 function montarGL() {
-  if (document.body.dataset.gl === "m2") montarRed();
+  const which = document.body.dataset.gl;
+  if (which === "m2") montarRed();
+  else if (which === "m3") montarBlueprint();
   else montarMatrix();
 }
 
 deck.initialize().then(() => {
   sincronizarLogo();
   if (document.body.dataset.gl) montarGL();
+  // Micro-interacciones con Motion (carga bajo demanda; solo decks con data-motion).
+  if (document.body.hasAttribute("data-motion")) {
+    import("./deckMotion.js").then(({ initDeckMotion }) => initDeckMotion(deck));
+  }
 });
 deck.addEventListener("slidechanged", sincronizarLogo);
