@@ -105,39 +105,43 @@ float hash21(vec2 p){ p = fract(p*vec2(123.34, 345.45)); p += dot(p, p+34.345); 
 // Máscara de "glifo": subrejilla de puntos que cambia lentamente (sugiere caracteres).
 float glyph(vec2 cuv, vec2 cid, float t){
   vec2 sub = floor(cuv * vec2(4.0, 5.0));
-  float seed = hash21(cid) + floor(t*3.0)*0.137;
-  return step(0.45, hash21(sub + seed*9.1));
+  float seed = hash21(cid) + floor(t*1.2)*0.137;     // cambian despacio
+  return step(0.62, hash21(sub + seed*9.1));         // menos puntos encendidos
 }
 
 void main(){
   vec2 uv = gl_FragCoord.xy / u_res.xy;
   float aspect = u_res.x / u_res.y;
-  float cols = 40.0;
+  float cols = 34.0;
   float rows = cols / aspect * 1.7;
   vec2 cell = vec2(uv.x*cols, uv.y*rows);
   vec2 cid = floor(cell);
   vec2 cuv = fract(cell);
 
   float colSeed = hash11(cid.x*2.13 + 5.7);
-  float speed = mix(3.0, 9.0, colSeed);
-  float head = fract(u_time*speed*0.06 + colSeed*37.0) * (rows + 8.0);  // cabeza cae
+  float active = step(0.55, hash11(cid.x*1.31 + 0.7));   // solo ~45% de columnas llueven
+  float speed = mix(1.0, 2.4, colSeed);                  // mucho más lento
+  float head = fract(u_time*speed*0.03 + colSeed*37.0) * (rows + 8.0);
   float rowFromTop = (rows - 1.0) - cid.y;
-  float dist = head - rowFromTop;                       // >0 = estela tras la cabeza
-  float trail = exp(-dist*0.16) * step(-0.5, dist);
-  float headGlow = smoothstep(2.0, 0.0, abs(dist));
+  float dist = head - rowFromTop;
+  float trail = exp(-dist*0.22) * step(-0.5, dist);
+  float headGlow = smoothstep(1.6, 0.0, abs(dist));
   float g = glyph(cuv, cid, u_time + colSeed*10.0);
-  float lum = g * (trail*0.7 + headGlow*1.2);
+  float lum = g * (trail*0.38 + headGlow*0.6) * active;  // tenue
 
   vec3 teal = vec3(0.05, 0.95, 0.80);
   vec3 blue = vec3(0.0, 0.45, 1.0);
-  vec3 col = mix(blue, teal, 0.55) * lum;
-  col += vec3(0.7, 1.0, 0.95) * headGlow * g;           // cabeza más blanca
-  col += vec3(0.0, 0.03, 0.09);                          // base navy
+  vec3 rainCol = mix(blue, teal, 0.55) * lum;
+  rainCol += vec3(0.6, 1.0, 0.95) * headGlow * g * active * 0.35;  // cabeza apenas más clara
 
-  // Atenuar el centro (texto/tarjetas legibles) + viñeta.
+  vec3 base = vec3(0.0, 0.025, 0.075);                   // navy de fondo
+
+  // La lluvia vive SOLO hacia los bordes; el centro (texto/tarjetas) queda limpio.
   vec2 d = uv - 0.5;
-  col *= mix(0.4, 1.0, smoothstep(0.12, 0.72, length(d*vec2(1.05, 1.0))));
-  col *= smoothstep(1.25, 0.35, length(d*vec2(1.15, 1.0)));
+  float periph = smoothstep(0.26, 0.78, length(d * vec2(1.05, 1.0)));
+  vec3 col = base + rainCol * periph * 0.6;
+
+  col *= smoothstep(1.25, 0.35, length(d * vec2(1.15, 1.0)));   // viñeta
   gl_FragColor = vec4(col, 1.0);
 }
 `;
