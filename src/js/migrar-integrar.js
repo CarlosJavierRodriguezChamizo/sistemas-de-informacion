@@ -57,7 +57,7 @@ function recomendacion({ integrar, migrar }) {
     return {
       clase: "equilibrio", tag: "Empate técnico — decide la justificación",
       texto: `Integrar ${integrar}% vs migrar ${migrar}%: están muy igualados. ${pesoFrase} ` +
-        `Aquí el número no decide: lo que se evalúa es cómo argumentas el trade-off.`,
+        `Aquí el número no decide: lo que se evalúa es cómo lo argumentas: cuánto cuesta, qué ganas y qué puede salir mal.`,
     };
   }
   if (diff > 0) {
@@ -108,8 +108,9 @@ app.innerHTML = [
   `<main id="contenido" class="section section--light"><div class="wrap">
     <div class="tool-intro">
       <h1>¿Migrar o integrar el AS/400?</h1>
-      <p class="lead">Ajusta cada criterio (1–5) y su peso. El componente recalcula en vivo
-      dos índices y una recomendación <strong>orientativa</strong>.</p>
+      <p class="lead">Decidir es responder a tres preguntas: <strong>¿cuánto me cuesta?</strong>,
+      <strong>¿qué gano?</strong> y <strong>¿qué puede salir mal?</strong> Ajusta cada criterio (1–5)
+      y su peso; el componente recalcula en vivo una recomendación <strong>orientativa</strong>.</p>
     </div>
 
     <div class="toolbar">
@@ -132,7 +133,7 @@ app.innerHTML = [
           <p class="ctx__nota">${escapeHtml(s8.nota)}</p>
         </div>
 
-        <h2 style="margin-top:var(--sp-5)">Criterios del trade-off</h2>
+        <h2 style="margin-top:var(--sp-5)">Criterios para decidir</h2>
         <div class="crit">${CRITERIOS.map(critRowHtml).join("")}</div>
       </div>
 
@@ -154,8 +155,8 @@ app.innerHTML = [
       </aside>
     </div>
 
-    <p class="didactic"><strong>Nota:</strong> no hay respuesta única. Lo que se evalúa es la
-    <strong>justificación del trade-off</strong>, no el número que salga.</p>
+    <p class="didactic"><strong>Nota:</strong> no hay respuesta única. Lo que se evalúa es tu
+    <strong>justificación</strong> —cuánto cuesta, qué ganas y qué puede salir mal—, no el número que salga.</p>
   </div></main>`,
 ].join("");
 

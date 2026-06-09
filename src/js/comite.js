@@ -87,12 +87,12 @@ root.innerHTML = `
   ${question("03", "Pregunta 3 · Decisión", "AS/400 de Club B2B: ¿migrar o integrar?",
     "¿Qué <span class=\"hl\">criterios</span> usarías para decidir si migrar el AS/400 de Club B2B o integrarlo vía API con el ecosistema SAP/Salesforce?",
     [
-      { i: "i-money", h: "Coste", p: "Migrar (proyecto completo) vs integrar (envolver con APIs)." },
-      { i: "i-bolt", h: "Beneficio", p: "Qué desbloquea cada opción para el negocio." },
-      { i: "i-shield", h: "Riesgo", p: "Legado, dependencia y continuidad de la operación." },
+      { i: "i-money", h: "¿Cuánto me cuesta?", p: "Migrar es un proyecto completo; integrar es envolverlo con APIs. ¿Qué esfuerzo y dinero?" },
+      { i: "i-bolt", h: "¿Qué gano si lo hago?", p: "Qué desbloquea cada opción para el negocio." },
+      { i: "i-shield", h: "¿Qué puede salir mal?", p: "Legado, dependencia del proveedor y continuidad de la operación." },
     ],
     { label: "Matriz migrar / integrar", href: "/tools/migrar-integrar.html" },
-    "Argumenta el trade-off coste – beneficio – riesgo.")}
+    "Decídelo respondiendo a tres preguntas: ¿cuánto me cuesta?, ¿qué gano? y ¿qué puede salir mal?")}
 
   ${question("04", "Pregunta 4 · Datos", "Calidad del dato: 5 problemas, mínimo",
     "Antes de cualquier análisis del dataset, ¿qué <span class=\"hl\">problemas de calidad del dato</span> detectas?",

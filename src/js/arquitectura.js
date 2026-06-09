@@ -78,7 +78,7 @@ const STEPS = [
   { s: 2, k: "La capa que conecta", h: "Una capa de integración (API / middleware)", p: "En vez de cables uno a uno, una capa común por la que cada sistema publica y consume datos mediante APIs. Conectas una vez, no N veces." },
   { s: 3, k: "Una sola verdad", h: "Data warehouse: single source of truth", p: "Los datos clave se consolidan en un almacén único. Una sola definición de «cliente», «pedido» o «stock» para toda la empresa." },
   { s: 4, k: "El cliente, completo", h: "Vista 360, BI y —ahora— IA", p: "Encima se construyen la visión 360 del cliente, el BI/EIS del Comité y los agentes de IA. Todos beben de la misma verdad integrada." },
-  { s: 5, k: "La pieza incómoda", h: "El AS/400: ¿migrar o integrar?", p: "El legado no desaparece solo. Hay que decidir: envolverlo con APIs ahora o planificar su reemplazo. Es un trade-off, no un dogma." },
+  { s: 5, k: "La pieza incómoda", h: "El AS/400: ¿migrar o integrar?", p: "El legado no desaparece solo. Hay que decidir: envolverlo con APIs ahora o planificar su reemplazo, según cuánto cuesta, qué ganas y qué puede salir mal." },
   { s: 6, k: "Tu turno", h: "Diseña el target state", p: "Apóyate en el explicador de APIs y en la matriz de decisión para defender tu arquitectura objetivo ante el Comité." },
 ];
 

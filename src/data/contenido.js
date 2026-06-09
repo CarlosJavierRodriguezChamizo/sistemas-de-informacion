@@ -40,10 +40,10 @@ export const MANDATOS = [
   {
     id: 3,
     titulo: "AS/400: ¿migrar o integrar?",
-    lema: "Trade-off coste–beneficio–riesgo",
-    encargo: "Evaluad el trade-off coste–beneficio–riesgo del AS/400 y dad una recomendación justificada.",
+    lema: "¿Cuánto cuesta? ¿Qué gano? ¿Qué puede salir mal?",
+    encargo: "Decidid sobre el AS/400 respondiendo a tres preguntas: ¿cuánto cuesta?, ¿qué gano? y ¿qué puede salir mal? Dad una recomendación justificada.",
     puntos: [
-      "Coste, beneficio y riesgo de cada opción",
+      "¿Cuánto cuesta?, ¿qué gano?, ¿qué puede salir mal?",
       "Horizonte corto vs medio plazo",
       "Recomendación y su justificación",
     ],
