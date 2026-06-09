@@ -57,6 +57,7 @@ export const DIAS = [
           { label: "Historia visual: arquitectura objetivo", href: "decks/arquitectura.html", kind: "story" },
           { label: "Cómo funciona una API", href: "tools/api.html", kind: "tool" },
           { label: "Migrar o integrar (AS/400)", href: "tools/migrar-integrar.html", kind: "tool" },
+          { label: "Ejemplo en vivo: Make", href: "https://www.make.com", kind: "tool" },
         ],
       },
       {
@@ -75,38 +76,38 @@ export const DIAS = [
     bloques: [
       { time: "9:00", dur: "15'", cat: "repaso", title: "Repaso relámpago" },
       {
-        time: "9:15", dur: "50'", cat: "deck", block: "m2",
-        title: "M2 · DSS / EIS",
-        note: "Práctica: del Excel manual al EIS del Comité.",
-        links: [{ label: "Abrir deck", href: "decks/m2.html", kind: "deck" }],
+        time: "9:15", dur: "40'", cat: "deck",
+        title: "Teoría · Del dato a la decisión",
+        note: "DSS/EIS y calidad del dato: por qué hay que validar el dato antes de analizarlo. Prepara la práctica que viene.",
       },
       {
-        time: "10:05", dur: "45'", cat: "tool",
+        time: "9:55", dur: "45'", cat: "tool",
         title: "⭐ Validación del dato",
-        note: "Práctica sobre el Excel real.",
+        note: "Pon a prueba la teoría: audita el dataset real del caso antes de analizarlo.",
         links: [{ label: "Abrir la práctica", href: "tools/validacion-dato.html", kind: "tool" }],
       },
-      { time: "10:50", dur: "25'", cat: "descanso", title: "Descanso" },
+      { time: "10:40", dur: "20'", cat: "descanso", title: "Descanso" },
       {
-        time: "11:15", dur: "15'", cat: "kahoot", title: "Kahoot #2",
+        time: "11:00", dur: "15'", cat: "kahoot", title: "Kahoot #2",
         links: [{ label: "Abrir Kahoots", href: "tools/kahoot.html", kind: "kahoot" }],
       },
       {
-        time: "11:30", dur: "35'", cat: "deck", block: "m3",
+        time: "11:15", dur: "30'", cat: "deck", block: "m3",
         title: "M3 · Proyectos de SI + caso Lidl-SAP",
+        note: "Por qué fracasan los proyectos: integrar pesa más que invertir.",
         links: [{ label: "Abrir deck", href: "decks/m3.html", kind: "deck" }],
       },
       {
-        time: "12:05", dur: "30'", cat: "ia", block: "m4",
+        time: "11:45", dur: "45'", cat: "ia", block: "m4",
         title: "M4 · IA, agentes y MCP en los SI",
-        note: "La IA necesita datos integrados y de calidad.",
+        note: "La IA necesita dato integrado y de calidad. Os enseño a dónde se está llegando con herramientas como Claude Code.",
         links: [
           { label: "Abrir deck", href: "decks/m4.html", kind: "deck" },
           { label: "Práctica: API → MCP → agente", href: "tools/mcp.html", kind: "tool" },
         ],
       },
       {
-        time: "12:35", dur: "20'", cat: "pitch", title: "Preparación del pitch ejecutivo",
+        time: "12:30", dur: "25'", cat: "pitch", title: "Preparación del pitch ejecutivo",
         note: "Todos los grupos preparan la misma propuesta y la defienden en clave de negocio: por qué su solución es la mejor.",
         links: [
           { label: "El reto del Comité", href: "decks/comite.html", kind: "pitch" },

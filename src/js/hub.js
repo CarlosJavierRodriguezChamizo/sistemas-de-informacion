@@ -14,9 +14,11 @@ const estados = new Map();
 
 /* --------------------------- Helpers de render --------------------------- */
 
-/** Un enlace de acción (deck/tool/kahoot/pitch). */
+/** Un enlace de acción (deck/tool/kahoot/pitch). Externos en pestaña nueva. */
 function linkHtml({ label, href, kind }) {
-  return `<a class="agenda-link agenda-link--${escapeHtml(kind)}" href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+  const ext = /^https?:\/\//i.test(href);
+  const extra = ext ? ' target="_blank" rel="noopener noreferrer"' : "";
+  return `<a class="agenda-link agenda-link--${escapeHtml(kind)}" href="${escapeHtml(href)}"${extra}>${escapeHtml(label)}</a>`;
 }
 
 /** Botón de estado de un bloque. */
