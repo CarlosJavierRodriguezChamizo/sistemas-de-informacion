@@ -21,6 +21,7 @@ export default defineConfig({
         intro: r('decks/intro.html'),
         // Mazos de teoría (RevealJS)
         m1: r('decks/m1.html'),
+        datos: r('decks/datos.html'),
         m2: r('decks/m2.html'),
         m3: r('decks/m3.html'),
         m4: r('decks/m4.html'),

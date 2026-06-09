@@ -110,7 +110,7 @@ function montarBlueprint() {
 function montarGL() {
   const which = document.body.dataset.gl;
   if (which === "m2") montarFondoEscena(NETWORK_FRAG, 1.75);
-  else if (which === "m3") montarBlueprint();
+  else if (which === "m3" || which === "datos") montarBlueprint();
   else if (which === "m4") montarFondoEscena(NEURAL_FRAG, 1.3);
   else montarMatrix();
 }

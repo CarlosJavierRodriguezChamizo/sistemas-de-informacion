@@ -79,6 +79,7 @@ export const DIAS = [
         time: "9:15", dur: "40'", cat: "deck",
         title: "Teoría · Del dato a la decisión",
         note: "DSS/EIS y calidad del dato: por qué hay que validar el dato antes de analizarlo. Prepara la práctica que viene.",
+        links: [{ label: "Abrir mini-deck", href: "decks/datos.html", kind: "deck" }],
       },
       {
         time: "9:55", dur: "45'", cat: "tool",
