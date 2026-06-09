@@ -110,13 +110,12 @@ export const DIAS = [
         note: "Todos los grupos preparan la misma propuesta y la defienden en clave de negocio: por qué su solución es la mejor.",
         links: [
           { label: "El reto del Comité", href: "decks/comite.html", kind: "pitch" },
-          { label: "Sala de pitch", href: "tools/pitch.html", kind: "pitch" },
         ],
       },
       {
         time: "12:55", dur: "~65'", cat: "pitch", title: "Pitches + feedback",
-        note: "5 grupos × ~12'.",
-        links: [{ label: "Sala de pitch", href: "tools/pitch.html", kind: "pitch" }],
+        note: "Cada grupo defiende su propuesta ante el Comité (~12').",
+        links: [{ label: "El reto del Comité", href: "decks/comite.html", kind: "pitch" }],
       },
     ],
   },

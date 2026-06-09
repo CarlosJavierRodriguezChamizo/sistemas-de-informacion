@@ -120,8 +120,7 @@ root.innerHTML = `
     <h2 data-anim>No basta con tener razón.<br>Hay que <span class="hl">convencer</span>.</h2>
     <p class="lead" data-anim style="margin-top:1rem">Todos respondéis a las mismas preguntas. Gana quien mejor defiende —en clave de negocio— por qué su solución es la mejor.</p>
     <div class="cta-row" data-anim>
-      <a class="btn btn--primary" href="${appUrl("/tools/pitch.html")}">Ir a la sala de pitch</a>
-      <a class="btn" href="${appUrl("/index.html")}">Volver al hub</a>
+      <a class="btn btn--primary" href="${appUrl("/index.html")}">Volver al hub</a>
     </div>
   </div></section>
   </main>

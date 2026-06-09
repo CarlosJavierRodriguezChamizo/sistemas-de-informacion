@@ -88,7 +88,6 @@ app.innerHTML = [
     nav: [
       { label: "Viernes", href: "#viernes" },
       { label: "Sábado", href: "#sabado" },
-      { label: "Pitch", href: "tools/pitch.html" },
     ],
   }),
 

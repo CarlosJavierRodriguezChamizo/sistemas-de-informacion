@@ -40,7 +40,6 @@ export default defineConfig({
         api: r('tools/api.html'),
         migrarIntegrar: r('tools/migrar-integrar.html'),
         mcp: r('tools/mcp.html'),
-        pitch: r('tools/pitch.html'),
         kahoot: r('tools/kahoot.html'),
       },
     },
