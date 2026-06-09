@@ -106,8 +106,8 @@ export const DIAS = [
         ],
       },
       {
-        time: "12:35", dur: "20'", cat: "pitch", title: "Asignación de mandatos + preparación del pitch",
-        note: "Cada grupo recibe su pregunta concreta del Comité y prepara su pitch.",
+        time: "12:35", dur: "20'", cat: "pitch", title: "Preparación del pitch ejecutivo",
+        note: "Todos los grupos preparan la misma propuesta y la defienden en clave de negocio: por qué su solución es la mejor.",
         links: [
           { label: "El reto del Comité", href: "decks/comite.html", kind: "pitch" },
           { label: "Sala de pitch", href: "tools/pitch.html", kind: "pitch" },

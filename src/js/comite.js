@@ -25,6 +25,8 @@ const SPRITE = `
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/></symbol>
   <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
   <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4 3 19h18L12 4z"/><path d="M12 10v4M12 17v.4"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/><path d="M5 19c3-4 6-6 10-8"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M6 20h12M12 4 5 8m7-4 7 4"/><path d="M5 8 2.5 14a3 3 0 0 0 5 0L5 8zM19 8l-2.5 6a3 3 0 0 0 5 0L19 8z"/></symbol>
 </svg>`;
 
 /* ------------------------------ Helpers ---------------------------------- */
@@ -60,7 +62,7 @@ root.innerHTML = `
   <section class="odoo-hero reveal"><div class="wrap">
     <span class="eyebrow" data-anim>Pitch inicial · El mandato</span>
     <h1 class="odoo-hero__title" data-anim>El reto del <span class="shine">Comité</span></h1>
-    <p class="lead" data-anim>Cuatro preguntas que Grupo Báltica necesita responder. Las trabajáis durante la sesión; el sábado, cada grupo defiende <strong>una</strong>.</p>
+    <p class="lead" data-anim>Cuatro preguntas que Grupo Báltica necesita responder. Pero no basta con la respuesta correcta: tendréis que <strong>convencer</strong> al Comité de que vuestra solución es la mejor.</p>
     <div class="odoo-hero__hint" data-anim aria-hidden="true">Desplázate ↓</div>
   </div></section>
 
@@ -102,10 +104,21 @@ root.innerHTML = `
     null,
     "Documenta al menos <strong>cinco</strong> problemas (lo trabajaréis sobre el Excel real del caso).")}
 
+  ${topic("★", "Modo ejecutivo · comercial", "No basta con responder: convencer", `
+    <div class="glass panel" data-anim style="margin-bottom:1rem">
+      <p class="claim">Todos los grupos respondéis a las <strong>mismas</strong> preguntas. La diferencia la marca quién <span class="hl">defiende mejor, en clave de negocio</span>, por qué su propuesta tecnológica es la mejor.</p>
+    </div>
+    <div class="feats">
+      ${feat("i-leaf", "Sostenibilidad", "¿Aguanta en el tiempo? Mantenimiento, escalabilidad y dependencia del proveedor.")}
+      ${feat("i-money", "Precio / coste", "Inversión, coste de operación y retorno. Defended el caso económico.")}
+      ${feat("i-target", "Priorización", "Qué primero y por qué: quick wins frente a cimientos.")}
+      ${feat("i-chart", "Criterio de negocio", "Impacto, riesgo y lo que vosotros consideréis clave para el Comité.")}
+    </div>`)}
+
   <section class="odoo-close reveal"><div class="wrap">
-    <span class="kicker" data-anim>El método</span>
-    <h2 data-anim>Lo trabajáis todo.<br>El sábado, <span class="hl">una</span>.</h2>
-    <p class="lead" data-anim style="margin-top:1rem">El sábado se asignan los mandatos: cada grupo recibe su pregunta concreta y prepara su pitch para el Comité.</p>
+    <span class="kicker" data-anim>El reto, en realidad</span>
+    <h2 data-anim>No basta con tener razón.<br>Hay que <span class="hl">convencer</span>.</h2>
+    <p class="lead" data-anim style="margin-top:1rem">Todos respondéis a las mismas preguntas. Gana quien mejor defiende —en clave de negocio— por qué su solución es la mejor.</p>
     <div class="cta-row" data-anim>
       <a class="btn btn--primary" href="${appUrl("/tools/pitch.html")}">Ir a la sala de pitch</a>
       <a class="btn" href="${appUrl("/index.html")}">Volver al hub</a>
