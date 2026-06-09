@@ -84,6 +84,7 @@ export const DIAS = [
         time: "10:05", dur: "45'", cat: "tool",
         title: "⭐ Validación del dato",
         note: "Práctica sobre el Excel real.",
+        links: [{ label: "Abrir la práctica", href: "tools/validacion-dato.html", kind: "tool" }],
       },
       { time: "10:50", dur: "25'", cat: "descanso", title: "Descanso" },
       {

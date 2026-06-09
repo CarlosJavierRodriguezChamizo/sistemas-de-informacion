@@ -1,0 +1,54 @@
+/* =========================================================================
+   validacion-dato.css — Práctica de calidad del dato (brief + hoja de trabajo).
+   Tema claro, coherente con el resto de herramientas (tool.css / mapa-silos).
+   ========================================================================= */
+
+.vf-board { display: grid; gap: var(--sp-5); margin-top: var(--sp-4); }
+@media (min-width: 1000px) { .vf-board { grid-template-columns: 1fr 1fr; align-items: start; } }
+.vf-col { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.panel { border: 1px solid var(--c-line); border-radius: var(--radius); padding: var(--sp-4); background: var(--c-bg); }
+.panel h3 { margin: 0 0 var(--sp-3); font-size: 1.1rem; }
+
+/* Pasos */
+.vf-steps { margin: 0; padding-left: 1.2em; display: grid; gap: var(--sp-2); }
+.vf-steps li { line-height: 1.5; }
+.vf-fields { display: block; margin-top: .2em; font-size: .85rem; color: var(--c-accent-blue); font-weight: 600; }
+.vf-note { margin: var(--sp-3) 0 0; font-size: .88rem; color: var(--c-body); background: #f4f6fb; padding: var(--sp-3); border-radius: var(--radius-sm); }
+
+/* Taxonomía */
+.vf-taxo { display: grid; gap: var(--sp-2); }
+.vf-taxo__item { display: grid; gap: .1em; padding: var(--sp-2) var(--sp-3); border-left: 3px solid var(--c-accent); background: var(--c-accent-soft); border-radius: var(--radius-sm); }
+.vf-taxo__item strong { font-size: .92rem; }
+.vf-taxo__item span { font-size: .82rem; color: var(--c-ink-soft); }
+
+/* Formulario */
+.vf-form { display: grid; gap: var(--sp-3); }
+.vf-grid { display: grid; gap: var(--sp-3); }
+@media (min-width: 560px) { .vf-grid { grid-template-columns: 1fr 1fr; } }
+.vf-form label { display: grid; gap: .3em; font-size: .82rem; font-weight: 600; color: var(--c-ink); }
+.vf-form input, .vf-form select {
+  font: inherit; font-size: .92rem; padding: .55em .7em; border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm); background: #fff; color: var(--c-ink); width: 100%;
+}
+.vf-form input:focus, .vf-form select:focus { outline: 2px solid var(--c-accent-blue); outline-offset: 1px; border-color: transparent; }
+
+/* Estado / contador */
+.vf-status { margin: var(--sp-3) 0; font-weight: 700; color: var(--c-ink); }
+.vf-ok { color: #0a826e; font-weight: 700; margin-left: .5em; }
+.vf-ok[hidden] { display: none; }
+
+/* Lista de hallazgos */
+.vf-empty { color: var(--c-ink-soft); font-size: .88rem; font-style: italic; }
+.vf-item {
+  position: relative; padding: var(--sp-3) 2.2em var(--sp-3) var(--sp-3);
+  border: 1px solid var(--c-line); border-radius: var(--radius-sm); margin-bottom: var(--sp-2);
+}
+.vf-item__loc { font-size: .9rem; }
+.vf-item__loc code { background: #f4f6fb; padding: 0 .35em; border-radius: 4px; font-size: .85em; }
+.vf-tag { display: inline-block; margin: .35em 0; font-size: .72rem; font-weight: 700; color: #fff; background: var(--c-accent-blue); padding: .2em .6em; border-radius: 999px; }
+.vf-item__imp { font-size: .85rem; color: var(--c-ink-soft); }
+.vf-item__rm { position: absolute; top: .5em; right: .5em; border: none; background: none; cursor: pointer; color: var(--c-ink-soft); font-size: 1.05em; line-height: 1; }
+.vf-item__rm:hover { color: #d33; }
+
+.vf-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-3); }

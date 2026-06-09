@@ -36,6 +36,7 @@ export default defineConfig({
         // Herramientas interactivas (prácticas)
         clasificador: r('tools/clasificador.html'),
         mapaSilos: r('tools/mapa-silos.html'),
+        validacionDato: r('tools/validacion-dato.html'),
         api: r('tools/api.html'),
         migrarIntegrar: r('tools/migrar-integrar.html'),
         mcp: r('tools/mcp.html'),
