@@ -9,24 +9,6 @@ import { Header } from "../components/index.js";
 import { escapeHtml } from "../components/_util.js";
 
 const MIN = 5;
-const TIPOS = [
-  "Duplicado",
-  "Formato / codificación inconsistente",
-  "Valor vacío o ausente",
-  "Incoherencia entre campos",
-  "Valor fuera de rango",
-  "Unidad o tipo de dato incorrecto",
-  "Fecha inválida o imposible",
-  "Otro",
-];
-const TAXO = [
-  ["Duplicados", "El mismo registro aparece más de una vez (¿por qué?)."],
-  ["Formato / codificación", "Lo mismo escrito de varias formas: «Sí/Si/SI/Yes/1»."],
-  ["Vacíos", "Celdas en blanco donde debería haber un dato obligatorio."],
-  ["Incoherencias", "Campos que se contradicen entre sí o entre hojas."],
-  ["Fuera de rango", "Valores imposibles: negativos, fechas futuras, % > 100."],
-  ["Unidades / tipos", "Números como texto, miles vs millones, € vs k€…"],
-];
 
 /* ------------------------------- Estado ---------------------------------- */
 const findings = []; // { hoja, celda, tipo, impacto }
@@ -76,13 +58,7 @@ app.innerHTML = [
               <span class="vf-fields">hoja y celda · tipo de error · impacto en el análisis</span></li>
             <li>Propón <strong>cómo lo corregirías</strong> (en tu entrega o en el pitch).</li>
           </ol>
-          <p class="vf-note">Aquí no hay solución: el objetivo es que <strong>tú</strong> los encuentres. Usa la hoja de la derecha para registrarlos y luego cópialos a tu entrega.</p>
-        </div>
-
-        <div class="panel">
-          <h3>Tipos de error frecuentes</h3>
-          <p style="font-size:.88rem;color:var(--c-ink-soft);margin:0 0 var(--sp-3)">Pistas de qué mirar (no dónde):</p>
-          <div class="vf-taxo">${TAXO.map(([t, d]) => `<div class="vf-taxo__item"><strong>${escapeHtml(t)}</strong><span>${escapeHtml(d)}</span></div>`).join("")}</div>
+          <p class="vf-note">Aquí no hay solución ni pistas: el objetivo es que <strong>tú</strong> detectes los problemas y determines de qué tipo son. Usa la hoja de la derecha para registrarlos y luego cópialos a tu entrega.</p>
         </div>
       </section>
 
@@ -93,7 +69,7 @@ app.innerHTML = [
             <div class="vf-grid">
               <label>Hoja<input id="vf-hoja" type="text" placeholder="p. ej. Clientes" required /></label>
               <label>Celda / columna<input id="vf-celda" type="text" placeholder="p. ej. B12 o «email»" required /></label>
-              <label>Tipo de error<select id="vf-tipo">${TIPOS.map((t) => `<option>${escapeHtml(t)}</option>`).join("")}</select></label>
+              <label>Tipo de error<input id="vf-tipo" type="text" placeholder="defínelo tú: ¿qué falla?" required /></label>
               <label>Impacto en el análisis<input id="vf-impacto" type="text" placeholder="¿qué distorsiona?" required /></label>
             </div>
             <button class="btn btn--primary" type="submit">Añadir hallazgo</button>
@@ -123,11 +99,11 @@ $("#vf-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const hoja = $("#vf-hoja").value.trim();
   const celda = $("#vf-celda").value.trim();
-  const tipo = $("#vf-tipo").value;
+  const tipo = $("#vf-tipo").value.trim();
   const impacto = $("#vf-impacto").value.trim();
-  if (!hoja || !celda || !impacto) return;
+  if (!hoja || !celda || !tipo || !impacto) return;
   findings.push({ hoja, celda, tipo, impacto });
-  $("#vf-hoja").value = ""; $("#vf-celda").value = ""; $("#vf-impacto").value = "";
+  $("#vf-hoja").value = ""; $("#vf-celda").value = ""; $("#vf-tipo").value = ""; $("#vf-impacto").value = "";
   $("#vf-hoja").focus();
   repintar();
 });

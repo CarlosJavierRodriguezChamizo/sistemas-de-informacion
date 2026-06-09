@@ -16,12 +16,6 @@
 .vf-fields { display: block; margin-top: .2em; font-size: .85rem; color: var(--c-accent-blue); font-weight: 600; }
 .vf-note { margin: var(--sp-3) 0 0; font-size: .88rem; color: var(--c-body); background: #f4f6fb; padding: var(--sp-3); border-radius: var(--radius-sm); }
 
-/* Taxonomía */
-.vf-taxo { display: grid; gap: var(--sp-2); }
-.vf-taxo__item { display: grid; gap: .1em; padding: var(--sp-2) var(--sp-3); border-left: 3px solid var(--c-accent); background: var(--c-accent-soft); border-radius: var(--radius-sm); }
-.vf-taxo__item strong { font-size: .92rem; }
-.vf-taxo__item span { font-size: .82rem; color: var(--c-ink-soft); }
-
 /* Formulario */
 .vf-form { display: grid; gap: var(--sp-3); }
 .vf-grid { display: grid; gap: var(--sp-3); }
