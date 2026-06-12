@@ -72,8 +72,8 @@ root.innerHTML = `
   <main id="contenido">
   <section class="odoo-hero reveal"><div class="wrap">
     <span class="eyebrow" data-anim>Síntesis · Cierre del día</span>
-    <h1 class="odoo-hero__title" data-anim>Empresas que integraron su <span class="shine">SI</span></h1>
-    <p class="lead" data-anim>Primero <strong>rediseñas tu propio stack</strong>; luego vemos una empresa que ya lo hizo y el patrón que se repite. Y qué nos dice del caso Báltica.</p>
+    <h1 class="odoo-hero__title" data-anim>Vamos a dar forma a nuestro <span class="shine">propio caso de empresa</span></h1>
+    <p class="lead" data-anim>Te cuento varios ejemplos de cómo integraron la tecnología algunas empresas y sus decisiones, y luego trabajaremos sobre el <strong>stack que habéis definido</strong>.</p>
     <div class="odoo-hero__hint" data-anim aria-hidden="true">Desplázate ↓</div>
   </div></section>
 
@@ -96,25 +96,7 @@ root.innerHTML = `
       <p style="color:rgba(255,255,255,.86)">El objetivo no es tener <em>más</em> sistemas, sino los <span class="hl">justos y bien conectados</span>. Lo mismo que le pasa a Báltica, a tu escala.</p>
     </div>`)}
 
-  ${topic("02", "Caso local · Sevilla", "Terapia Urbana, todo conectado", `
-    <div class="glass panel" data-anim style="margin-bottom:1rem">
-      <p class="claim"><strong>Terapia Urbana</strong> —empresa sevillana de <span class="hl">jardines verticales</span>, spin-off de la Universidad de Sevilla— orquesta un stack completo: cada herramienta hace su trabajo y <span class="hl">Odoo centraliza la gestión</span>. La <span class="hl">IA</span> se ha vuelto el acelerador de la fase creativa.</p>
-      <p class="fineprint" style="margin-top:.6rem">+31.000 m² instalados en +23 países · tecnología propia Fytotextile® (según la empresa) · caso trabajado de primera mano · <a href="https://www.terapiaurbana.com" target="_blank" rel="noopener noreferrer" style="color:var(--c-accent)">terapiaurbana.com ↗</a></p>
-    </div>
-    <div class="feats feats--3">
-      ${feat("i-globe", "WordPress", "La web pública: escaparate de proyectos y captación de clientes.")}
-      ${feat("i-chart", "Analytics", "Mide visitas y leads: qué proyectos atraen y por dónde llegan.")}
-      ${feat("i-pen", "AutoCAD", "Planimetría técnica 2D del jardín y su estructura.")}
-      ${feat("i-cube", "Revit · BIM", "Modelo 3D del jardín integrado en el edificio.")}
-      ${feat("i-spark", "IA · Renders", "Visualiza la fachada verde sobre el edificio del cliente antes de instalarla.", "feat--accent")}
-      ${feat("i-receipt", "Odoo", "Toda la gestión comercial y la facturación en un único sistema.")}
-    </div>
-    <div class="glass panel spot" data-anim style="margin-top:1rem; border-color: rgba(10,228,195,.45)">
-      <span class="kicker">El papel de la IA</span>
-      <p style="color:rgba(255,255,255,.86)">Enseñar cómo quedaría un jardín vertical sobre el edificio del cliente exigía renders lentos o subcontratados. Hoy la IA los genera en <strong>minutos</strong>: el cliente “ve” su fachada verde al instante, se <strong>cierran propuestas antes</strong> y el equipo prueba más variantes de diseño. <span class="hl">No sustituye al diseñador: le da velocidad.</span></p>
-    </div>`)}
-
-  ${topic("03", "El denominador común", "El patrón que se repite", `
+  ${topic("02", "El denominador común", "El patrón que se repite", `
     <div class="glass panel" data-anim style="margin-bottom:1rem">
       <p class="claim">En todas, el sistema dejó de <em>apoyar</em> el negocio para <strong>ser</strong> el negocio. Y el combustible siempre es el mismo: <span class="hl">dato integrado y de calidad</span>.</p>
     </div>
@@ -124,7 +106,7 @@ root.innerHTML = `
       ${feat("i-bolt", "Escalar sin romperse", "Procesos y arquitectura que crecen con el negocio.")}
     </div>`)}
 
-  ${topic("04", "El hilo del día", "De la teoría al caso Báltica", `
+  ${topic("03", "El hilo del día", "De la teoría al caso Báltica", `
     <div class="flow">
       ${flowStep("M1", "i-bulb", "Qué es un SI", "Personas + procesos + datos + tecnología que convierten datos en decisiones.")}
       ${arrow}
@@ -135,7 +117,7 @@ root.innerHTML = `
       ${flowStep("M4", "i-brain", "IA + MCP", "La IA necesita dato integrado; agentes que componen la vista 360.")}
     </div>`)}
 
-  ${topic("05", "La tesis", "Báltica tiene las piezas. Le falta que hablen.", `
+  ${topic("04", "La tesis", "Báltica tiene las piezas. Le falta que hablen.", `
     <div class="stats">
       <div class="stat glass spot" data-anim><span class="bignum" data-count="14.5" data-dec="1" data-pre="+" data-suf=" %">+0 %</span><span class="lab">Crecen las ventas</span></div>
       <div class="stat glass spot stat--warn" data-anim><span class="bignum">6,0 → 2,5 %</span><span class="lab">…y cae el EBITDA</span></div>
