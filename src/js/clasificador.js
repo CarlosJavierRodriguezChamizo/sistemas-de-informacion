@@ -36,6 +36,23 @@ const FAMILY_REASON = {
 };
 const ZONE_LABEL = Object.fromEntries(ZONES.map((z) => [z.key, z.label]));
 
+/** Explicación precisa por sistema (por qué pertenece a su tipo). Id → motivo.
+    Basada en qué es cada producto y en la nota del dataset; sin inventar. */
+const SYSTEM_REASON = {
+  1:  "ERP de SAP que integra finanzas, compras, producción e inventario en un único núcleo transaccional: es el back-office central de la empresa.",
+  2:  "CRM de ventas de Salesforce: gestiona cuentas, contactos y oportunidades del pipeline comercial. Su foco es la relación con el cliente.",
+  3:  "Plataforma de comercio electrónico de Salesforce (el canal de venta online): un sistema de cara al cliente, dentro de la familia CRM/Commerce.",
+  4:  "Data warehouse de SAP (Business Warehouse): consolida datos para informar y analizar. Es la capa de BI/DSS de soporte a la decisión.",
+  5:  "Herramienta de Microsoft para cuadros de mando y visualización de datos: explota la información para la dirección (BI/EIS).",
+  6:  "Plataforma de atención al cliente: gestiona tickets y NPS. Es CRM en su vertiente de servicio.",
+  7:  "Warehouse Management System (WMS) de Manhattan Associates: gobierna el almacén y la logística. Pertenece a la cadena de suministro (SCM).",
+  8:  "Sistema legado sobre IBM AS/400 que aloja el maestro de clientes y la facturación del Club B2B: funciones de back-office → ERP (legacy).",
+  9:  "Analítica web y de aplicación de Google: mide tráfico y comportamiento digital. Es analítica de datos (BI/Analytics).",
+  10: "Plataforma de marketing y engagement (SAP Emarsys): campañas y comunicación con clientes. Es CRM en su vertiente de marketing.",
+  11: "Plataforma de reseñas y contenido generado por el usuario (UGC) sobre los productos: trabaja sobre la relación con el cliente (CRM/UGC).",
+  12: "App propia de fidelización (1,2M socios): gestiona el programa de loyalty y los datos del socio. Es CRM en su vertiente de fidelización.",
+};
+
 /* ------------------------------- Estado --------------------------------- */
 const sistemas = getSistemas();
 /** Map<idCarta, ubicación>  ('pool' | código de zona). */
@@ -118,6 +135,11 @@ app.innerHTML = [
       <div class="zones">${ZONES.map(zoneHtml).join("")}</div>
     </div>
 
+    <section class="explica" id="explica" hidden tabindex="-1" aria-live="polite">
+      <h2 class="explica__title">¡12/12! Por qué cada sistema va donde va</h2>
+      <div id="explica-body"></div>
+    </section>
+
     <section class="insight" id="insight" hidden tabindex="-1" aria-live="polite">
       <p class="insight__big" id="insight-big"></p>
       <p id="insight-text"></p>
@@ -177,6 +199,7 @@ function limpiarValidacion() {
   });
   $("#score").hidden = true;
   $("#insight").hidden = true;
+  $("#explica").hidden = true;
 }
 
 function reetiquetar(card, estadoTxt) {
@@ -207,7 +230,7 @@ function comprobar() {
     if (zona === correcta) {
       correctos += 1;
       card.classList.add("is-correct");
-      tip.textContent = `Correcto. Tipo real: ${s.tipo}. ${FAMILY_REASON[correcta]}`;
+      tip.textContent = `Correcto · ${s.tipo}. ${SYSTEM_REASON[s.id]}`;
       reetiquetar(card, "Correcto");
     } else {
       card.classList.add("is-incorrect");
@@ -224,7 +247,34 @@ function comprobar() {
   const restante = sinClasificar ? ` Quedan ${sinClasificar} sin clasificar.` : "";
   anunciar(`${correctos} de 12 correctos.${restante} Pasa el ratón o el foco por cada tarjeta para ver la explicación.`);
 
+  // Explicación completa (por qué cada sistema va donde va) solo si TODO está bien.
+  if (correctos === sistemas.length && sinClasificar === 0) mostrarExplicacion();
+  else $("#explica").hidden = true;
+
   mostrarInsight();
+}
+
+/* -------------------------- Explicación (12/12) -------------------------- */
+function mostrarExplicacion() {
+  const porZona = { erp: [], crm: [], scm: [], bi: [], otro: [] };
+  sistemas.forEach((s) => porZona[zoneOf(s.tipo)].push(s));
+
+  $("#explica-body").innerHTML = ZONES
+    .filter((z) => porZona[z.key].length)
+    .map((z) => `
+      <div class="explica__group">
+        <h3 class="explica__fam">${escapeHtml(z.label)} <span>· ${escapeHtml(FAMILY_REASON[z.key])}</span></h3>
+        <ul class="explica__list">
+          ${porZona[z.key]
+            .map((s) => `<li><strong>${escapeHtml(s.sistema)}</strong> <span class="explica__tipo">${escapeHtml(s.tipo)}</span><br>${escapeHtml(SYSTEM_REASON[s.id])}</li>`)
+            .join("")}
+        </ul>
+      </div>`)
+    .join("");
+
+  const panel = $("#explica");
+  panel.hidden = false;
+  panel.focus();
 }
 
 /* ------------------------------- Insight -------------------------------- */
