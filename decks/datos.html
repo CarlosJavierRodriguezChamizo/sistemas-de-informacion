@@ -95,27 +95,27 @@
 
       <!-- 6 · Errores típicos (1/2) -->
       <section>
-        <span class="kicker">Lo que vais a cazar en el dataset</span>
+        <span class="kicker">En el día a día de una pyme</span>
         <h2>Errores típicos de calidad <span style="opacity:.6;font-size:.6em">(1/2)</span></h2>
         <ul class="flags" style="margin-top:.7em">
-          <li data-anim><strong>Tipo de dato</strong> (texto vs número) — el precio <span class="v">1.299 €</span> guardado como texto: la columna "Ventas" no suma.</li>
-          <li data-anim><strong>Error de agregación</strong> — ventas por canal: Tienda 60% + Online 30% + Marketplace 20% = <span class="v">110%</span>.</li>
-          <li data-anim><strong>Codificación inconsistente</strong> — el mismo DNI como <span class="v">12345678Z</span>, <span class="v">12345678-Z</span>, <span class="v">12345678 z</span>: cuenta como tres clientes.</li>
-          <li data-anim><strong>Datos y registros duplicados</strong> — el pedido #1042 grabado dos veces porque se colgó el TPV: factura el doble.</li>
-          <li data-anim><strong>Outlier extremo</strong> — una venta de <span class="v">90.000 €</span> en una tienda de 200 €/día: faltó el decimal al teclear.</li>
+          <li data-anim><strong>Tipo de dato</strong> (texto vs número) — en la hoja de caja, el importe <span class="v">1.299 €</span> escrito como texto: Excel no deja sumar la columna del día.</li>
+          <li data-anim><strong>Error de agregación</strong> — en el informe de gastos, los porcentajes por partida suman <span class="v">103%</span>: alguien redondeó a mano.</li>
+          <li data-anim><strong>Codificación inconsistente</strong> — el mismo proveedor como <span class="v">B12345678</span>, <span class="v">B-12345678</span> y <span class="v">b 12345678</span>: aparece tres veces en la lista.</li>
+          <li data-anim><strong>Datos y registros duplicados</strong> — una factura se emite dos veces porque el programa se colgó al guardar: el cliente paga doble.</li>
+          <li data-anim><strong>Outlier extremo</strong> — en la nómina aparece un sueldo de <span class="v">45.000 €</span> donde el resto son 1.500 €: faltaban los céntimos.</li>
         </ul>
       </section>
 
       <!-- 7 · Errores típicos (2/2) -->
       <section>
-        <span class="kicker">Lo que vais a cazar en el dataset</span>
+        <span class="kicker">En el día a día de una pyme</span>
         <h2>Errores típicos de calidad <span style="opacity:.6;font-size:.6em">(2/2)</span></h2>
         <ul class="flags" style="margin-top:.7em">
-          <li data-anim><strong>Inconsistencia de formato</strong> — el proveedor exporta <span class="v">1.250,50</span> y tu hoja espera <span class="v">1,250.50</span>: al importar se lee <span class="v">1,25</span>.</li>
-          <li data-anim><strong>Valores imposibles</strong> — edad <span class="v">204</span>, stock <span class="v">-5</span>, fecha <span class="v">30/02/2024</span>, descuento <span class="v">150%</span>.</li>
-          <li data-anim><strong>Datos faltantes o ausentes</strong> — el 30% de las fichas de cliente sin email ni código postal: no puedes segmentar la campaña.</li>
-          <li data-anim><strong>Inconsistencia de unidades</strong> — pesos mezclando gramos (<span class="v">450</span>) y kilos (<span class="v">0,45</span>) en la misma columna: el coste de envío se dispara.</li>
-          <li data-anim><strong>Error de transcripción humana</strong> — tecleado a mano: <span class="v">Zaragoza</span> → <span class="v">Zaragza</span>, o un dígito cambiado en el IBAN.</li>
+          <li data-anim><strong>Inconsistencia de formato</strong> — el banco exporta <span class="v">1.250,50</span> y tu Excel lo lee como <span class="v">1,25</span>: el cuadre de caja no sale.</li>
+          <li data-anim><strong>Valores imposibles</strong> — fecha de alta <span class="v">30/02/2024</span>, stock de <span class="v">-3</span> unidades, una edad de <span class="v">150</span>.</li>
+          <li data-anim><strong>Datos faltantes o ausentes</strong> — la mitad de las fichas de cliente sin teléfono ni email: no puedes avisar de una promoción.</li>
+          <li data-anim><strong>Inconsistencia de unidades</strong> — en el almacén, unos productos en gramos y otros en kilos en la misma columna: el pedido al proveedor sale x1.000.</li>
+          <li data-anim><strong>Error de transcripción humana</strong> — al teclear a mano, <span class="v">Sevilla</span> → <span class="v">Sevila</span>, o un número de cuenta con un dígito cambiado.</li>
         </ul>
       </section>
 
