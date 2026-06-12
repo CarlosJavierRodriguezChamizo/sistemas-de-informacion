@@ -80,8 +80,26 @@ function dayHtml(d, locked) {
   </div>`;
 }
 
-/** Un día está bloqueado si es el sábado y el conmutador está cerrado. */
-const isLocked = (d) => d.id === "sabado" && !SABADO_ABIERTO;
+/** El sábado se abre si: (a) el conmutador del código está en true,
+    (b) la URL lleva ?SABADO_ABIERTO=true, o (c) ya se abrió en esta sesión.
+    El parámetro de URL se recuerda en sessionStorage para que la navegación
+    posterior (decks, tools) siga desbloqueada sin repetirlo en cada enlace. */
+function sabadoAbierto() {
+  if (SABADO_ABIERTO) return true;
+  try {
+    const v = new URLSearchParams(location.search).get("SABADO_ABIERTO");
+    if (v !== null && v !== "false" && v !== "0") {
+      sessionStorage.setItem("baltica-sabado", "ok");
+      return true;
+    }
+    return sessionStorage.getItem("baltica-sabado") === "ok";
+  } catch (e) {
+    return false;
+  }
+}
+
+/** Un día está bloqueado si es el sábado y el sábado no está abierto. */
+const isLocked = (d) => d.id === "sabado" && !sabadoAbierto();
 
 /** Leyenda de tipos de bloque. */
 function legendHtml() {

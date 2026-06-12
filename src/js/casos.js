@@ -73,20 +73,28 @@ root.innerHTML = `
   <section class="odoo-hero reveal"><div class="wrap">
     <span class="eyebrow" data-anim>Síntesis · Cierre del día</span>
     <h1 class="odoo-hero__title" data-anim>Empresas que integraron su <span class="shine">SI</span></h1>
-    <p class="lead" data-anim>Casos reales —con <strong>fuente y vídeo</strong>— de empresas españolas que integraron sus sistemas. Y qué nos dicen del caso Báltica.</p>
+    <p class="lead" data-anim>Primero <strong>rediseñas tu propio stack</strong>; luego vemos una empresa que ya lo hizo y el patrón que se repite. Y qué nos dice del caso Báltica.</p>
     <div class="odoo-hero__hint" data-anim aria-hidden="true">Desplázate ↓</div>
   </div></section>
 
-  ${topic("01", "Casos reales · España", "Empresas españolas que integraron su SI", `
-    <div class="cases">
-      ${caseCard("i-store", "Distribución", "Mercadona", "Adoptó SAP S/4HANA + Retail + SuccessFactors: una sola plataforma, sin duplicidades y con datos en tiempo real de toda la cadena.", "https://news.sap.com/spain/2017/07/mercadona-acelera-su-plan-de-innovacion-digital-de-la-mano-de-sap/")}
-      ${caseCard("i-glass", "Bebidas", "Estrella Galicia", "Hijos de Rivera planifica de forma integrada demanda y suministro con SAP IBP, dentro de su transformación digital (unidad MOVE).", "https://www.saptools.es/sap-integrated-business-planning-ibp-demand-drp-hijos-de-rivera/")}
-      ${caseCard("i-leaf", "Agrícola", "Atlantic Blue", "Pasó de un escenario multisistema a tener SAP como “la columna que vertebra todos los departamentos”.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://youtu.be/npuWGGhxOaI")}
-      ${caseCard("i-flask", "Alimentación", "Dallant", "Implantó SAP S/4HANA para ganar eficiencia y apoyar un crecimiento de más del 50% en cinco años.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://youtu.be/aLx4px4WJgM")}
-      ${caseCard("i-building", "Construcción", "Aldesa", "Migró a SAP S/4HANA para un control exhaustivo de la planificación de sus obras.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://www.youtube.com/watch?v=Iokb_yCCuZQ")}
-      ${caseCard("i-factory", "Industria", "Inquiba", "Completó su migración a SAP S/4HANA, integrando procesos y funcionalidades en un único sistema.", "https://news.sap.com/spain/2021/07/4-pymes-que-implementaron-el-software-erp-de-sap-con-exito/", "https://www.youtube.com/watch?v=v_wwYWNqiwE")}
+  ${topic("01", "Reto individual · Tu empresa", "Antes de mirar otras empresas, mira la tuya", `
+    <div class="glass panel" data-anim style="margin-bottom:1rem; border-color: rgba(10,228,195,.45)">
+      <span class="kicker">La pregunta de salida</span>
+      <p class="claim">¿<span class="hl">Cuántas herramientas tecnológicas</span> usas en tu día a día en la empresa? Cuéntalas. Casi siempre son más —y más desconectadas— de lo que parece.</p>
     </div>
-    <p class="fineprint" data-anim style="margin-top:1rem">Fuentes: SAP España News Center y saptools.es · vídeos: canales de YouTube de cada caso.</p>`)}
+    <p class="lead" data-anim style="margin-bottom:1rem;max-width:54ch">Ya tienes <strong>arquitectura</strong> y <strong>APIs</strong>. El reto no es añadir software: es <span class="hl">rediseñar el tuyo</span>. Primero el proceso, luego las herramientas.</p>
+    <div class="flow">
+      ${flowStep("1", "i-cube", "Inventaría", "Lista el software que usas cada día. Uno por uno, sin olvidar el Excel ni el WhatsApp.")}
+      ${arrow}
+      ${flowStep("2", "i-link", "Mapea procesos", "¿Qué hace cada herramienta y cómo se pasan el dato? Localiza silos, duplicidades y copia-pega.")}
+      ${arrow}
+      ${flowStep("3", "i-bolt", "Detecta el dolor", "¿Dónde se rompe? Dato que no fluye, esperas, trabajo manual, errores que se repiten.")}
+      ${arrow}
+      ${flowStep("4", "i-spark", "Rediseña el stack", "Quita lo que sobra y pon lo que falta. ¿Qué necesitas de verdad y cómo lo conectas por API?")}
+    </div>
+    <div class="glass panel spot" data-anim style="margin-top:1rem">
+      <p style="color:rgba(255,255,255,.86)">El objetivo no es tener <em>más</em> sistemas, sino los <span class="hl">justos y bien conectados</span>. Lo mismo que le pasa a Báltica, a tu escala.</p>
+    </div>`)}
 
   ${topic("02", "Caso local · Sevilla", "Terapia Urbana, todo conectado", `
     <div class="glass panel" data-anim style="margin-bottom:1rem">

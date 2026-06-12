@@ -13,9 +13,14 @@
            al hub si se abren por URL directa.
    true  = sábado ABIERTO (todo accesible con normalidad).
 
-   Para abrir el sábado basta con poner esto en `true`. Las páginas del sábado
-   llevan además su propio guard inline equivalente (busca "guard-sabado" en
-   decks/*.html y tools/*.html) por si se cargan sin pasar por el hub.
+   Para abrir el sábado de forma permanente basta con poner esto en `true`.
+
+   Atajo sin tocar código: añade ?SABADO_ABIERTO=true a la URL (p. ej.
+   .../sistemas-de-informacion/?SABADO_ABIERTO=true). El override se recuerda
+   durante toda la sesión del navegador (sessionStorage "baltica-sabado"), así
+   que al navegar a los decks/tools del sábado siguen desbloqueados. Se cierra
+   de nuevo al cerrar la pestaña. Las páginas del sábado llevan su propio guard
+   inline equivalente (busca "guard-sabado" en decks/*.html y tools/*.html).
    ------------------------------------------------------------------------- */
 export const SABADO_ABIERTO = false;
 
