@@ -5,6 +5,20 @@
    El sábado reserva ~30' para el bloque M4 (IA + MCP), recortando otros.
    ========================================================================= */
 
+/* -------------------------------------------------------------------------
+   Conmutador de apertura del sábado.
+   false = el contenido del sábado está BLOQUEADO (solo se trabaja el viernes):
+           en el hub la columna del sábado sale atenuada y sin enlaces, y las
+           páginas solo-sábado (datos, m3, m4, validacion-dato, mcp) redirigen
+           al hub si se abren por URL directa.
+   true  = sábado ABIERTO (todo accesible con normalidad).
+
+   Para abrir el sábado basta con poner esto en `true`. Las páginas del sábado
+   llevan además su propio guard inline equivalente (busca "guard-sabado" en
+   decks/*.html y tools/*.html) por si se cargan sin pasar por el hub.
+   ------------------------------------------------------------------------- */
+export const SABADO_ABIERTO = false;
+
 export const DIAS = [
   {
     id: "viernes",
@@ -47,7 +61,7 @@ export const DIAS = [
       },
       {
         time: "19:10", dur: "15'", cat: "kahoot", title: "Kahoot #1",
-        links: [{ label: "Abrir Kahoots", href: "tools/kahoot.html", kind: "kahoot" }],
+        note: "El profesor lo lanza en pantalla.",
       },
       {
         time: "19:25", dur: "60'", cat: "deck",
@@ -90,7 +104,7 @@ export const DIAS = [
       { time: "10:40", dur: "20'", cat: "descanso", title: "Descanso" },
       {
         time: "11:00", dur: "15'", cat: "kahoot", title: "Kahoot #2",
-        links: [{ label: "Abrir Kahoots", href: "tools/kahoot.html", kind: "kahoot" }],
+        note: "El profesor lo lanza en pantalla.",
       },
       {
         time: "11:15", dur: "30'", cat: "deck", block: "m3",

@@ -26,6 +26,27 @@
 
 .day__list { display: flex; flex-direction: column; gap: var(--sp-3); }
 
+/* --------------------------------------------------- Día bloqueado (sábado) */
+.day--locked .day__head { opacity: .9; }
+.day__lock {
+  display: flex; align-items: center; gap: .5em;
+  margin: var(--sp-3) 0 0; padding: var(--sp-2) var(--sp-3);
+  border: 1px dashed var(--c-line); border-radius: var(--radius-sm);
+  background: var(--c-bg-soft, #f4f5f7);
+  color: var(--c-ink-soft); font-size: .9rem; font-weight: 600;
+}
+/* Las tarjetas del día bloqueado se ven, pero atenuadas y sin interacción. */
+.agenda-item--locked { opacity: .55; filter: grayscale(.25); }
+.agenda-item--locked:hover { box-shadow: none; }
+/* Pastilla de enlace inerte: mismo hueco, sin navegación ni hover. */
+.agenda-link--locked {
+  cursor: not-allowed; opacity: .6;
+  border-style: dashed !important;
+  background: var(--c-bg) !important; color: var(--c-ink-soft) !important;
+}
+.agenda-link--locked::before { content: "🔒"; opacity: .7; }
+.agenda-link--locked:hover { transform: none; }
+
 /* --------------------------------------------------------- Item agenda */
 .agenda-item {
   display: grid;

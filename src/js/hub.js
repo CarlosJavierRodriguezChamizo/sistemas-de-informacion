@@ -4,7 +4,7 @@
    ========================================================================= */
 import { Header, Section, Kpi, Chip } from "../components/index.js";
 import { escapeHtml } from "../components/_util.js";
-import { DIAS, CATS } from "../data/agenda.js";
+import { DIAS, CATS, SABADO_ABIERTO } from "../data/agenda.js";
 
 /* ----- Estado en memoria (no persiste entre recargas, por diseño) ----- */
 const STATES = ["pendiente", "encurso", "hecho"];
@@ -14,8 +14,12 @@ const estados = new Map();
 
 /* --------------------------- Helpers de render --------------------------- */
 
-/** Un enlace de acción (deck/tool/kahoot/pitch). Externos en pestaña nueva. */
-function linkHtml({ label, href, kind }) {
+/** Un enlace de acción (deck/tool/kahoot/pitch). Externos en pestaña nueva.
+    Si `locked`, se pinta como pastilla inerte (sin navegación). */
+function linkHtml({ label, href, kind }, locked) {
+  if (locked) {
+    return `<span class="agenda-link agenda-link--${escapeHtml(kind)} agenda-link--locked" aria-disabled="true">${escapeHtml(label)}</span>`;
+  }
   const ext = /^https?:\/\//i.test(href);
   const extra = ext ? ' target="_blank" rel="noopener noreferrer"' : "";
   return `<a class="agenda-link agenda-link--${escapeHtml(kind)}" href="${escapeHtml(href)}"${extra}>${escapeHtml(label)}</a>`;
@@ -31,18 +35,18 @@ function statusButton(id) {
   </button>`;
 }
 
-/** Una tarjeta de bloque de la escaleta. */
-function itemHtml(b, id) {
+/** Una tarjeta de bloque de la escaleta. `locked` desactiva sus enlaces. */
+function itemHtml(b, id, locked) {
   const cat = CATS[b.cat] || { label: b.cat, cls: "cat--plenary" };
   const st = estados.get(id) || "pendiente";
   const block = b.block ? `<span class="badge badge--${escapeHtml(b.block)}">${escapeHtml(b.block.toUpperCase())}</span>` : "";
   const note = b.note ? `<p class="agenda-item__note">${escapeHtml(b.note)}</p>` : "";
   const links = b.links?.length
-    ? `<div class="agenda-links">${b.links.map(linkHtml).join("")}</div>`
+    ? `<div class="agenda-links">${b.links.map((l) => linkHtml(l, locked)).join("")}</div>`
     : "";
   const dur = b.dur ? `<span class="agenda-item__dur">${escapeHtml(b.dur)}</span>` : "";
 
-  return `<article class="agenda-item ${cat.cls}" data-status="${st}">
+  return `<article class="agenda-item ${cat.cls}${locked ? " agenda-item--locked" : ""}" data-status="${st}">
     <div class="agenda-item__time">
       <span class="agenda-item__hour">${escapeHtml(b.time)}</span>
       ${dur}
@@ -60,17 +64,24 @@ function itemHtml(b, id) {
   </article>`;
 }
 
-/** Una columna de día con su lista de bloques. */
-function dayHtml(d) {
-  const items = d.bloques.map((b, i) => itemHtml(b, `${d.id}-${i}`)).join("");
-  return `<div class="day" id="${escapeHtml(d.id)}">
+/** Una columna de día con su lista de bloques. `locked` la atenúa y corta enlaces. */
+function dayHtml(d, locked) {
+  const items = d.bloques.map((b, i) => itemHtml(b, `${d.id}-${i}`, locked)).join("");
+  const lockBanner = locked
+    ? `<p class="day__lock" role="status">🔒 Contenido del sábado — se abre el sábado. Hoy trabajamos solo el viernes.</p>`
+    : "";
+  return `<div class="day${locked ? " day--locked" : ""}" id="${escapeHtml(d.id)}">
     <header class="day__head">
       <h2 class="day__name">${escapeHtml(d.dia)} <span class="day__franja">${escapeHtml(d.franja)}</span></h2>
       <p class="day__lema">${escapeHtml(d.lema)}</p>
+      ${lockBanner}
     </header>
     <div class="day__list">${items}</div>
   </div>`;
 }
+
+/** Un día está bloqueado si es el sábado y el conmutador está cerrado. */
+const isLocked = (d) => d.id === "sabado" && !SABADO_ABIERTO;
 
 /** Leyenda de tipos de bloque. */
 function legendHtml() {
@@ -124,7 +135,7 @@ app.innerHTML = [
       <strong>pendiente → en curso → hecho</strong> durante la sesión.</p>
       ${legendHtml()}
       <div class="days" style="margin-top:var(--sp-6)">
-        ${DIAS.map(dayHtml).join("")}
+        ${DIAS.map((d) => dayHtml(d, isLocked(d))).join("")}
       </div>`,
   }),
 
