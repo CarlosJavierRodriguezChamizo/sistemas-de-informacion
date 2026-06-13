@@ -7,22 +7,16 @@
 
 /* -------------------------------------------------------------------------
    Conmutador de apertura del sábado.
-   false = el contenido del sábado está BLOQUEADO (solo se trabaja el viernes):
-           en el hub la columna del sábado sale atenuada y sin enlaces, y las
-           páginas solo-sábado (datos, m3, m4, validacion-dato, mcp) redirigen
-           al hub si se abren por URL directa.
    true  = sábado ABIERTO (todo accesible con normalidad).
+   false = el contenido del sábado queda BLOQUEADO (solo se trabaja el
+           viernes): en el hub la columna del sábado sale atenuada y sin
+           enlaces, y las páginas solo-sábado (datos, m3, m4, validacion-dato,
+           mcp) redirigen al hub si se abren por URL directa.
 
-   Para abrir el sábado de forma permanente basta con poner esto en `true`.
-
-   Atajo sin tocar código: añade ?SABADO_ABIERTO=true a la URL (p. ej.
-   .../sistemas-de-informacion/?SABADO_ABIERTO=true). El override se recuerda
-   durante toda la sesión del navegador (sessionStorage "baltica-sabado"), así
-   que al navegar a los decks/tools del sábado siguen desbloqueados. Se cierra
-   de nuevo al cerrar la pestaña. Las páginas del sábado llevan su propio guard
-   inline equivalente (busca "guard-sabado" en decks/*.html y tools/*.html).
+   Si lo cambias, ajusta también el guard inline de esas páginas (busca
+   "guard-sabado" en decks/*.html y tools/*.html), que llevan su propio flag.
    ------------------------------------------------------------------------- */
-export const SABADO_ABIERTO = false;
+export const SABADO_ABIERTO = true;
 
 export const DIAS = [
   {
